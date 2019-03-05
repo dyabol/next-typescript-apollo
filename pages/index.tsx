@@ -1,9 +1,8 @@
-import { gql } from 'apollo-boost';
 import 'isomorphic-unfetch';
 import Link from 'next/link';
 import React from 'react';
-import { Mutation } from 'react-apollo';
 import Layout from '../containers/Layout';
+import { LoginComponent } from '../generated/apolloComponents';
 
 export type Props = {
   stars: string;
@@ -27,27 +26,23 @@ class Index extends React.Component<Props, {}> {
         <Link href="/post?slug=something" as="/post/something">
           <a>Post</a>
         </Link>
-        <Mutation
-          mutation={gql`
-            mutation {
-              login(email: "dyabol@gmail.com", password: "heslo") {
-                id
-                fullName
-              }
-            }
-          `}
-        >
+        <LoginComponent>
           {mutation => (
             <button
               onClick={async () => {
-                const result = await mutation();
+                const result = await mutation({
+                  variables: {
+                    email: 'dyabol@gmail.com',
+                    password: 'heslo'
+                  }
+                });
                 console.log(result);
               }}
             >
               Call login mutation
             </button>
           )}
-        </Mutation>
+        </LoginComponent>
       </Layout>
     );
   }
