@@ -1,6 +1,6 @@
-import React from 'react';
-import Link from 'next/link';
 import 'isomorphic-unfetch';
+import Link from 'next/link';
+import React from 'react';
 import Layout from '../containers/Layout';
 
 export type Props = {

@@ -1,17 +1,23 @@
 {
-  "name": "wpgraphql",
-  "version": "1.0.0",
+  "name": "typeql-client",
+  "version": "0.1.0",
   "main": "index.js",
   "author": "Jakub Hromek <dyabol@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
+    "apollo-boost": "^0.1.28",
+    "apollo-link-context": "^1.0.14",
+    "apollo-link-http": "^1.5.11",
+    "cookie": "^0.3.1",
     "express": "^4.16.4",
+    "graphql-tag": "^2.10.1",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^8.0.3",
     "node-sass": "^4.11.0",
     "react": "^16.8.3",
+    "react-apollo": "^2.4.1",
     "react-dom": "^16.8.3",
     "react-relay": "^3.0.0",
     "relay-runtime": "^3.0.0"
@@ -19,10 +25,14 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "generate": "gql-gen --config codegen.yml",
+    "type-check": "tsc"
   },
   "devDependencies": {
+    "@types/cookie": "^0.3.2",
     "@types/next": "^8.0.1",
+    "@types/node": "^11.9.5",
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
     "@types/react-relay": "^1.3.12",
@@ -31,7 +41,11 @@
     "babel-plugin-relay": "^3.0.0",
     "eslint": "4.x",
     "graphql": "^14.1.1",
+    "graphql-code-generator": "^0.18.0",
     "tslint": "^5.13.0",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.3333",
+    "graphql-codegen-typescript-common": "0.18.0",
+    "graphql-codegen-typescript-client": "0.18.0",
+    "graphql-codegen-typescript-react-apollo": "0.18.0"
   }
 }

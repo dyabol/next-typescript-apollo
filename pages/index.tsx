@@ -1,6 +1,8 @@
-import React from 'react';
-import Link from 'next/link';
+import { gql } from 'apollo-boost';
 import 'isomorphic-unfetch';
+import Link from 'next/link';
+import React from 'react';
+import { Mutation } from 'react-apollo';
 import Layout from '../containers/Layout';
 
 export type Props = {
@@ -25,6 +27,27 @@ class Index extends React.Component<Props, {}> {
         <Link href="/post?slug=something" as="/post/something">
           <a>Post</a>
         </Link>
+        <Mutation
+          mutation={gql`
+            mutation {
+              login(email: "dyabol@gmail.com", password: "heslo") {
+                id
+                fullName
+              }
+            }
+          `}
+        >
+          {mutation => (
+            <button
+              onClick={async () => {
+                const result = await mutation();
+                console.log(result);
+              }}
+            >
+              Call login mutation
+            </button>
+          )}
+        </Mutation>
       </Layout>
     );
   }
