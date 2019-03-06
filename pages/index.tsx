@@ -1,7 +1,7 @@
 import 'isomorphic-unfetch';
 import React from 'react';
+import LoginForm from '../components/LoginForm';
 import Layout from '../containers/Layout';
-import { LoginComponent } from '../generated/apolloComponents';
 
 export type Props = {
   stars: string;
@@ -19,23 +19,7 @@ class Index extends React.Component<Props, {}> {
     return (
       <Layout>
         <p>Next.js has {this.props.stars} ⭐️</p>
-        <LoginComponent>
-          {mutation => (
-            <button
-              onClick={async () => {
-                const result = await mutation({
-                  variables: {
-                    email: 'dyabol@gmail.com',
-                    password: 'heslo'
-                  }
-                });
-                console.log(result);
-              }}
-            >
-              Call login mutation
-            </button>
-          )}
-        </LoginComponent>
+        <LoginForm />
       </Layout>
     );
   }
