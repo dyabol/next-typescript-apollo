@@ -1,6 +1,8 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import * as React from 'react';
+import { Container } from 'reactstrap';
+import Footer from '../components/Footer';
+import Menu from '../components/Menu';
 
 export type Props = {
   readonly title?: string;
@@ -25,32 +27,21 @@ export default class Layout extends React.Component<Props, {}> {
   public render() {
     const { children } = this.props;
     return (
-      <div>
-        <Head>
-          <title>{this.getTitle()}</title>
-          <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
-            key="viewport"
-          />
-        </Head>
-        <nav>
-          <Link prefetch href="/">
-            <a>Home</a>
-          </Link>
-          <Link href="/preact" as="/preact">
-            <a>Preact</a>
-          </Link>
-          <Link href="/post?slug=something" as="/post/something">
-            <a>Post</a>
-          </Link>
-          <Link href="/register" as="/register">
-            <a>Register</a>
-          </Link>
-        </nav>
-        {children}
-        <footer>Jakub Hromek &copy; 2019</footer>
-      </div>
+      <>
+        <div className="content">
+          <Head>
+            <title>{this.getTitle()}</title>
+            <meta
+              name="viewport"
+              content="initial-scale=1.0, width=device-width"
+              key="viewport"
+            />
+          </Head>
+          <Menu />
+          <Container>{children}</Container>
+        </div>
+        <Footer />
+      </>
     );
   }
 }

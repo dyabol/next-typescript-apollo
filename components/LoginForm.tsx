@@ -37,6 +37,7 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
                   required
                   id="emailField"
                   label="E-mail"
+                  autoFocus
                 />
                 <Field
                   name="password"

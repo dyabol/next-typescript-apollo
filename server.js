@@ -13,6 +13,10 @@ app.prepare().then(() => {
     return app.render(req, res, '/post', { slug: req.params.slug });
   });
 
+  server.get('/user/confirm/:token', (req, res) => {
+    return app.render(req, res, '/confirm', { token: req.params.token });
+  });
+
   server.get('*', (req, res) => {
     return handle(req, res);
   });
