@@ -2,6 +2,7 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import withApollo from '../lib/withApollo';
+import '../styles/global.scss';
 
 class MyApp extends App<any> {
   render() {

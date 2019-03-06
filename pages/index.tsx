@@ -1,5 +1,4 @@
 import 'isomorphic-unfetch';
-import Link from 'next/link';
 import React from 'react';
 import Layout from '../containers/Layout';
 import { LoginComponent } from '../generated/apolloComponents';
@@ -20,12 +19,6 @@ class Index extends React.Component<Props, {}> {
     return (
       <Layout>
         <p>Next.js has {this.props.stars} ⭐️</p>
-        <Link prefetch href="/preact">
-          <a>How about preact?</a>
-        </Link>
-        <Link href="/post?slug=something" as="/post/something">
-          <a>Post</a>
-        </Link>
         <LoginComponent>
           {mutation => (
             <button

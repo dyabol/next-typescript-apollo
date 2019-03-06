@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Layout from '../containers/Layout';
 
 export type Props = {
   slug: string;
@@ -12,6 +13,10 @@ export default class Post extends React.Component<Props, {}> {
   }
 
   public render() {
-    return <h1>Test {this.props.slug}</h1>;
+    return (
+      <Layout>
+        <h1>Test {this.props.slug}</h1>
+      </Layout>
+    );
   }
 }

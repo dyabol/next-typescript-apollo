@@ -1,5 +1,5 @@
 import Head from 'next/head';
-
+import Link from 'next/link';
 import * as React from 'react';
 
 export type Props = {
@@ -23,6 +23,7 @@ export default class Layout extends React.Component<Props, {}> {
   }
 
   public render() {
+    const { children } = this.props;
     return (
       <div>
         <Head>
@@ -33,7 +34,22 @@ export default class Layout extends React.Component<Props, {}> {
             key="viewport"
           />
         </Head>
-        {this.props.children}
+        <nav>
+          <Link prefetch href="/">
+            <a>Home</a>
+          </Link>
+          <Link href="/preact" as="/preact">
+            <a>Preact</a>
+          </Link>
+          <Link href="/post?slug=something" as="/post/something">
+            <a>Post</a>
+          </Link>
+          <Link href="/register" as="/register">
+            <a>Register</a>
+          </Link>
+        </nav>
+        {children}
+        <footer>Jakub Hromek &copy; 2019</footer>
       </div>
     );
   }

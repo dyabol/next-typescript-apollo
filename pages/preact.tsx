@@ -1,5 +1,4 @@
 import 'isomorphic-unfetch';
-import Link from 'next/link';
 import React from 'react';
 import Layout from '../containers/Layout';
 
@@ -19,9 +18,6 @@ export default class Preact extends React.Component<Props, {}> {
     return (
       <Layout title="Preact">
         <p>Preact has {this.props.stars} ⭐️</p>
-        <Link prefetch href="/">
-          <a>I bet next has more stars (?)</a>
-        </Link>
       </Layout>
     );
   }
