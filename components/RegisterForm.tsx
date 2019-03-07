@@ -1,4 +1,5 @@
 import { Field, Formik } from 'formik';
+import Router from 'next/router';
 import * as React from 'react';
 import { Button, Form } from 'reactstrap';
 import { RegisterComponent } from '../generated/apolloComponents';
@@ -31,12 +32,13 @@ export default class RegisterForm extends React.Component<
                     data: {
                       firstName: values.firstName,
                       lastName: values.lastName,
-                      email: values.lastName,
+                      email: values.email,
                       password: values.password
                     }
                   }
                 });
                 console.log(response);
+                Router.push('/check-email');
               } catch (err) {
                 if (err.graphQLErrors && err.graphQLErrors.length > 0) {
                   const errors: { [key: string]: string } = {};

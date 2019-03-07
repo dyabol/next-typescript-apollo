@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'reactstrap';
 import Layout from '../containers/Layout';
 
 export type Props = {};
@@ -7,8 +8,10 @@ class Index extends React.Component<Props, {}> {
   render() {
     return (
       <Layout>
-        <h1>Hlavní stránka</h1>
-        <p>Index</p>
+        <Alert color="success">
+          <h4 className="alert-heading">Registred!</h4>
+          <p>Check your email to confirm your account.</p>
+        </Alert>
       </Layout>
     );
   }

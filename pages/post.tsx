@@ -16,7 +16,8 @@ export default class Post extends React.Component<Props, {}> {
   public render() {
     return (
       <Layout>
-        <h1>Test {this.props.slug}</h1>
+        <h1>Post</h1>
+        <p>Slug: {this.props.slug}</p>
       </Layout>
     );
   }

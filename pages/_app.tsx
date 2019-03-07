@@ -1,8 +1,8 @@
-import 'bootstrap/scss/bootstrap.scss';
 import App, { Container } from 'next/app';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import withApollo from '../lib/withApollo';
+import '../styles/bootstrap.scss';
 import '../styles/global.scss';
 
 class MyApp extends App<any> {

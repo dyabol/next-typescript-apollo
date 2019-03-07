@@ -1,4 +1,5 @@
 import { Field, Formik } from 'formik';
+import Router from 'next/router';
 import * as React from 'react';
 import { Button, Form } from 'reactstrap';
 import { LoginComponent } from '../generated/apolloComponents';
@@ -7,6 +8,17 @@ import InputField from './field/InputField';
 export interface LoginFormProps {}
 
 export default class LoginForm extends React.Component<LoginFormProps, {}> {
+  public emailInput = React.createRef<HTMLInputElement>();
+
+  constructor(props: LoginFormProps) {
+    super(props);
+    this.focusTextInput = this.focusTextInput.bind(this);
+  }
+
+  focusTextInput() {
+    this.emailInput.current!.focus();
+  }
+
   public render() {
     return (
       <LoginComponent>
@@ -16,7 +28,7 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
               email: '',
               password: ''
             }}
-            onSubmit={async values => {
+            onSubmit={async (values, { setErrors }) => {
               const result = await login({
                 variables: {
                   email: values.email,
@@ -24,11 +36,20 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
                 }
               });
               console.log(result);
+              if (result && result.data && !result.data.login) {
+                setErrors({
+                  email: 'Bed login or password'
+                });
+                this.focusTextInput();
+                return;
+              }
+              Router.push('/');
             }}
           >
-            {({ values }) => (
-              <Form>
+            {({ values, handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
                 <Field
+                  innerRef={this.emailInput}
                   name="email"
                   type="email"
                   placeholder=""
