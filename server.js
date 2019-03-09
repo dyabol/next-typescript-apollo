@@ -17,6 +17,12 @@ app.prepare().then(() => {
     return app.render(req, res, '/confirm', { token: req.params.token });
   });
 
+  server.get('/user/change-password/:token', (req, res) => {
+    return app.render(req, res, '/change-password', {
+      token: req.params.token
+    });
+  });
+
   server.get('*', (req, res) => {
     return handle(req, res);
   });

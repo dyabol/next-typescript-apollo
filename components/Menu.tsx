@@ -51,6 +51,9 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
               <Link href="/login">Login</Link>
             </NavItem>
             <NavItem>
+              <Link href="/forgot-password">Forgot password</Link>
+            </NavItem>
+            <NavItem>
               <Link href="/hello">Hello</Link>
             </NavItem>
           </Nav>
