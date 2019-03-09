@@ -38,7 +38,7 @@ export default class Layout extends React.Component<Props, {}> {
             />
           </Head>
           <Menu />
-          <Container>{children}</Container>
+          <Container className="mt-3">{children}</Container>
         </div>
         <Footer />
       </>

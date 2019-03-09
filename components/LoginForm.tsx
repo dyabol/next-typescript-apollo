@@ -1,7 +1,8 @@
 import { Field, Formik } from 'formik';
+import Link from 'next/link';
 import Router from 'next/router';
 import * as React from 'react';
-import { Button, Form } from 'reactstrap';
+import { Button, Form, FormGroup } from 'reactstrap';
 import { LoginComponent, MeQuery } from '../generated/apolloComponents';
 import { meQuery } from '../graphql/user/queries/me';
 import InputField from './field/InputField';
@@ -83,6 +84,11 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
                   id="passwordField"
                   label="Heslo"
                 />
+                <FormGroup>
+                  <Link href="/forgot-password">
+                    <a>Forgot password</a>
+                  </Link>
+                </FormGroup>
                 <Button color="primary" type="submit">
                   Přihlásit
                 </Button>

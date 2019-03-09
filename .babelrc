@@ -1,4 +1,4 @@
 {
-  "plugins": ["relay"],
+  "plugins": [["styled-components", { "ssr": true }]],
   "presets": ["next/babel", "@zeit/next-typescript/babel"]
 }

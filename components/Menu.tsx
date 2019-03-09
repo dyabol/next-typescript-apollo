@@ -8,7 +8,7 @@ import {
   NavItem
 } from 'reactstrap';
 import { MeComponent } from '../generated/apolloComponents';
-import Link from './Link';
+import Link from './MenuLink';
 
 export interface MenuProps {}
 
@@ -46,30 +46,38 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
               <Link href="/post/something">Post</Link>
             </NavItem>
             <NavItem>
-              <Link href="/register">Register</Link>
+              <Link href="/hello">Hello</Link>
             </NavItem>
             <MeComponent>
               {({ data, loading }) => {
                 if (!data || loading || !data.me) {
                   return (
-                    <NavItem>
-                      <Link href="/login">Login</Link>
-                    </NavItem>
+                    <>
+                      <NavItem>
+                        <Link className="btn btn-primary ml-3" href="/login">
+                          Login
+                        </Link>
+                      </NavItem>
+                      <NavItem>
+                        <Link
+                          className="btn btn-secondary ml-3"
+                          href="/register"
+                        >
+                          Register
+                        </Link>
+                      </NavItem>
+                    </>
                   );
                 }
                 return (
                   <NavItem>
-                    <Link href="/logout">Logout</Link>
+                    <Link className="btn btn-secondary ml-3" href="/logout">
+                      Logout
+                    </Link>
                   </NavItem>
                 );
               }}
             </MeComponent>
-            <NavItem>
-              <Link href="/forgot-password">Forgot password</Link>
-            </NavItem>
-            <NavItem>
-              <Link href="/hello">Hello</Link>
-            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
