@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const registerMutation = gql`
+export const helloQuery = gql`
   query Hello {
     hello
   }

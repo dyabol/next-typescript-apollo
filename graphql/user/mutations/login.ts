@@ -7,6 +7,7 @@ export const loginMutation = gql`
       firstName
       lastName
       email
+      fullName
     }
   }
 `;

@@ -2,7 +2,8 @@ import { Field, Formik } from 'formik';
 import Router from 'next/router';
 import * as React from 'react';
 import { Button, Form } from 'reactstrap';
-import { LoginComponent } from '../generated/apolloComponents';
+import { LoginComponent, MeQuery } from '../generated/apolloComponents';
+import { meQuery } from '../graphql/user/queries/me';
 import InputField from './field/InputField';
 
 export interface LoginFormProps {}
@@ -33,6 +34,18 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
                 variables: {
                   email: values.email,
                   password: values.password
+                },
+                update: (cache, { data }) => {
+                  if (!data || !data.login) {
+                    return;
+                  }
+                  cache.writeQuery<MeQuery>({
+                    query: meQuery,
+                    data: {
+                      __typename: 'Query',
+                      me: data.login
+                    }
+                  });
                 }
               });
               console.log(result);

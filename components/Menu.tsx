@@ -7,6 +7,7 @@ import {
   NavbarToggler,
   NavItem
 } from 'reactstrap';
+import { MeComponent } from '../generated/apolloComponents';
 import Link from './Link';
 
 export interface MenuProps {}
@@ -47,9 +48,22 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
             <NavItem>
               <Link href="/register">Register</Link>
             </NavItem>
-            <NavItem>
-              <Link href="/login">Login</Link>
-            </NavItem>
+            <MeComponent>
+              {({ data, loading }) => {
+                if (!data || loading || !data.me) {
+                  return (
+                    <NavItem>
+                      <Link href="/login">Login</Link>
+                    </NavItem>
+                  );
+                }
+                return (
+                  <NavItem>
+                    <Link href="/logout">Logout</Link>
+                  </NavItem>
+                );
+              }}
+            </MeComponent>
             <NavItem>
               <Link href="/forgot-password">Forgot password</Link>
             </NavItem>
