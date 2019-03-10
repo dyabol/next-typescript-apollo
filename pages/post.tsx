@@ -1,25 +1,35 @@
 import Link from 'next/link';
 import * as React from 'react';
-import { InjectedIntl } from 'react-intl';
+import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Layout from '../containers/Layout';
+import { PostBySlugProps } from '../generated/apolloComponents';
+import { postBySlugQuery } from '../graphql/user/queries/postBySlug';
 import Context from '../interfaces/Context';
 import withIntl from '../lib/withIntl';
 
-export type Props = {
-  slug: string;
-  intl: InjectedIntl;
-};
+export type Props =
+  | {
+      intl: InjectedIntl;
+    }
+  | PostBySlugProps;
 
 class Post extends React.Component<Props, {}> {
-  static async getInitialProps({ query: { slug } }: Context) {
+  static async getInitialProps({ apolloClient, query: { slug } }: Context) {
+    const post = await apolloClient.query({
+      query: postBySlugQuery,
+      variables: { slug }
+    });
+    if (!post || post.loading || !post.data) {
+      return {};
+    }
     return {
-      slug
+      ...post.data.post
     };
   }
 
   public render() {
-    const { intl } = this.props;
+    const { intl, id, user, title, content } = this.props;
     return (
       <Layout>
         <Breadcrumb>
@@ -43,10 +53,23 @@ class Post extends React.Component<Props, {}> {
               </a>
             </Link>
           </BreadcrumbItem>
-          <BreadcrumbItem active>Post {this.props.slug}</BreadcrumbItem>
+          <BreadcrumbItem active>{title}</BreadcrumbItem>
         </Breadcrumb>
-        <h1>Post</h1>
-        <p>Slug: {this.props.slug}</p>
+        <section>
+          <article id={'post-' + id} className="post">
+            <header>
+              <h1 className="post-title">{title}</h1>
+            </header>
+            <div className="post-content">{content}</div>
+            <footer>
+              <FormattedMessage
+                id="post_author"
+                defaultMessage={'Author: {fullName}'}
+                values={{ fullName: user.fullName }}
+              />
+            </footer>
+          </article>
+        </section>
       </Layout>
     );
   }

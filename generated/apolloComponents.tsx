@@ -3,11 +3,15 @@ export type Maybe<T> = T | null;
 export interface PageInput {
   title: string;
 
+  slug: string;
+
   content: string;
 }
 
 export interface PostInput {
   title: string;
+
+  slug: string;
 
   content: string;
 
@@ -29,6 +33,9 @@ export interface RegisterInput {
 
   email: string;
 }
+
+/** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+export type DateTime = any;
 
 /** The `Upload` scalar type represents a file upload. */
 export type Upload = any;
@@ -164,6 +171,90 @@ export type MeMe = {
   fullName: string;
 };
 
+export type PostByIdVariables = {
+  id: number;
+};
+
+export type PostByIdQuery = {
+  __typename?: "Query";
+
+  post: PostByIdPost;
+};
+
+export type PostByIdPost = {
+  __typename?: "Post";
+
+  id: string;
+
+  slug: string;
+
+  title: string;
+
+  content: string;
+
+  createdAt: DateTime;
+
+  upadatedAt: DateTime;
+
+  user: PostByIdUser;
+};
+
+export type PostByIdUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  fullName: string;
+
+  email: string;
+};
+
+export type PostBySlugVariables = {
+  slug: string;
+};
+
+export type PostBySlugQuery = {
+  __typename?: "Query";
+
+  post: PostBySlugPost;
+};
+
+export type PostBySlugPost = {
+  __typename?: "Post";
+
+  id: string;
+
+  slug: string;
+
+  title: string;
+
+  content: string;
+
+  createdAt: DateTime;
+
+  upadatedAt: DateTime;
+
+  user: PostBySlugUser;
+};
+
+export type PostBySlugUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  fullName: string;
+
+  email: string;
+};
+
 export type PostsVariables = {};
 
 export type PostsQuery = {
@@ -176,6 +267,8 @@ export type PostsPosts = {
   __typename?: "Post";
 
   id: string;
+
+  slug: string;
 
   title: string;
 
@@ -552,10 +645,115 @@ export function MeHOC<TProps, TChildProps = any>(
     MeProps<TChildProps>
   >(MeDocument, operationOptions);
 }
+export const PostByIdDocument = gql`
+  query PostById($id: Int!) {
+    post(id: $id) {
+      id
+      slug
+      title
+      content
+      createdAt
+      upadatedAt
+      user {
+        id
+        firstName
+        lastName
+        fullName
+        email
+      }
+    }
+  }
+`;
+export class PostByIdComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<PostByIdQuery, PostByIdVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<PostByIdQuery, PostByIdVariables>
+        query={PostByIdDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type PostByIdProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<PostByIdQuery, PostByIdVariables>
+> &
+  TChildProps;
+export function PostByIdHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        PostByIdQuery,
+        PostByIdVariables,
+        PostByIdProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    PostByIdQuery,
+    PostByIdVariables,
+    PostByIdProps<TChildProps>
+  >(PostByIdDocument, operationOptions);
+}
+export const PostBySlugDocument = gql`
+  query PostBySlug($slug: String!) {
+    post(slug: $slug) {
+      id
+      slug
+      title
+      content
+      createdAt
+      upadatedAt
+      user {
+        id
+        firstName
+        lastName
+        fullName
+        email
+      }
+    }
+  }
+`;
+export class PostBySlugComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<PostBySlugQuery, PostBySlugVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<PostBySlugQuery, PostBySlugVariables>
+        query={PostBySlugDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type PostBySlugProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<PostBySlugQuery, PostBySlugVariables>
+> &
+  TChildProps;
+export function PostBySlugHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        PostBySlugQuery,
+        PostBySlugVariables,
+        PostBySlugProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    PostBySlugQuery,
+    PostBySlugVariables,
+    PostBySlugProps<TChildProps>
+  >(PostBySlugDocument, operationOptions);
+}
 export const PostsDocument = gql`
   query Posts {
     posts {
       id
+      slug
       title
       content
       user {

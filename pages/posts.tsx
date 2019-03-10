@@ -41,12 +41,12 @@ class Posts extends React.Component<Props, {}> {
                 return (
                   <article id={'post-' + post.id} className="post" key={key}>
                     <header>
-                      <h3 className="post-title">{post.title}</h3>
+                      <h2 className="post-title">{post.title}</h2>
                     </header>
                     <div className="post-content">{post.content}</div>
                     <Link
-                      href={{ pathname: '/post', query: { slug: post.id } }}
-                      as={'/post/' + post.id}
+                      href={{ pathname: '/post', query: { slug: post.slug } }}
+                      as={'/post/' + post.slug}
                     >
                       <a>Detail</a>
                     </Link>
