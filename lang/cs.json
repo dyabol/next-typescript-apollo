@@ -17,5 +17,6 @@
   "change_password": "Změnit heslo",
   "passwords_do_not_match": "Hesla se neshodují.",
   "post": "Příspěvek",
-  "posts": "Příspěvky"
+  "posts": "Příspěvky",
+  "post_author": "Autor: {fullName}"
 }

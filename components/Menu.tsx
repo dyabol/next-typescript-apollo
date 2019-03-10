@@ -51,10 +51,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
               </MenuLink>
             </NavItem>
             <NavItem>
-              <MenuLink
-                href={{ pathname: '/post', query: { slug: 'something' } }}
-                as="/post/something"
-              >
+              <MenuLink href={'/posts'}>
                 {intl.formatMessage({
                   id: 'posts',
                   defaultMessage: 'Posts'

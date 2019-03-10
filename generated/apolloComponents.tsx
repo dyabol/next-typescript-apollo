@@ -164,6 +164,32 @@ export type MeMe = {
   fullName: string;
 };
 
+export type PostsVariables = {};
+
+export type PostsQuery = {
+  __typename?: "Query";
+
+  posts: PostsPosts[];
+};
+
+export type PostsPosts = {
+  __typename?: "Post";
+
+  id: string;
+
+  title: string;
+
+  content: string;
+
+  user: PostsUser;
+};
+
+export type PostsUser = {
+  __typename?: "User";
+
+  fullName: string;
+};
+
 import gql from "graphql-tag";
 import * as React from "react";
 import * as ReactApollo from "react-apollo";
@@ -525,4 +551,49 @@ export function MeHOC<TProps, TChildProps = any>(
     MeVariables,
     MeProps<TChildProps>
   >(MeDocument, operationOptions);
+}
+export const PostsDocument = gql`
+  query Posts {
+    posts {
+      id
+      title
+      content
+      user {
+        fullName
+      }
+    }
+  }
+`;
+export class PostsComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<PostsQuery, PostsVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<PostsQuery, PostsVariables>
+        query={PostsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type PostsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<PostsQuery, PostsVariables>
+> &
+  TChildProps;
+export function PostsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        PostsQuery,
+        PostsVariables,
+        PostsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    PostsQuery,
+    PostsVariables,
+    PostsProps<TChildProps>
+  >(PostsDocument, operationOptions);
 }
