@@ -8,7 +8,7 @@ import {
   NavItem
 } from 'reactstrap';
 import { MeComponent } from '../generated/apolloComponents';
-import Link from './MenuLink';
+import MenuLink from './MenuLink';
 
 export interface MenuProps {}
 
@@ -38,15 +38,20 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <Link prefetch href="/">
+              <MenuLink prefetch={true} href="/">
                 Home
-              </Link>
+              </MenuLink>
             </NavItem>
             <NavItem>
-              <Link href="/post/something">Post</Link>
+              <MenuLink
+                href={{ pathname: '/post', query: { slug: 'something' } }}
+                as="/post/something"
+              >
+                Post
+              </MenuLink>
             </NavItem>
             <NavItem>
-              <Link href="/hello">Hello</Link>
+              <MenuLink href="/hello">Hello</MenuLink>
             </NavItem>
             <MeComponent>
               {({ data, loading }) => {
@@ -54,26 +59,29 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
                   return (
                     <>
                       <NavItem>
-                        <Link className="btn btn-primary ml-3" href="/login">
+                        <MenuLink
+                          className="btn btn-primary ml-3"
+                          href="/login"
+                        >
                           Login
-                        </Link>
+                        </MenuLink>
                       </NavItem>
                       <NavItem>
-                        <Link
+                        <MenuLink
                           className="btn btn-secondary ml-3"
                           href="/register"
                         >
                           Register
-                        </Link>
+                        </MenuLink>
                       </NavItem>
                     </>
                   );
                 }
                 return (
                   <NavItem>
-                    <Link className="btn btn-secondary ml-3" href="/logout">
+                    <MenuLink className="btn btn-secondary ml-3" href="/logout">
                       Logout
-                    </Link>
+                    </MenuLink>
                   </NavItem>
                 );
               }}

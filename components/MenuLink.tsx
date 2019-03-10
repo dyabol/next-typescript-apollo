@@ -1,26 +1,26 @@
-import { RouterProps, withRouter } from 'next/router';
+import Link from 'next/link';
+import { RouterProps, UrlLike, withRouter } from 'next/router';
 
 type Props = {
   className?: string;
   children: string;
-  href: string;
+  href: string | UrlLike;
   router: RouterProps;
+  as?: string;
   prefetch?: boolean;
 };
 
-function MenuLink({ className, children, router, href }: Props) {
+function MenuLink(props: Props) {
+  const { className, children, router } = props;
   const classes = className ? className : 'nav-link';
-  const linkClass = router.pathname === href ? classes + ' active' : classes;
-
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-    router.push(href);
-  };
+  const pathname = props.as ? props.as : props.href;
+  const linkClass =
+    router.pathname === pathname ? classes + ' active' : classes;
 
   return (
-    <a href={href} onClick={handleClick} className={linkClass}>
-      {children}
-    </a>
+    <Link href={props.href} as={props.as} prefetch={props.prefetch}>
+      <a className={linkClass}>{children}</a>
+    </Link>
   );
 }
 

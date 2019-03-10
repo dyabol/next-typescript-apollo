@@ -1,18 +1,64 @@
 import App, { Container } from 'next/app';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
+import { addLocaleData, IntlProvider } from 'react-intl';
 import withApollo from '../lib/withApollo';
 import '../styles/bootstrap.scss';
 import '../styles/global.scss';
 
+declare global {
+  interface Window {
+    ReactIntlLocaleData: any;
+    __NEXT_DATA__: any;
+  }
+}
+
+// Register React Intl's locale data for the user's locale in the browser. This
+// locale data was added to the page by `pages/_document.js`. This only happens
+// once, on initial page load in the browser.
+if (typeof window !== 'undefined' && window.ReactIntlLocaleData) {
+  Object.keys(window.ReactIntlLocaleData).forEach(lang => {
+    addLocaleData(window.ReactIntlLocaleData[lang]);
+  });
+}
+
 class MyApp extends App<any> {
+  static async getInitialProps({ Component, ctx }: any) {
+    let pageProps = {};
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    // Get the `locale` and `messages` from the request object on the server.
+    // In the browser, use the same values that the server serialized.
+    const { req } = ctx;
+    const { locale, messages } = req || window.__NEXT_DATA__.props;
+    const initialNow = Date.now();
+
+    return { pageProps, locale, messages, initialNow };
+  }
+
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
+    const {
+      Component,
+      pageProps,
+      locale,
+      messages,
+      initialNow,
+      apolloClient
+    } = this.props;
     return (
       <Container>
-        <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
-        </ApolloProvider>
+        <IntlProvider
+          locale={locale}
+          messages={messages}
+          initialNow={initialNow}
+        >
+          <ApolloProvider client={apolloClient}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+        </IntlProvider>
       </Container>
     );
   }

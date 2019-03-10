@@ -1,10 +1,18 @@
-import Document from 'next/document';
+import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-export default class MyDocument extends Document {
+type Props = {
+  locale: any;
+  localeDataScript: any;
+};
+
+export default class MyDocument extends Document<Props> {
   static async getInitialProps(ctx: any) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
+    const {
+      req: { locale, localeDataScript }
+    } = ctx;
 
     try {
       ctx.renderPage = () =>
@@ -16,6 +24,8 @@ export default class MyDocument extends Document {
       const initialProps = await Document.getInitialProps(ctx);
       return {
         ...initialProps,
+        locale,
+        localeDataScript,
         styles: (
           <>
             {initialProps.styles}
@@ -26,5 +36,28 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render() {
+    // Polyfill Intl API for older browsers
+    const polyfill = `https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.${
+      this.props.locale
+    }`;
+
+    return (
+      <html>
+        <Head />
+        <body>
+          <Main />
+          <script src={polyfill} />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: this.props.localeDataScript
+            }}
+          />
+          <NextScript />
+        </body>
+      </html>
+    );
   }
 }

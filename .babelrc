@@ -1,4 +1,32 @@
 {
-  "plugins": [["styled-components", { "ssr": true }]],
-  "presets": ["next/babel", "@zeit/next-typescript/babel"]
+  "presets": ["next/babel", "@zeit/next-typescript/babel"],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-intl",
+        [
+          "styled-components",
+          {
+            "ssr": true
+          }
+        ]
+      ]
+    },
+    "production": {
+      "plugins": [
+        [
+          "react-intl",
+          {
+            "messagesDir": "lang/.messages/"
+          }
+        ],
+        [
+          "styled-components",
+          {
+            "ssr": true
+          }
+        ]
+      ]
+    }
+  }
 }
