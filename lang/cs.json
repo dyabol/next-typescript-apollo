@@ -1,4 +1,21 @@
 {
   "hello": "Ahoj",
-  "welcome": "Výtejte"
+  "welcome": "Výtejte",
+  "home": "Domů",
+  "logout": "Odhlásit",
+  "login": "Přihlásit",
+  "register": "Registrovat se",
+  "registration": "Registrace",
+  "email": "E-mail",
+  "password": "Heslo",
+  "repeat_password": "Heslo znovu",
+  "forgot_password": "Zapomenuté heslo",
+  "reset_password": "Resetovat heslo",
+  "first_name": "Jméno",
+  "last_name": "Příjmení",
+  "wrong_email_or_password": "Špatný email nebo heslo.",
+  "change_password": "Změnit heslo",
+  "passwords_do_not_match": "Hesla se neshodují.",
+  "post": "Příspěvek",
+  "posts": "Příspěvky"
 }

@@ -1,17 +1,19 @@
 import { Field, Formik } from 'formik';
 import Router from 'next/router';
 import * as React from 'react';
+import { InjectedIntl } from 'react-intl';
 import { Button, Form } from 'reactstrap';
 import { ForgotPasswordComponent } from '../generated/apolloComponents';
+import withIntl from '../lib/withIntl';
 import InputField from './field/InputField';
 
-export interface ForgotPasswordFormProps {}
+export interface ForgotPasswordFormProps {
+  intl: InjectedIntl;
+}
 
-export default class ForgotPasswordForm extends React.Component<
-  ForgotPasswordFormProps,
-  {}
-> {
+class ForgotPasswordForm extends React.Component<ForgotPasswordFormProps, {}> {
   public render() {
+    const { intl } = this.props;
     return (
       <ForgotPasswordComponent>
         {forgotPassword => (
@@ -37,10 +39,16 @@ export default class ForgotPasswordForm extends React.Component<
                   component={InputField}
                   required
                   id="emailField"
-                  label="E-mail"
+                  label={intl.formatMessage({
+                    id: 'email',
+                    defaultMessage: 'E-email'
+                  })}
                 />
                 <Button color="primary" type="submit">
-                  Reset password
+                  {intl.formatMessage({
+                    id: 'reset_password',
+                    defaultMessage: 'Reset password'
+                  })}
                 </Button>
               </Form>
             )}
@@ -50,3 +58,5 @@ export default class ForgotPasswordForm extends React.Component<
     );
   }
 }
+
+export default withIntl(ForgotPasswordForm);

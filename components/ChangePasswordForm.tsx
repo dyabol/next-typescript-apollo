@@ -1,20 +1,20 @@
 import { Field, Formik } from 'formik';
 import Router from 'next/router';
 import * as React from 'react';
+import { InjectedIntl } from 'react-intl';
 import { Button, Form } from 'reactstrap';
 import { ChangePasswordComponent } from '../generated/apolloComponents';
+import withIntl from '../lib/withIntl';
 import InputField from './field/InputField';
 
 export interface ChangePasswordFormProps {
   token: string;
+  intl: InjectedIntl;
 }
 
-export default class ChangePasswordForm extends React.Component<
-  ChangePasswordFormProps,
-  {}
-> {
+class ChangePasswordForm extends React.Component<ChangePasswordFormProps, {}> {
   public render() {
-    const { token } = this.props;
+    const { token, intl } = this.props;
     return (
       <ChangePasswordComponent>
         {changePassword => (
@@ -23,8 +23,11 @@ export default class ChangePasswordForm extends React.Component<
             validateOnChange={true}
             validate={values => {
               let errors: { [key: string]: string } = {};
-              if (values.password != values.password_repeat) {
-                errors.password_repeat = 'Hesla se neshodují';
+              if (values.password != values.repeat_password) {
+                errors.repeat_password = intl.formatMessage({
+                  id: 'passwords_do_not_match',
+                  defaultMessage: 'Passwords do not match.'
+                });
               }
               return errors;
             }}
@@ -42,7 +45,7 @@ export default class ChangePasswordForm extends React.Component<
             }}
             initialValues={{
               password: '',
-              password_repeat: ''
+              repeat_password: ''
             }}
           >
             {({ values, handleSubmit }) => (
@@ -55,20 +58,29 @@ export default class ChangePasswordForm extends React.Component<
                   component={InputField}
                   required
                   id="passwordField"
-                  label="Heslo"
+                  label={intl.formatMessage({
+                    id: 'password',
+                    defaultMessage: 'Password'
+                  })}
                 />
                 <Field
-                  name="password_repeat"
+                  name="repeat_password"
                   type="password"
                   placeholder=""
-                  value={values.password_repeat}
+                  value={values.repeat_password}
                   component={InputField}
                   required
-                  id="passwordRepeatField"
-                  label="Heslo znovu"
+                  id="repeatPasswordField"
+                  label={intl.formatMessage({
+                    id: 'repeat_password',
+                    defaultMessage: 'Repeat password'
+                  })}
                 />
                 <Button color="primary" type="submit">
-                  Change password
+                  {intl.formatMessage({
+                    id: 'change_password',
+                    defaultMessage: 'Change password'
+                  })}
                 </Button>
               </Form>
             )}
@@ -78,3 +90,5 @@ export default class ChangePasswordForm extends React.Component<
     );
   }
 }
+
+export default withIntl(ChangePasswordForm);

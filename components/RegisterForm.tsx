@@ -1,17 +1,19 @@
 import { Field, Formik } from 'formik';
 import Router from 'next/router';
 import * as React from 'react';
+import { InjectedIntl } from 'react-intl';
 import { Button, Form } from 'reactstrap';
 import { RegisterComponent } from '../generated/apolloComponents';
+import withIntl from '../lib/withIntl';
 import InputField from './field/InputField';
 
-export interface RegisterFormProps {}
+export interface RegisterFormProps {
+  intl: InjectedIntl;
+}
 
-export default class RegisterForm extends React.Component<
-  RegisterFormProps,
-  {}
-> {
+class RegisterForm extends React.Component<RegisterFormProps, {}> {
   public render() {
+    const { intl } = this.props;
     return (
       <RegisterComponent>
         {register => (
@@ -20,8 +22,11 @@ export default class RegisterForm extends React.Component<
             validateOnChange={true}
             validate={values => {
               let errors: { [key: string]: string } = {};
-              if (values.password != values.password_repeat) {
-                errors.password_repeat = 'Hesla se neshodují';
+              if (values.password != values.repeat_password) {
+                errors.repeat_password = intl.formatMessage({
+                  id: 'passwords_do_not_match',
+                  defaultMessage: 'Passwords do not match.'
+                });
               }
               return errors;
             }}
@@ -60,7 +65,7 @@ export default class RegisterForm extends React.Component<
             initialValues={{
               email: '',
               password: '',
-              password_repeat: '',
+              repeat_password: '',
               firstName: '',
               lastName: ''
             }}
@@ -75,7 +80,10 @@ export default class RegisterForm extends React.Component<
                   required
                   autoFocus
                   id="firstNameField"
-                  label="Jméno"
+                  label={intl.formatMessage({
+                    id: 'first_name',
+                    defaultMessage: 'First name'
+                  })}
                 />
                 <Field
                   name="lastName"
@@ -84,7 +92,10 @@ export default class RegisterForm extends React.Component<
                   component={InputField}
                   required
                   id="lastNameField"
-                  label="Příjmení"
+                  label={intl.formatMessage({
+                    id: 'last_name',
+                    defaultMessage: 'Last name'
+                  })}
                 />
                 <Field
                   name="email"
@@ -94,7 +105,10 @@ export default class RegisterForm extends React.Component<
                   component={InputField}
                   required
                   id="emailField"
-                  label="E-mail"
+                  label={intl.formatMessage({
+                    id: 'email',
+                    defaultMessage: 'E-mail'
+                  })}
                 />
                 <Field
                   name="password"
@@ -104,20 +118,29 @@ export default class RegisterForm extends React.Component<
                   component={InputField}
                   required
                   id="passwordField"
-                  label="Heslo"
+                  label={intl.formatMessage({
+                    id: 'password',
+                    defaultMessage: 'Password'
+                  })}
                 />
                 <Field
-                  name="password_repeat"
+                  name="repeat_password"
                   type="password"
                   placeholder=""
-                  value={values.password_repeat}
+                  value={values.repeat_password}
                   component={InputField}
                   required
-                  id="passwordRepeatField"
-                  label="Heslo znovu"
+                  id="repeatPasswordField"
+                  label={intl.formatMessage({
+                    id: 'repeat_password',
+                    defaultMessage: 'Repeat password'
+                  })}
                 />
                 <Button color="primary" type="submit">
-                  Registrovat
+                  {intl.formatMessage({
+                    id: 'register',
+                    defaultMessage: 'Register'
+                  })}
                 </Button>
               </Form>
             )}
@@ -127,3 +150,5 @@ export default class RegisterForm extends React.Component<
     );
   }
 }
+
+export default withIntl(RegisterForm);

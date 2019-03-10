@@ -2,14 +2,18 @@ import { Field, Formik } from 'formik';
 import Link from 'next/link';
 import Router from 'next/router';
 import * as React from 'react';
+import { InjectedIntl } from 'react-intl';
 import { Button, Form, FormGroup } from 'reactstrap';
 import { LoginComponent, MeQuery } from '../generated/apolloComponents';
 import { meQuery } from '../graphql/user/queries/me';
+import withIntl from '../lib/withIntl';
 import InputField from './field/InputField';
 
-export interface LoginFormProps {}
+export interface LoginFormProps {
+  intl: InjectedIntl;
+}
 
-export default class LoginForm extends React.Component<LoginFormProps, {}> {
+class LoginForm extends React.Component<LoginFormProps, {}> {
   public emailInput = React.createRef<HTMLInputElement>();
 
   constructor(props: LoginFormProps) {
@@ -22,6 +26,7 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
   }
 
   public render() {
+    const { intl } = this.props;
     return (
       <LoginComponent>
         {login => (
@@ -52,7 +57,10 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
               console.log(result);
               if (result && result.data && !result.data.login) {
                 setErrors({
-                  email: 'Bed login or password'
+                  email: intl.formatMessage({
+                    id: 'wrong_email_or_password',
+                    defaultMessage: 'Wrong email or password.'
+                  })
                 });
                 this.focusTextInput();
                 return;
@@ -71,7 +79,10 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
                   component={InputField}
                   required
                   id="emailField"
-                  label="E-mail"
+                  label={intl.formatMessage({
+                    id: 'email',
+                    defaultMessage: 'E-mail'
+                  })}
                   autoFocus
                 />
                 <Field
@@ -82,15 +93,26 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
                   component={InputField}
                   required
                   id="passwordField"
-                  label="Heslo"
+                  label={intl.formatMessage({
+                    id: 'password',
+                    defaultMessage: 'Password'
+                  })}
                 />
                 <FormGroup>
                   <Link href="/forgot-password">
-                    <a>Forgot password</a>
+                    <a>
+                      {intl.formatMessage({
+                        id: 'forgot_password',
+                        defaultMessage: 'Forgot password'
+                      })}
+                    </a>
                   </Link>
                 </FormGroup>
                 <Button color="primary" type="submit">
-                  Přihlásit
+                  {intl.formatMessage({
+                    id: 'login',
+                    defaultMessage: 'Login'
+                  })}
                 </Button>
               </Form>
             )}
@@ -100,3 +122,5 @@ export default class LoginForm extends React.Component<LoginFormProps, {}> {
     );
   }
 }
+
+export default withIntl(LoginForm);

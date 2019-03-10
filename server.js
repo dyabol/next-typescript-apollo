@@ -50,8 +50,7 @@ app.prepare().then(() => {
       accept.language(accept.languages(supportedLanguages)) || 'en';
     req.locale = locale;
     req.localeDataScript = getLocaleDataScript(locale);
-    //req.messages = dev ? {} : getMessages(locale);
-    req.messages = getMessages(locale);
+    req.messages = dev ? {} : getMessages(locale);
     return req;
   };
 

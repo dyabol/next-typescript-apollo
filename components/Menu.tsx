@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { InjectedIntl } from 'react-intl';
 import {
   Collapse,
   Nav,
@@ -8,15 +9,18 @@ import {
   NavItem
 } from 'reactstrap';
 import { MeComponent } from '../generated/apolloComponents';
+import withIntl from '../lib/withIntl';
 import MenuLink from './MenuLink';
 
-export interface MenuProps {}
+export interface MenuProps {
+  intl: InjectedIntl;
+}
 
 export interface MenuState {
   isOpen: boolean;
 }
 
-export default class Menu extends React.Component<MenuProps, MenuState> {
+class Menu extends React.Component<MenuProps, MenuState> {
   constructor(props: MenuProps) {
     super(props);
 
@@ -31,6 +35,7 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
     });
   }
   public render() {
+    const { intl } = this.props;
     return (
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">reactstrap</NavbarBrand>
@@ -39,7 +44,10 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
           <Nav className="ml-auto" navbar>
             <NavItem>
               <MenuLink prefetch={true} href="/">
-                Home
+                {intl.formatMessage({
+                  id: 'home',
+                  defaultMessage: 'Home'
+                })}
               </MenuLink>
             </NavItem>
             <NavItem>
@@ -47,11 +55,19 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
                 href={{ pathname: '/post', query: { slug: 'something' } }}
                 as="/post/something"
               >
-                Post
+                {intl.formatMessage({
+                  id: 'posts',
+                  defaultMessage: 'Posts'
+                })}
               </MenuLink>
             </NavItem>
             <NavItem>
-              <MenuLink href="/hello">Hello</MenuLink>
+              <MenuLink href="/hello">
+                {intl.formatMessage({
+                  id: 'hello',
+                  defaultMessage: 'Hello'
+                })}
+              </MenuLink>
             </NavItem>
             <MeComponent>
               {({ data, loading }) => {
@@ -63,7 +79,10 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
                           className="btn btn-primary ml-3"
                           href="/login"
                         >
-                          Login
+                          {intl.formatMessage({
+                            id: 'login',
+                            defaultMessage: 'Login'
+                          })}
                         </MenuLink>
                       </NavItem>
                       <NavItem>
@@ -71,7 +90,10 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
                           className="btn btn-secondary ml-3"
                           href="/register"
                         >
-                          Register
+                          {intl.formatMessage({
+                            id: 'registration',
+                            defaultMessage: 'Registration'
+                          })}
                         </MenuLink>
                       </NavItem>
                     </>
@@ -80,7 +102,10 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
                 return (
                   <NavItem>
                     <MenuLink className="btn btn-secondary ml-3" href="/logout">
-                      Logout
+                      {intl.formatMessage({
+                        id: 'logout',
+                        defaultMessage: 'Logout'
+                      })}
                     </MenuLink>
                   </NavItem>
                 );
@@ -92,3 +117,5 @@ export default class Menu extends React.Component<MenuProps, MenuState> {
     );
   }
 }
+
+export default withIntl(Menu);
