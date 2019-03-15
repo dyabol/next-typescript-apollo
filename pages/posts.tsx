@@ -43,12 +43,20 @@ class Posts extends React.Component<Props, {}> {
                     <header>
                       <h2 className="post-title">{post.title}</h2>
                     </header>
-                    <div className="post-content">{post.content}</div>
+                    <div
+                      className="post-content"
+                      dangerouslySetInnerHTML={{ __html: post.content }}
+                    />
                     <Link
                       href={{ pathname: '/post', query: { slug: post.slug } }}
                       as={'/post/' + post.slug}
                     >
-                      <a>Detail</a>
+                      <a>
+                        {intl.formatMessage({
+                          id: 'detail',
+                          defaultMessage: 'Detail'
+                        })}
+                      </a>
                     </Link>
                     <footer>
                       <FormattedMessage

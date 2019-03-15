@@ -18,6 +18,16 @@ export interface PostInput {
   user: number;
 }
 
+export interface EditPostInput {
+  id: string;
+
+  title: string;
+
+  slug: string;
+
+  content: string;
+}
+
 export interface ChangePasswordInput {
   password: string;
 
@@ -34,6 +44,14 @@ export interface RegisterInput {
   email: string;
 }
 
+export interface UserMetaInput {
+  key: string;
+
+  value: string;
+
+  userId: string;
+}
+
 /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
 export type DateTime = any;
 
@@ -43,6 +61,168 @@ export type Upload = any;
 // ====================================================
 // Documents
 // ====================================================
+
+export type CreatePostVariables = {
+  data: PostInput;
+};
+
+export type CreatePostMutation = {
+  __typename?: "Mutation";
+
+  createPost: CreatePostCreatePost;
+};
+
+export type CreatePostCreatePost = {
+  __typename?: "Post";
+
+  id: string;
+
+  title: string;
+
+  slug: string;
+
+  content: string;
+};
+
+export type EditPostVariables = {
+  data: EditPostInput;
+};
+
+export type EditPostMutation = {
+  __typename?: "Mutation";
+
+  editPost: EditPostEditPost;
+};
+
+export type EditPostEditPost = {
+  __typename?: "Post";
+
+  id: string;
+
+  title: string;
+
+  slug: string;
+
+  content: string;
+};
+
+export type PostByIdVariables = {
+  id: string;
+};
+
+export type PostByIdQuery = {
+  __typename?: "Query";
+
+  post: PostByIdPost;
+};
+
+export type PostByIdPost = {
+  __typename?: "Post";
+
+  id: string;
+
+  slug: string;
+
+  title: string;
+
+  content: string;
+
+  createdAt: DateTime;
+
+  updatedAt: DateTime;
+
+  user: PostByIdUser;
+};
+
+export type PostByIdUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  fullName: string;
+
+  email: string;
+};
+
+export type PostBySlugVariables = {
+  slug: string;
+};
+
+export type PostBySlugQuery = {
+  __typename?: "Query";
+
+  post: PostBySlugPost;
+};
+
+export type PostBySlugPost = {
+  __typename?: "Post";
+
+  id: string;
+
+  slug: string;
+
+  title: string;
+
+  content: string;
+
+  createdAt: DateTime;
+
+  updatedAt: DateTime;
+
+  user: PostBySlugUser;
+};
+
+export type PostBySlugUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  fullName: string;
+
+  email: string;
+};
+
+export type PostsVariables = {};
+
+export type PostsQuery = {
+  __typename?: "Query";
+
+  posts: PostsPosts[];
+};
+
+export type PostsPosts = {
+  __typename?: "Post";
+
+  id: string;
+
+  slug: string;
+
+  title: string;
+
+  content: string;
+
+  createdAt: DateTime;
+
+  updatedAt: DateTime;
+
+  user: PostsUser;
+};
+
+export type PostsUser = {
+  __typename?: "User";
+
+  id: string;
+
+  fullName: string;
+};
 
 export type ChangePasswordVariables = {
   data: ChangePasswordInput;
@@ -171,116 +351,21 @@ export type MeMe = {
   fullName: string;
 };
 
-export type PostByIdVariables = {
-  id: number;
+export type AddUserRoleVariables = {
+  userId: string;
+  role: string;
 };
 
-export type PostByIdQuery = {
-  __typename?: "Query";
+export type AddUserRoleMutation = {
+  __typename?: "Mutation";
 
-  post: PostByIdPost;
+  createUserMeta: AddUserRoleCreateUserMeta;
 };
 
-export type PostByIdPost = {
-  __typename?: "Post";
+export type AddUserRoleCreateUserMeta = {
+  __typename?: "UserMeta";
 
   id: string;
-
-  slug: string;
-
-  title: string;
-
-  content: string;
-
-  createdAt: DateTime;
-
-  upadatedAt: DateTime;
-
-  user: PostByIdUser;
-};
-
-export type PostByIdUser = {
-  __typename?: "User";
-
-  id: string;
-
-  firstName: string;
-
-  lastName: string;
-
-  fullName: string;
-
-  email: string;
-};
-
-export type PostBySlugVariables = {
-  slug: string;
-};
-
-export type PostBySlugQuery = {
-  __typename?: "Query";
-
-  post: PostBySlugPost;
-};
-
-export type PostBySlugPost = {
-  __typename?: "Post";
-
-  id: string;
-
-  slug: string;
-
-  title: string;
-
-  content: string;
-
-  createdAt: DateTime;
-
-  upadatedAt: DateTime;
-
-  user: PostBySlugUser;
-};
-
-export type PostBySlugUser = {
-  __typename?: "User";
-
-  id: string;
-
-  firstName: string;
-
-  lastName: string;
-
-  fullName: string;
-
-  email: string;
-};
-
-export type PostsVariables = {};
-
-export type PostsQuery = {
-  __typename?: "Query";
-
-  posts: PostsPosts[];
-};
-
-export type PostsPosts = {
-  __typename?: "Post";
-
-  id: string;
-
-  slug: string;
-
-  title: string;
-
-  content: string;
-
-  user: PostsUser;
-};
-
-export type PostsUser = {
-  __typename?: "User";
-
-  fullName: string;
 };
 
 import gql from "graphql-tag";
@@ -291,6 +376,253 @@ import * as ReactApollo from "react-apollo";
 // Components
 // ====================================================
 
+export const CreatePostDocument = gql`
+  mutation CreatePost($data: PostInput!) {
+    createPost(data: $data) {
+      id
+      title
+      slug
+      content
+    }
+  }
+`;
+export class CreatePostComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<CreatePostMutation, CreatePostVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<CreatePostMutation, CreatePostVariables>
+        mutation={CreatePostDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type CreatePostProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<CreatePostMutation, CreatePostVariables>
+> &
+  TChildProps;
+export type CreatePostMutationFn = ReactApollo.MutationFn<
+  CreatePostMutation,
+  CreatePostVariables
+>;
+export function CreatePostHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        CreatePostMutation,
+        CreatePostVariables,
+        CreatePostProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    CreatePostMutation,
+    CreatePostVariables,
+    CreatePostProps<TChildProps>
+  >(CreatePostDocument, operationOptions);
+}
+export const EditPostDocument = gql`
+  mutation EditPost($data: EditPostInput!) {
+    editPost(data: $data) {
+      id
+      title
+      slug
+      content
+    }
+  }
+`;
+export class EditPostComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<EditPostMutation, EditPostVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<EditPostMutation, EditPostVariables>
+        mutation={EditPostDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type EditPostProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<EditPostMutation, EditPostVariables>
+> &
+  TChildProps;
+export type EditPostMutationFn = ReactApollo.MutationFn<
+  EditPostMutation,
+  EditPostVariables
+>;
+export function EditPostHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        EditPostMutation,
+        EditPostVariables,
+        EditPostProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    EditPostMutation,
+    EditPostVariables,
+    EditPostProps<TChildProps>
+  >(EditPostDocument, operationOptions);
+}
+export const PostByIdDocument = gql`
+  query PostById($id: ID!) {
+    post(id: $id) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+      user {
+        id
+        firstName
+        lastName
+        fullName
+        email
+      }
+    }
+  }
+`;
+export class PostByIdComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<PostByIdQuery, PostByIdVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<PostByIdQuery, PostByIdVariables>
+        query={PostByIdDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type PostByIdProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<PostByIdQuery, PostByIdVariables>
+> &
+  TChildProps;
+export function PostByIdHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        PostByIdQuery,
+        PostByIdVariables,
+        PostByIdProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    PostByIdQuery,
+    PostByIdVariables,
+    PostByIdProps<TChildProps>
+  >(PostByIdDocument, operationOptions);
+}
+export const PostBySlugDocument = gql`
+  query PostBySlug($slug: String!) {
+    post(slug: $slug) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+      user {
+        id
+        firstName
+        lastName
+        fullName
+        email
+      }
+    }
+  }
+`;
+export class PostBySlugComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<PostBySlugQuery, PostBySlugVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<PostBySlugQuery, PostBySlugVariables>
+        query={PostBySlugDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type PostBySlugProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<PostBySlugQuery, PostBySlugVariables>
+> &
+  TChildProps;
+export function PostBySlugHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        PostBySlugQuery,
+        PostBySlugVariables,
+        PostBySlugProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    PostBySlugQuery,
+    PostBySlugVariables,
+    PostBySlugProps<TChildProps>
+  >(PostBySlugDocument, operationOptions);
+}
+export const PostsDocument = gql`
+  query Posts {
+    posts {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+      user {
+        id
+        fullName
+      }
+    }
+  }
+`;
+export class PostsComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<PostsQuery, PostsVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<PostsQuery, PostsVariables>
+        query={PostsDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type PostsProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<PostsQuery, PostsVariables>
+> &
+  TChildProps;
+export function PostsHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        PostsQuery,
+        PostsVariables,
+        PostsProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    PostsQuery,
+    PostsVariables,
+    PostsProps<TChildProps>
+  >(PostsDocument, operationOptions);
+}
 export const ChangePasswordDocument = gql`
   mutation ChangePassword($data: ChangePasswordInput!) {
     changePassword(data: $data) {
@@ -645,153 +977,47 @@ export function MeHOC<TProps, TChildProps = any>(
     MeProps<TChildProps>
   >(MeDocument, operationOptions);
 }
-export const PostByIdDocument = gql`
-  query PostById($id: Int!) {
-    post(id: $id) {
+export const AddUserRoleDocument = gql`
+  mutation AddUserRole($userId: ID!, $role: String!) {
+    createUserMeta(data: { userId: $userId, value: $role, key: "role" }) {
       id
-      slug
-      title
-      content
-      createdAt
-      upadatedAt
-      user {
-        id
-        firstName
-        lastName
-        fullName
-        email
-      }
     }
   }
 `;
-export class PostByIdComponent extends React.Component<
-  Partial<ReactApollo.QueryProps<PostByIdQuery, PostByIdVariables>>
+export class AddUserRoleComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<AddUserRoleMutation, AddUserRoleVariables>>
 > {
   render() {
     return (
-      <ReactApollo.Query<PostByIdQuery, PostByIdVariables>
-        query={PostByIdDocument}
+      <ReactApollo.Mutation<AddUserRoleMutation, AddUserRoleVariables>
+        mutation={AddUserRoleDocument}
         {...(this as any)["props"] as any}
       />
     );
   }
 }
-export type PostByIdProps<TChildProps = any> = Partial<
-  ReactApollo.DataProps<PostByIdQuery, PostByIdVariables>
+export type AddUserRoleProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<AddUserRoleMutation, AddUserRoleVariables>
 > &
   TChildProps;
-export function PostByIdHOC<TProps, TChildProps = any>(
+export type AddUserRoleMutationFn = ReactApollo.MutationFn<
+  AddUserRoleMutation,
+  AddUserRoleVariables
+>;
+export function AddUserRoleHOC<TProps, TChildProps = any>(
   operationOptions:
     | ReactApollo.OperationOption<
         TProps,
-        PostByIdQuery,
-        PostByIdVariables,
-        PostByIdProps<TChildProps>
+        AddUserRoleMutation,
+        AddUserRoleVariables,
+        AddUserRoleProps<TChildProps>
       >
     | undefined
 ) {
   return ReactApollo.graphql<
     TProps,
-    PostByIdQuery,
-    PostByIdVariables,
-    PostByIdProps<TChildProps>
-  >(PostByIdDocument, operationOptions);
-}
-export const PostBySlugDocument = gql`
-  query PostBySlug($slug: String!) {
-    post(slug: $slug) {
-      id
-      slug
-      title
-      content
-      createdAt
-      upadatedAt
-      user {
-        id
-        firstName
-        lastName
-        fullName
-        email
-      }
-    }
-  }
-`;
-export class PostBySlugComponent extends React.Component<
-  Partial<ReactApollo.QueryProps<PostBySlugQuery, PostBySlugVariables>>
-> {
-  render() {
-    return (
-      <ReactApollo.Query<PostBySlugQuery, PostBySlugVariables>
-        query={PostBySlugDocument}
-        {...(this as any)["props"] as any}
-      />
-    );
-  }
-}
-export type PostBySlugProps<TChildProps = any> = Partial<
-  ReactApollo.DataProps<PostBySlugQuery, PostBySlugVariables>
-> &
-  TChildProps;
-export function PostBySlugHOC<TProps, TChildProps = any>(
-  operationOptions:
-    | ReactApollo.OperationOption<
-        TProps,
-        PostBySlugQuery,
-        PostBySlugVariables,
-        PostBySlugProps<TChildProps>
-      >
-    | undefined
-) {
-  return ReactApollo.graphql<
-    TProps,
-    PostBySlugQuery,
-    PostBySlugVariables,
-    PostBySlugProps<TChildProps>
-  >(PostBySlugDocument, operationOptions);
-}
-export const PostsDocument = gql`
-  query Posts {
-    posts {
-      id
-      slug
-      title
-      content
-      user {
-        fullName
-      }
-    }
-  }
-`;
-export class PostsComponent extends React.Component<
-  Partial<ReactApollo.QueryProps<PostsQuery, PostsVariables>>
-> {
-  render() {
-    return (
-      <ReactApollo.Query<PostsQuery, PostsVariables>
-        query={PostsDocument}
-        {...(this as any)["props"] as any}
-      />
-    );
-  }
-}
-export type PostsProps<TChildProps = any> = Partial<
-  ReactApollo.DataProps<PostsQuery, PostsVariables>
-> &
-  TChildProps;
-export function PostsHOC<TProps, TChildProps = any>(
-  operationOptions:
-    | ReactApollo.OperationOption<
-        TProps,
-        PostsQuery,
-        PostsVariables,
-        PostsProps<TChildProps>
-      >
-    | undefined
-) {
-  return ReactApollo.graphql<
-    TProps,
-    PostsQuery,
-    PostsVariables,
-    PostsProps<TChildProps>
-  >(PostsDocument, operationOptions);
+    AddUserRoleMutation,
+    AddUserRoleVariables,
+    AddUserRoleProps<TChildProps>
+  >(AddUserRoleDocument, operationOptions);
 }

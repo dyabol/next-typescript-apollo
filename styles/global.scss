@@ -7,3 +7,28 @@
 .content {
   flex: 1;
 }
+
+.editor-wrapper {
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+
+  .editor-toolbar {
+    background: #fff;
+    border: 0;
+    border-bottom: 1px solid #ced4da;
+  }
+
+  .editor-content {
+    margin: 0 1rem;
+
+    .public-DraftEditor-content {
+      min-height: 20rem;
+    }
+  }
+}
+
+.post-saved {
+  .hide {
+    cursor: pointer;
+  }
+}

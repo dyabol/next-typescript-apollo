@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import {
   ConfirmUserMutation,
   ConfirmUserVariables
@@ -31,6 +32,11 @@ export default class Confirm extends React.Component<Props, {}> {
   }
 
   public render() {
-    return 'Something went wrong.';
+    return (
+      <FormattedMessage
+        id="something_went_wrong"
+        defaultMessage="Something went wrong."
+      />
+    );
   }
 }

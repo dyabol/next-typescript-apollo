@@ -4,7 +4,7 @@ import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Layout from '../containers/Layout';
 import { PostBySlugProps } from '../generated/apolloComponents';
-import { postBySlugQuery } from '../graphql/user/queries/postBySlug';
+import { postBySlugQuery } from '../graphql/post/queries/postBySlug';
 import Context from '../interfaces/Context';
 import withIntl from '../lib/withIntl';
 
@@ -29,7 +29,7 @@ class Post extends React.Component<Props, {}> {
   }
 
   public render() {
-    const { intl, id, user, title, content } = this.props;
+    const { id, user, title, content, intl } = this.props;
     return (
       <Layout>
         <Breadcrumb>
@@ -60,7 +60,10 @@ class Post extends React.Component<Props, {}> {
             <header>
               <h1 className="post-title">{title}</h1>
             </header>
-            <div className="post-content">{content}</div>
+            <div
+              className="post-content"
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
             <footer>
               <FormattedMessage
                 id="post_author"

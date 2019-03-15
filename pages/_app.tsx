@@ -2,6 +2,7 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { addLocaleData, IntlProvider } from 'react-intl';
+import '../lib/icons';
 import withApollo from '../lib/withApollo';
 import '../styles/bootstrap.scss';
 import '../styles/global.scss';

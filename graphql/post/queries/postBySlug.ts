@@ -8,7 +8,7 @@ export const postBySlugQuery = gql`
       title
       content
       createdAt
-      upadatedAt
+      updatedAt
       user {
         id
         firstName

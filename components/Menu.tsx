@@ -38,7 +38,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
     const { intl } = this.props;
     return (
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">reactstrap</NavbarBrand>
+        <NavbarBrand>reactstrap</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
@@ -98,6 +98,12 @@ class Menu extends React.Component<MenuProps, MenuState> {
                 }
                 return (
                   <NavItem>
+                    <MenuLink className="btn btn-primary ml-3" href="/admin">
+                      {intl.formatMessage({
+                        id: 'administration',
+                        defaultMessage: 'Administration'
+                      })}
+                    </MenuLink>
                     <MenuLink className="btn btn-secondary ml-3" href="/logout">
                       {intl.formatMessage({
                         id: 'logout',

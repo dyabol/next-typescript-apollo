@@ -50,13 +50,19 @@ app.prepare().then(() => {
       accept.language(accept.languages(supportedLanguages)) || 'en';
     req.locale = locale;
     req.localeDataScript = getLocaleDataScript(locale);
-    req.messages = dev ? {} : getMessages(locale);
+    req.messages = /*dev ? {} :*/ getMessages(locale);
     return req;
   };
 
   server.get('/post/:slug', (req, res) => {
     return app.render(addLocaleSupport(req), res, '/post', {
       slug: req.params.slug
+    });
+  });
+
+  server.get('/admin/edit-post/:id', (req, res) => {
+    return app.render(addLocaleSupport(req), res, '/admin/edit-post', {
+      id: req.params.id
     });
   });
 
