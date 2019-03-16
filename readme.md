@@ -1,6 +1,6 @@
-#TypeQL - client
+# TypeQL - client
 
-##TODO
+## TODO
 
 - Paging
 - Delete
