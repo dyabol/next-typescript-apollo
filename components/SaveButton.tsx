@@ -17,7 +17,7 @@ export default class SaveButton extends React.Component<Props, State> {
       return (
         <Button color="success" disabled>
           <FontAwesomeIcon className="mr-2" icon="check" />
-          <FormattedMessage id="complete" defaultMessage="Complete" />
+          <FormattedMessage id="saved" defaultMessage="Saved" />
         </Button>
       );
     } else if (loading) {

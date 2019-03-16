@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import Router from 'next/router';
 import React from 'react';
 import { FormattedMessage, FormattedRelative } from 'react-intl';
 import { Button, Table } from 'reactstrap';
@@ -13,6 +14,9 @@ const HeadRow = () => (
   <tr>
     <th>
       <FormattedMessage id="title" defaultMessage="Title" />
+    </th>
+    <th>
+      <FormattedMessage id="slug" defaultMessage="Slug" />
     </th>
     <th>
       <FormattedMessage id="author" defaultMessage="Author" />
@@ -31,7 +35,11 @@ class Posts extends React.Component<Props, {}> {
     return (
       <Layout>
         <FormattedMessage tagName="h1" id="posts" defaultMessage="Posts" />
-        <Button className="mr-3 mt-3 mb-3" color="primary">
+        <Button
+          className="mr-3 mt-3 mb-3"
+          color="primary"
+          onClick={() => Router.push('/admin/new-post')}
+        >
           <FontAwesomeIcon className="mr-2" icon="plus" />
           <FormattedMessage id="new_post" defaultMessage="New post" />
         </Button>
@@ -52,6 +60,7 @@ class Posts extends React.Component<Props, {}> {
                         <a>{post.title}</a>
                       </Link>
                     </td>
+                    <td>{post.slug}</td>
                     <td>{post.user.fullName}</td>
                     <td>
                       <FormattedRelative value={post.createdAt} />{' '}

@@ -38,5 +38,8 @@
   "updated": "Upraveno",
   "complete": "Hotovo",
   "post_saved": "Příspěvek uložen.",
-  "loading": "Načítám"
+  "saved": "Uloženo",
+  "loading": "Načítám",
+  "error": "Chyba",
+  "detail": "Detail"
 }

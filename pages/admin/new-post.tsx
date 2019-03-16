@@ -5,34 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import Button from 'reactstrap/lib/Button';
 import PostForm, { FuncInput } from '../../components/admin/PostForm';
 import Layout from '../../containers/admin/Layout';
-import {
-  EditPostComponent,
-  PostByIdPost
-} from '../../generated/apolloComponents';
-import { postByIdQuery } from '../../graphql/post/queries/postById';
-import Context from '../../interfaces/Context';
+import { CreatePostComponent } from '../../generated/apolloComponents';
 
-export type Props = {} & PostByIdPost;
+export type Props = {};
 
 export type State = {};
 
-class EditPost extends React.Component<Props, State> {
-  static async getInitialProps({ apolloClient, query: { id } }: Context) {
-    const post = await apolloClient.query({
-      query: postByIdQuery,
-      variables: { id }
-    });
-    if (!post || post.loading || !post.data) {
-      return {};
-    }
-    return {
-      id,
-      ...post.data.post
-    };
-  }
-
+class NewPost extends React.Component<Props, State> {
   render() {
-    const { id, title, content, slug } = this.props;
     return (
       <Layout>
         <Button
@@ -45,18 +25,17 @@ class EditPost extends React.Component<Props, State> {
           <FontAwesomeIcon className="mr-2" icon="angle-left" />
           <FormattedMessage id="back" defaultMessage="Back" />
         </Button>
-        <EditPostComponent>
-          {editPost => (
+        <CreatePostComponent>
+          {createPost => (
             <PostForm
-              slug={slug}
-              title={title}
-              content={content}
-              id={id}
+              slug=""
+              title=""
+              content=""
+              id=""
               func={(values: FuncInput) => {
-                return editPost({
+                return createPost({
                   variables: {
                     data: {
-                      id: this.props.id,
                       ...values
                     }
                   }
@@ -64,10 +43,10 @@ class EditPost extends React.Component<Props, State> {
               }}
             />
           )}
-        </EditPostComponent>
+        </CreatePostComponent>
       </Layout>
     );
   }
 }
 
-export default EditPost;
+export default NewPost;

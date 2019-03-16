@@ -38,5 +38,8 @@
   "updated": "Updated",
   "complete": "Completes",
   "post_saved": "Post saved.",
-  "loading": "Loading"
+  "saved": "Saved",
+  "loading": "Loading",
+  "error": "Error",
+  "detail": "Detail"
 }

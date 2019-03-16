@@ -8,14 +8,12 @@ export interface PageInput {
   content: string;
 }
 
-export interface PostInput {
+export interface CreatePostInput {
   title: string;
 
   slug: string;
 
   content: string;
-
-  user: number;
 }
 
 export interface EditPostInput {
@@ -63,7 +61,7 @@ export type Upload = any;
 // ====================================================
 
 export type CreatePostVariables = {
-  data: PostInput;
+  data: CreatePostInput;
 };
 
 export type CreatePostMutation = {
@@ -377,7 +375,7 @@ import * as ReactApollo from "react-apollo";
 // ====================================================
 
 export const CreatePostDocument = gql`
-  mutation CreatePost($data: PostInput!) {
+  mutation CreatePost($data: CreatePostInput!) {
     createPost(data: $data) {
       id
       title

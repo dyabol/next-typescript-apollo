@@ -8,6 +8,8 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
+//config.autoAddCss = false;
+
 library.add(faPlus);
 library.add(faSave);
 library.add(faAngleLeft);
