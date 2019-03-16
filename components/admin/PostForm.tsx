@@ -1,4 +1,3 @@
-import { FetchResult } from 'apollo-link';
 import { Field, Formik, FormikActions } from 'formik';
 import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
@@ -7,33 +6,28 @@ import MyEditor from '../../components/Editor';
 import ErrorAlert from '../../components/ErrorAlert';
 import InputField from '../../components/field/InputField';
 import SaveButton from '../../components/SaveButton';
-import { EditPostMutation } from '../../generated/apolloComponents';
+import {
+  CreatePostMutation,
+  EditPostMutation
+} from '../../generated/apolloComponents';
 import { parseGraphQlValidationError } from '../../lib/error';
 import withIntl from '../../lib/withIntl';
 
-export type FuncInput = {
-  title: string;
-  slug: string;
-  content: string;
+export type Result = {
+  data: EditPostMutation | CreatePostMutation;
 };
 
-export type Fields = {
+export interface EditorProps {
   title: string;
   content: string;
   slug: string;
-};
+}
 
-export type Props = {
+export interface Props extends EditorProps {
   intl: InjectedIntl;
-  id: string;
-  func: (
-    values: FuncInput
-  ) => Promise<void | FetchResult<
-    EditPostMutation,
-    Record<string, any>,
-    Record<string, any>
-  >>;
-} & Fields;
+  onSave?: (values: any) => void;
+  save: (values: EditorProps) => Result;
+}
 
 export type State = {
   loading: boolean;
@@ -78,16 +72,21 @@ class PostForm extends React.Component<Props, State> {
     });
   }
 
-  async onSubmitHandler(values: Fields, { setErrors }: FormikActions<Fields>) {
-    const { intl, func } = this.props;
+  async onSubmitHandler(
+    values: EditorProps,
+    { setErrors }: FormikActions<EditorProps>
+  ) {
+    const { intl, save, onSave } = this.props;
     this.setLoading();
     try {
-      const result = await func(values);
+      const result = await save(values);
       if (result && result.data) {
         this.setComplete();
+        if (onSave) {
+          onSave(result.data);
+        }
       } else {
-        this.setIdle();
-        this.showError(
+        throw new Error(
           intl.formatMessage({
             id: 'something_went_wrong',
             defaultMessage: 'Something went wrong.'

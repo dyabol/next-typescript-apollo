@@ -38,7 +38,7 @@ class Posts extends React.Component<Props, {}> {
         <Button
           className="mr-3 mt-3 mb-3"
           color="primary"
-          onClick={() => Router.push('/admin/new-post')}
+          onClick={() => Router.push('/admin/post')}
         >
           <FontAwesomeIcon className="mr-2" icon="plus" />
           <FormattedMessage id="new_post" defaultMessage="New post" />
@@ -52,10 +52,10 @@ class Posts extends React.Component<Props, {}> {
                     <td>
                       <Link
                         href={{
-                          pathname: '/admin/edit-post',
+                          pathname: '/admin/post',
                           query: { id: post.id }
                         }}
-                        as={'/admin/edit-post/' + post.id}
+                        as={'/admin/post/' + post.id}
                       >
                         <a>{post.title}</a>
                       </Link>

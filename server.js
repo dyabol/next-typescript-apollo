@@ -60,8 +60,8 @@ app.prepare().then(() => {
     });
   });
 
-  server.get('/admin/edit-post/:id', (req, res) => {
-    return app.render(addLocaleSupport(req), res, '/admin/edit-post', {
+  server.get('/admin/post/:id', (req, res) => {
+    return app.render(addLocaleSupport(req), res, '/admin/post', {
       id: req.params.id
     });
   });
