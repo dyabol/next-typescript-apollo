@@ -27,9 +27,7 @@ export interface State extends EditorProps {
 class EditPost extends React.Component<Props, State> {
   static async getInitialProps({ apolloClient, query: { id } }: Context) {
     if (!id) {
-      return {
-        id: null
-      };
+      return {};
     }
     const post = await apolloClient.query({
       query: postByIdQuery,
@@ -39,7 +37,6 @@ class EditPost extends React.Component<Props, State> {
       return {};
     }
     return {
-      id,
       ...post.data.post
     };
   }
