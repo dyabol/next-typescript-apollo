@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import Menu from '../../components/admin/Menu';
 import Sidebar from '../../components/admin/Sidebar';
-import Footer from '../../components/Footer';
 import Loading from '../../components/Loading';
 import { MeComponent } from '../../generated/apolloComponents';
 
@@ -34,7 +33,7 @@ export default class Layout extends React.Component<Props, {}> {
         {({ data }) =>
           data && data.me ? (
             <>
-              <div className="content">
+              <div className="content d-flex flex-column admin">
                 <Head>
                   <title>{this.getTitle()}</title>
                   <meta
@@ -44,16 +43,15 @@ export default class Layout extends React.Component<Props, {}> {
                   />
                 </Head>
                 <Menu />
-                <Container className="pt-3" fluid={true}>
-                  <Row>
-                    <Col xs={'auto'}>
+                <Container className="flex-grow-1 d-flex" fluid={true}>
+                  <Row className="flex-grow-1">
+                    <Col className="p-0 admin-side-bar" xs={'auto'}>
                       <Sidebar />
                     </Col>
-                    <Col>{children}</Col>
+                    <Col className="pt-3">{children}</Col>
                   </Row>
                 </Container>
               </div>
-              <Footer />
             </>
           ) : (
             <Loading />

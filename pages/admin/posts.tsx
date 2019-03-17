@@ -2,15 +2,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import Router from 'next/router';
 import React from 'react';
-import { FormattedMessage, FormattedRelative } from 'react-intl';
+import { FormattedMessage, FormattedRelative, InjectedIntl } from 'react-intl';
 import { Button, Table } from 'reactstrap';
 import PostsPagination from '../../components/admin/Pagination';
 import PostsTableHeader from '../../components/admin/PostsTableHeader';
 import Loading from '../../components/Loading';
 import Layout from '../../containers/admin/Layout';
 import { PostsComponent } from '../../generated/apolloComponents';
+import withIntl from '../../lib/withIntl';
 
-export type Props = {};
+export type Props = {
+  intl: InjectedIntl;
+};
 export type Stats = {
   skip: number;
   take: number;
@@ -26,9 +29,15 @@ class Posts extends React.Component<Props, Stats> {
   }
 
   render() {
+    const { intl } = this.props;
+    const title = intl.formatMessage({
+      id: 'posts',
+      defaultMessage: 'Posts'
+    });
+
     return (
-      <Layout>
-        <FormattedMessage tagName="h1" id="posts" defaultMessage="Posts" />
+      <Layout title={title}>
+        <h1>{title}</h1>
         <Button
           className="mr-3 mt-3 mb-3"
           color="primary"
@@ -96,4 +105,4 @@ class Posts extends React.Component<Props, Stats> {
   }
 }
 
-export default Posts;
+export default withIntl(Posts);

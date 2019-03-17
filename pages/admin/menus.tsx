@@ -7,12 +7,12 @@ export type Props = {
   intl: InjectedIntl;
 };
 
-class Index extends React.Component<Props, {}> {
+class Menus extends React.Component<Props, {}> {
   render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
-      id: 'main',
-      defaultMessage: 'Main'
+      id: 'menus',
+      defaultMessage: 'Menus'
     });
 
     return (
@@ -24,4 +24,4 @@ class Index extends React.Component<Props, {}> {
   }
 }
 
-export default withIntl(Index);
+export default withIntl(Menus);

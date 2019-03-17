@@ -1,3 +1,5 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { RouterProps, UrlLike, withRouter } from 'next/router';
 
@@ -8,10 +10,11 @@ type Props = {
   router: RouterProps;
   as?: string;
   prefetch?: boolean;
+  icon?: IconProp;
 };
 
 function MenuLink(props: Props) {
-  const { className, children, router } = props;
+  const { className, children, router, icon } = props;
   const classes = className ? className : 'nav-link';
   const pathname = props.as ? props.as : props.href;
   const linkClass =
@@ -19,7 +22,10 @@ function MenuLink(props: Props) {
 
   return (
     <Link href={props.href} as={props.as} prefetch={props.prefetch}>
-      <a className={linkClass}>{children}</a>
+      <a className={linkClass}>
+        {icon && <FontAwesomeIcon className="mr-2" icon={icon} />}
+        {children}
+      </a>
     </Link>
   );
 }

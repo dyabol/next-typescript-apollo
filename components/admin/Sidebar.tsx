@@ -20,7 +20,7 @@ class Sidebar extends React.Component<SidebarProps, any> {
       <Container>
         <Nav vertical>
           <NavItem>
-            <MenuLink href="/admin">
+            <MenuLink href="/admin" icon="home">
               {intl.formatMessage({
                 id: 'main',
                 defaultMessage: 'Main'
@@ -28,10 +28,42 @@ class Sidebar extends React.Component<SidebarProps, any> {
             </MenuLink>
           </NavItem>
           <NavItem>
-            <MenuLink href="/admin/posts">
+            <MenuLink href="/admin/posts" icon="pencil-alt">
               {intl.formatMessage({
                 id: 'posts',
                 defaultMessage: 'Posts'
+              })}
+            </MenuLink>
+          </NavItem>
+          <NavItem>
+            <MenuLink href="/admin/pages" icon="file-alt">
+              {intl.formatMessage({
+                id: 'pages',
+                defaultMessage: 'Pages'
+              })}
+            </MenuLink>
+          </NavItem>
+          <NavItem>
+            <MenuLink href="/admin/menus" icon="compass">
+              {intl.formatMessage({
+                id: 'menus',
+                defaultMessage: 'Menus'
+              })}
+            </MenuLink>
+          </NavItem>
+          <NavItem>
+            <MenuLink href="/admin/profile" icon="user-tie">
+              {intl.formatMessage({
+                id: 'profile',
+                defaultMessage: 'Profile'
+              })}
+            </MenuLink>
+          </NavItem>
+          <NavItem>
+            <MenuLink href="/admin/users" icon="users">
+              {intl.formatMessage({
+                id: 'users',
+                defaultMessage: 'Users'
               })}
             </MenuLink>
           </NavItem>

@@ -3,7 +3,7 @@ import { ApolloClient } from 'apollo-boost';
 import Router from 'next/router';
 import React from 'react';
 import { ApolloConsumer } from 'react-apollo';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
 import PostForm, { EditorProps } from '../../components/admin/PostForm';
@@ -18,9 +18,11 @@ import { editPostMutation } from '../../graphql/post/mutations/editPost';
 import { postByIdQuery } from '../../graphql/post/queries/postById';
 import Context from '../../interfaces/Context';
 import redirect from '../../lib/redirect';
+import withIntl from '../../lib/withIntl';
 
 export type Props = {
   router: any;
+  intl: InjectedIntl;
 } & PostByIdPost;
 
 export interface State extends EditorProps {
@@ -135,10 +137,19 @@ class EditPost extends React.Component<Props, State> {
   }
 
   render() {
-    const { title, content, slug } = this.state;
-
+    const { title, content, slug, id } = this.state;
+    const { intl } = this.props;
+    const postTitle = id
+      ? intl.formatMessage({
+          id: 'edit_post',
+          defaultMessage: 'Edit post'
+        })
+      : intl.formatMessage({
+          id: 'create_post',
+          defaultMessage: 'Create post'
+        });
     return (
-      <Layout>
+      <Layout title={postTitle}>
         <Button
           outline
           size="sm"
@@ -149,12 +160,13 @@ class EditPost extends React.Component<Props, State> {
           <FontAwesomeIcon className="mr-2" icon="angle-left" />
           <FormattedMessage id="back" defaultMessage="Back" />
         </Button>
+        <h1>{postTitle}</h1>
         <ApolloConsumer>
           {client => (
             <>
               <PostForm
                 onDelete={this.toggle}
-                deleteButton={this.state.id ? true : false}
+                deleteButton={id ? true : false}
                 slug={slug}
                 title={title}
                 content={content}
@@ -197,4 +209,4 @@ class EditPost extends React.Component<Props, State> {
   }
 }
 
-export default EditPost;
+export default withIntl(EditPost);

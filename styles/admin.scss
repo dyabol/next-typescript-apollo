@@ -1,0 +1,44 @@
+@import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+.admin {
+  .editor-wrapper {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+
+    .editor-toolbar {
+      background: #fff;
+      border: 0;
+      border-bottom: 1px solid #ced4da;
+    }
+
+    .editor-content {
+      margin: 0 1rem;
+
+      .public-DraftEditor-content {
+        min-height: 20rem;
+      }
+    }
+  }
+
+  .posts-table {
+    min-height: 600px;
+  }
+
+  .admin-side-bar {
+    background: $gray-800;
+
+    .nav-link {
+      color: white;
+      &.active {
+        background: $gray-700;
+      }
+      &:hover {
+        background: $gray-600;
+      }
+
+      svg {
+        width: 20px;
+      }
+    }
+  }
+}

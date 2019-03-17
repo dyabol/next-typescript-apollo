@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export interface FooterProps {}
 
 const Foot = styled('div')`
-  background: #404040;
+  background: #343a40;
   color: white;
   padding: 0.5em 1em;
   text-align: center;

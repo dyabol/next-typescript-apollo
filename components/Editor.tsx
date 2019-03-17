@@ -5,7 +5,6 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import * as React from 'react';
 import { Editor, RawDraftContentState } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export interface Props {
   content?: string;

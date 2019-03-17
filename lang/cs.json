@@ -45,5 +45,11 @@
   "delete": "Odstranit",
   "cancel": "Zrušit",
   "delete_post_title": "Odstranit přípěvek",
-  "delete_post_message": "Jste si jist/a že chcete odstranit příspěvek {title}?"
+  "delete_post_message": "Jste si jist/a že chcete odstranit příspěvek {title}?",
+  "profile": "Profil",
+  "pages": "Stránky",
+  "menus": "Menu",
+  "users": "Uživatelé",
+  "edit_post": "Upravit příspěvek",
+  "create_post": "Vytvořit příspěvek"
 }

@@ -45,5 +45,11 @@
   "delete": "Delete",
   "cancel": "Cancel",
   "delete_post_title": "Delete post",
-  "delete_post_message": "Are you sure you want to remove the {title} post?"
+  "delete_post_message": "Are you sure you want to remove the {title} post?",
+  "profile": "Profile",
+  "pages": "Pages",
+  "menus": "Menus",
+  "users": "Users",
+  "edit_post": "Edit post",
+  "create_post": "New post"
 }
