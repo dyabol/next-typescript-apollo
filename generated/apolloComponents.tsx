@@ -188,12 +188,17 @@ export type PostBySlugUser = {
   email: string;
 };
 
-export type PostsVariables = {};
+export type PostsVariables = {
+  take?: Maybe<number>;
+  skip?: Maybe<number>;
+};
 
 export type PostsQuery = {
   __typename?: "Query";
 
   posts: PostsPosts[];
+
+  postsCount: number;
 };
 
 export type PostsPosts = {
@@ -573,8 +578,8 @@ export function PostBySlugHOC<TProps, TChildProps = any>(
   >(PostBySlugDocument, operationOptions);
 }
 export const PostsDocument = gql`
-  query Posts {
-    posts {
+  query Posts($take: Int, $skip: Int) {
+    posts(take: $take, skip: $skip) {
       id
       slug
       title
@@ -586,6 +591,7 @@ export const PostsDocument = gql`
         fullName
       }
     }
+    postsCount
   }
 `;
 export class PostsComponent extends React.Component<

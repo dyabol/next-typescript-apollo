@@ -4,33 +4,27 @@ import Router from 'next/router';
 import React from 'react';
 import { FormattedMessage, FormattedRelative } from 'react-intl';
 import { Button, Table } from 'reactstrap';
+import PostsPagination from '../../components/admin/Pagination';
+import PostsTableHeader from '../../components/admin/PostsTableHeader';
 import Loading from '../../components/Loading';
 import Layout from '../../containers/admin/Layout';
 import { PostsComponent } from '../../generated/apolloComponents';
 
 export type Props = {};
+export type Stats = {
+  skip: number;
+  take: number;
+};
 
-const HeadRow = () => (
-  <tr>
-    <th>
-      <FormattedMessage id="title" defaultMessage="Title" />
-    </th>
-    <th>
-      <FormattedMessage id="slug" defaultMessage="Slug" />
-    </th>
-    <th>
-      <FormattedMessage id="author" defaultMessage="Author" />
-    </th>
-    <th>
-      <FormattedMessage id="created" defaultMessage="Created" />
-    </th>
-    <th>
-      <FormattedMessage id="updated" defaultMessage="Updated" />
-    </th>
-  </tr>
-);
+class Posts extends React.Component<Props, Stats> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      skip: 0,
+      take: 10
+    };
+  }
 
-class Posts extends React.Component<Props, {}> {
   render() {
     return (
       <Layout>
@@ -43,7 +37,7 @@ class Posts extends React.Component<Props, {}> {
           <FontAwesomeIcon className="mr-2" icon="plus" />
           <FormattedMessage id="new_post" defaultMessage="New post" />
         </Button>
-        <PostsComponent>
+        <PostsComponent variables={this.state}>
           {({ data }) => {
             if (data && data.posts) {
               const rows = data.posts.map((post, key) => {
@@ -72,15 +66,26 @@ class Posts extends React.Component<Props, {}> {
                 );
               });
               return (
-                <Table hover>
-                  <thead>
-                    <HeadRow />
-                  </thead>
-                  <tbody>{rows}</tbody>
-                  <tfoot>
-                    <HeadRow />
-                  </tfoot>
-                </Table>
+                <>
+                  <div className="posts-table">
+                    <Table hover>
+                      <thead>
+                        <PostsTableHeader />
+                      </thead>
+                      <tbody>{rows}</tbody>
+                      <tfoot>
+                        <PostsTableHeader />
+                      </tfoot>
+                    </Table>
+                  </div>
+                  <PostsPagination
+                    onChange={skip =>
+                      this.setState({ skip: skip * this.state.take })
+                    }
+                    {...this.state}
+                    count={data.postsCount}
+                  />
+                </>
               );
             }
             return <Loading />;

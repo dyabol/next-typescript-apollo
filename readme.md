@@ -2,5 +2,5 @@
 
 ## TODO
 
-- Paging
 - Delete
+- Sorting
