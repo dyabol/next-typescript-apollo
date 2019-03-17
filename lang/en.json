@@ -41,5 +41,9 @@
   "saved": "Saved",
   "loading": "Loading",
   "error": "Error",
-  "detail": "Detail"
+  "detail": "Detail",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "delete_post_title": "Delete post",
+  "delete_post_message": "Are you sure you want to remove the {title} post?"
 }

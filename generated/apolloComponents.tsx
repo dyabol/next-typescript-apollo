@@ -82,6 +82,16 @@ export type CreatePostCreatePost = {
   content: string;
 };
 
+export type DeletePostVariables = {
+  id: string;
+};
+
+export type DeletePostMutation = {
+  __typename?: "Mutation";
+
+  deletePost: boolean;
+};
+
 export type EditPostVariables = {
   data: EditPostInput;
 };
@@ -425,6 +435,48 @@ export function CreatePostHOC<TProps, TChildProps = any>(
     CreatePostVariables,
     CreatePostProps<TChildProps>
   >(CreatePostDocument, operationOptions);
+}
+export const DeletePostDocument = gql`
+  mutation DeletePost($id: ID!) {
+    deletePost(id: $id)
+  }
+`;
+export class DeletePostComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<DeletePostMutation, DeletePostVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<DeletePostMutation, DeletePostVariables>
+        mutation={DeletePostDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type DeletePostProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<DeletePostMutation, DeletePostVariables>
+> &
+  TChildProps;
+export type DeletePostMutationFn = ReactApollo.MutationFn<
+  DeletePostMutation,
+  DeletePostVariables
+>;
+export function DeletePostHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        DeletePostMutation,
+        DeletePostVariables,
+        DeletePostProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    DeletePostMutation,
+    DeletePostVariables,
+    DeletePostProps<TChildProps>
+  >(DeletePostDocument, operationOptions);
 }
 export const EditPostDocument = gql`
   mutation EditPost($data: EditPostInput!) {

@@ -41,5 +41,9 @@
   "saved": "Uloženo",
   "loading": "Načítám",
   "error": "Chyba",
-  "detail": "Detail"
+  "detail": "Detail",
+  "delete": "Odstranit",
+  "cancel": "Zrušit",
+  "delete_post_title": "Odstranit přípěvek",
+  "delete_post_message": "Jste si jist/a že chcete odstranit příspěvek {title}?"
 }

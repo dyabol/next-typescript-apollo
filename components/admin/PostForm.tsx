@@ -1,7 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Field, Formik, FormikActions } from 'formik';
 import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
-import { Form, FormGroup, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Label } from 'reactstrap';
 import MyEditor from '../../components/Editor';
 import ErrorAlert from '../../components/ErrorAlert';
 import InputField from '../../components/field/InputField';
@@ -25,6 +26,8 @@ export interface EditorProps {
 
 export interface Props extends EditorProps {
   intl: InjectedIntl;
+  deleteButton?: boolean;
+  onDelete?: () => void;
   onSave?: (values: any) => void;
   save: (values: EditorProps) => Result;
 }
@@ -105,7 +108,7 @@ class PostForm extends React.Component<Props, State> {
   }
 
   public render() {
-    const { title, content, slug, intl } = this.props;
+    const { title, content, slug, intl, deleteButton, onDelete } = this.props;
     return (
       <div className="post-form">
         <ErrorAlert onDismiss={this.hideError} error={this.state.error} />
@@ -158,9 +161,16 @@ class PostForm extends React.Component<Props, State> {
               </FormGroup>
               <FormGroup>
                 <SaveButton
+                  className="mr-3"
                   loading={this.state.loading}
                   complete={this.state.complete}
                 />
+                {deleteButton && (
+                  <Button type="button" color="danger" onClick={onDelete}>
+                    <FontAwesomeIcon className="mr-2" icon="trash-alt" />
+                    <FormattedMessage id="delete" defaultMessage="Delete" />
+                  </Button>
+                )}
               </FormGroup>
             </Form>
           )}

@@ -4,6 +4,7 @@ import Router from 'next/router';
 import React from 'react';
 import { ApolloConsumer } from 'react-apollo';
 import { FormattedMessage } from 'react-intl';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
 import PostForm, { EditorProps } from '../../components/admin/PostForm';
 import Layout from '../../containers/admin/Layout';
@@ -11,10 +12,12 @@ import {
   CreatePostMutation,
   PostByIdPost
 } from '../../generated/apolloComponents';
-import { createPostMuttation } from '../../graphql/post/mutations/createPost';
+import { createPostMutation } from '../../graphql/post/mutations/createPost';
+import { deletePostMutation } from '../../graphql/post/mutations/deletePost';
 import { editPostMutation } from '../../graphql/post/mutations/editPost';
 import { postByIdQuery } from '../../graphql/post/queries/postById';
 import Context from '../../interfaces/Context';
+import redirect from '../../lib/redirect';
 
 export type Props = {
   router: any;
@@ -22,10 +25,15 @@ export type Props = {
 
 export interface State extends EditorProps {
   id: string | null;
+  modal: boolean;
 }
 
 class EditPost extends React.Component<Props, State> {
-  static async getInitialProps({ apolloClient, query: { id } }: Context) {
+  static async getInitialProps({
+    apolloClient,
+    query: { id },
+    ...ctx
+  }: Context) {
     if (!id) {
       return {};
     }
@@ -33,7 +41,11 @@ class EditPost extends React.Component<Props, State> {
       query: postByIdQuery,
       variables: { id }
     });
-    if (!post || post.loading || !post.data) {
+    if (!post || post.loading) {
+      return {};
+    }
+    if (!post || !post.data || !post.data.post) {
+      redirect(ctx, '/admin/post');
       return {};
     }
     return {
@@ -47,18 +59,30 @@ class EditPost extends React.Component<Props, State> {
       id: props.id,
       title: props.title || '',
       content: props.content || '',
-      slug: props.slug || ''
+      slug: props.slug || '',
+      modal: false
     };
     this.save = this.save.bind(this);
     this.changeUrl = this.changeUrl.bind(this);
+    this.onDeleteHandler = this.onDeleteHandler.bind(this);
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
   }
 
   changeUrl(result: CreatePostMutation) {
+    // TODO: aktualizace state (mazani prave vytvoreneho prispevku)
     if (!result.createPost) {
       return;
     }
     const id = result.createPost.id;
-    this.setState(result.createPost);
+    this.setState({
+      id
+    });
 
     Router.push(
       {
@@ -72,8 +96,9 @@ class EditPost extends React.Component<Props, State> {
 
   save(values: EditorProps, client: ApolloClient<any>) {
     const { id } = this.state;
+    var result;
     if (id) {
-      return client.mutate({
+      result = client.mutate({
         mutation: editPostMutation,
         variables: {
           data: {
@@ -82,15 +107,31 @@ class EditPost extends React.Component<Props, State> {
           }
         }
       });
-    }
-    return client.mutate({
-      mutation: createPostMuttation,
-      variables: {
-        data: {
-          ...values
+    } else {
+      result = client.mutate({
+        mutation: createPostMutation,
+        variables: {
+          data: {
+            ...values
+          }
         }
+      });
+    }
+    client.resetStore();
+    return result;
+  }
+
+  async onDeleteHandler(client: ApolloClient<any>) {
+    const result = await client.mutate({
+      mutation: deletePostMutation,
+      variables: {
+        id: this.state.id
       }
     });
+    if (result.data && result.data.deletePost) {
+      client.resetStore();
+      Router.push('/admin/posts');
+    }
   }
 
   render() {
@@ -110,13 +151,45 @@ class EditPost extends React.Component<Props, State> {
         </Button>
         <ApolloConsumer>
           {client => (
-            <PostForm
-              slug={slug}
-              title={title}
-              content={content}
-              onSave={this.changeUrl}
-              save={(values: EditorProps) => this.save(values, client)}
-            />
+            <>
+              <PostForm
+                onDelete={this.toggle}
+                deleteButton={this.state.id ? true : false}
+                slug={slug}
+                title={title}
+                content={content}
+                onSave={this.changeUrl}
+                save={(values: EditorProps) => this.save(values, client)}
+              />
+              <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                <ModalHeader toggle={this.toggle}>
+                  <FormattedMessage
+                    id="delete_post_title"
+                    defaultMessage="Delete post"
+                  />
+                </ModalHeader>
+                <ModalBody>
+                  <FormattedMessage
+                    id="delete_post_message"
+                    defaultMessage="Are you sure you want to remove the {title} post?"
+                    values={{ title: <strong>{title}</strong> }}
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    color="danger"
+                    onClick={() => this.onDeleteHandler(client)}
+                  >
+                    <FontAwesomeIcon className="mr-2" icon="trash-alt" />
+                    <FormattedMessage id="delete" defaultMessage="Delete" />
+                  </Button>{' '}
+                  <Button color="secondary" onClick={this.toggle}>
+                    <FontAwesomeIcon className="mr-2" icon="times" />
+                    <FormattedMessage id="cancel" defaultMessage="Cancel" />
+                  </Button>
+                </ModalFooter>
+              </Modal>
+            </>
           )}
         </ApolloConsumer>
       </Layout>

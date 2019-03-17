@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const createPostMuttation = gql`
+export const createPostMutation = gql`
   mutation CreatePost($data: CreatePostInput!) {
     createPost(data: $data) {
       id
