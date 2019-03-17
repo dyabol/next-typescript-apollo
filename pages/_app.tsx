@@ -1,10 +1,19 @@
 import App, { Container } from 'next/app';
+import Router from 'next/router';
+import NProgress from 'nprogress';
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import '../lib/icons';
 import withApollo from '../lib/withApollo';
 import '../styles/global.scss';
+
+Router.events.on('routeChangeStart', (url: string) => {
+  console.log(`Loading: ${url}`);
+  NProgress.start();
+});
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 declare global {
   interface Window {
