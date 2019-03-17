@@ -6,7 +6,6 @@ import { FormattedMessage, FormattedRelative, InjectedIntl } from 'react-intl';
 import { Button, Table } from 'reactstrap';
 import PostsPagination from '../../components/admin/Pagination';
 import PostsTableHeader from '../../components/admin/PostsTableHeader';
-import Loading from '../../components/Loading';
 import Layout from '../../containers/admin/Layout';
 import { PostsComponent } from '../../generated/apolloComponents';
 import withIntl from '../../lib/withIntl';
@@ -97,7 +96,7 @@ class Posts extends React.Component<Props, Stats> {
                 </>
               );
             }
-            return <Loading />;
+            return null;
           }}
         </PostsComponent>
       </Layout>

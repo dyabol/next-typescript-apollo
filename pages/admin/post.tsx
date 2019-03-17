@@ -10,6 +10,7 @@ import PostForm, { EditorProps } from '../../components/admin/PostForm';
 import Layout from '../../containers/admin/Layout';
 import {
   CreatePostMutation,
+  EditPostMutation,
   PostByIdPost
 } from '../../generated/apolloComponents';
 import { createPostMutation } from '../../graphql/post/mutations/createPost';
@@ -76,24 +77,27 @@ class EditPost extends React.Component<Props, State> {
     }));
   }
 
-  changeUrl(result: CreatePostMutation) {
-    // TODO: aktualizace state (mazani prave vytvoreneho prispevku)
-    if (!result.createPost) {
-      return;
-    }
-    const id = result.createPost.id;
+  changeUrl(result: CreatePostMutation & EditPostMutation) {
+    const obj = result.createPost || result.editPost;
+
     this.setState({
-      id
+      id: obj.id,
+      title: obj.title,
+      content: obj.content,
+      slug: obj.slug
     });
 
-    Router.push(
-      {
-        pathname: '/admin/post',
-        query: { id }
-      },
-      '/admin/post/' + id,
-      { shallow: true }
-    );
+    if (result && result.createPost) {
+      const id = result.createPost.id;
+      Router.push(
+        {
+          pathname: '/admin/post',
+          query: { id }
+        },
+        '/admin/post/' + id,
+        { shallow: true }
+      );
+    }
   }
 
   save(values: EditorProps, client: ApolloClient<any>) {
