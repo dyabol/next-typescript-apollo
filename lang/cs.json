@@ -32,6 +32,7 @@
   "content": "Obsah",
   "save": "Uložit",
   "new_post": "Nový příspěvek",
+  "new_page": "Nová stránka",
   "back": "Zpět",
   "reset": "Vrátit",
   "created": "Vytvořeno",
@@ -51,5 +52,9 @@
   "menus": "Menu",
   "users": "Uživatelé",
   "edit_post": "Upravit příspěvek",
-  "create_post": "Vytvořit příspěvek"
+  "create_post": "Vytvořit příspěvek",
+  "edit_page": "Upravit stránku",
+  "create_page": "Vytvořit stránku",
+  "delete_page_title": "Odstranit stránku",
+  "delete_page_message": "Jste si jist/a že chcete odstranit stránku {title}?"
 }

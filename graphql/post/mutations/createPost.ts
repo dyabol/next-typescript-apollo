@@ -10,3 +10,14 @@ export const createPostMutation = gql`
     }
   }
 `;
+
+export const createPageMutation = gql`
+  mutation CreatePage($data: CreatePostInput!) {
+    createPage(data: $data) {
+      id
+      title
+      slug
+      content
+    }
+  }
+`;

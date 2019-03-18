@@ -1,13 +1,5 @@
 export type Maybe<T> = T | null;
 
-export interface PageInput {
-  title: string;
-
-  slug: string;
-
-  content: string;
-}
-
 export interface CreatePostInput {
   title: string;
 
@@ -49,6 +41,11 @@ export interface UserMetaInput {
 
   userId: string;
 }
+/** Type of post */
+export enum PostType {
+  Post = "POST",
+  Page = "PAGE"
+}
 
 /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
 export type DateTime = any;
@@ -82,6 +79,28 @@ export type CreatePostCreatePost = {
   content: string;
 };
 
+export type CreatePageVariables = {
+  data: CreatePostInput;
+};
+
+export type CreatePageMutation = {
+  __typename?: "Mutation";
+
+  createPage: CreatePageCreatePage;
+};
+
+export type CreatePageCreatePage = {
+  __typename?: "Post";
+
+  id: string;
+
+  title: string;
+
+  slug: string;
+
+  content: string;
+};
+
 export type DeletePostVariables = {
   id: string;
 };
@@ -90,6 +109,16 @@ export type DeletePostMutation = {
   __typename?: "Mutation";
 
   deletePost: boolean;
+};
+
+export type DeletePageVariables = {
+  id: string;
+};
+
+export type DeletePageMutation = {
+  __typename?: "Mutation";
+
+  deletePage: boolean;
 };
 
 export type EditPostVariables = {
@@ -114,6 +143,28 @@ export type EditPostEditPost = {
   content: string;
 };
 
+export type EditPageVariables = {
+  data: EditPostInput;
+};
+
+export type EditPageMutation = {
+  __typename?: "Mutation";
+
+  editPage: EditPageEditPage;
+};
+
+export type EditPageEditPage = {
+  __typename?: "Post";
+
+  id: string;
+
+  title: string;
+
+  slug: string;
+
+  content: string;
+};
+
 export type PostByIdVariables = {
   id: string;
 };
@@ -121,7 +172,7 @@ export type PostByIdVariables = {
 export type PostByIdQuery = {
   __typename?: "Query";
 
-  post: PostByIdPost;
+  post: Maybe<PostByIdPost>;
 };
 
 export type PostByIdPost = {
@@ -156,6 +207,48 @@ export type PostByIdUser = {
   email: string;
 };
 
+export type PageByIdVariables = {
+  id: string;
+};
+
+export type PageByIdQuery = {
+  __typename?: "Query";
+
+  page: Maybe<PageByIdPage>;
+};
+
+export type PageByIdPage = {
+  __typename?: "Post";
+
+  id: string;
+
+  slug: string;
+
+  title: string;
+
+  content: string;
+
+  createdAt: DateTime;
+
+  updatedAt: DateTime;
+
+  user: PageByIdUser;
+};
+
+export type PageByIdUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  fullName: string;
+
+  email: string;
+};
+
 export type PostBySlugVariables = {
   slug: string;
 };
@@ -163,7 +256,7 @@ export type PostBySlugVariables = {
 export type PostBySlugQuery = {
   __typename?: "Query";
 
-  post: PostBySlugPost;
+  post: Maybe<PostBySlugPost>;
 };
 
 export type PostBySlugPost = {
@@ -185,6 +278,48 @@ export type PostBySlugPost = {
 };
 
 export type PostBySlugUser = {
+  __typename?: "User";
+
+  id: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  fullName: string;
+
+  email: string;
+};
+
+export type PageBySlugVariables = {
+  slug: string;
+};
+
+export type PageBySlugQuery = {
+  __typename?: "Query";
+
+  page: Maybe<PageBySlugPage>;
+};
+
+export type PageBySlugPage = {
+  __typename?: "Post";
+
+  id: string;
+
+  slug: string;
+
+  title: string;
+
+  content: string;
+
+  createdAt: DateTime;
+
+  updatedAt: DateTime;
+
+  user: PageBySlugUser;
+};
+
+export type PageBySlugUser = {
   __typename?: "User";
 
   id: string;
@@ -230,6 +365,45 @@ export type PostsPosts = {
 };
 
 export type PostsUser = {
+  __typename?: "User";
+
+  id: string;
+
+  fullName: string;
+};
+
+export type PagesVariables = {
+  take?: Maybe<number>;
+  skip?: Maybe<number>;
+};
+
+export type PagesQuery = {
+  __typename?: "Query";
+
+  pages: PagesPages[];
+
+  pagesCount: number;
+};
+
+export type PagesPages = {
+  __typename?: "Post";
+
+  id: string;
+
+  slug: string;
+
+  title: string;
+
+  content: string;
+
+  createdAt: DateTime;
+
+  updatedAt: DateTime;
+
+  user: PagesUser;
+};
+
+export type PagesUser = {
   __typename?: "User";
 
   id: string;
@@ -436,6 +610,53 @@ export function CreatePostHOC<TProps, TChildProps = any>(
     CreatePostProps<TChildProps>
   >(CreatePostDocument, operationOptions);
 }
+export const CreatePageDocument = gql`
+  mutation CreatePage($data: CreatePostInput!) {
+    createPage(data: $data) {
+      id
+      title
+      slug
+      content
+    }
+  }
+`;
+export class CreatePageComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<CreatePageMutation, CreatePageVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<CreatePageMutation, CreatePageVariables>
+        mutation={CreatePageDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type CreatePageProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<CreatePageMutation, CreatePageVariables>
+> &
+  TChildProps;
+export type CreatePageMutationFn = ReactApollo.MutationFn<
+  CreatePageMutation,
+  CreatePageVariables
+>;
+export function CreatePageHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        CreatePageMutation,
+        CreatePageVariables,
+        CreatePageProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    CreatePageMutation,
+    CreatePageVariables,
+    CreatePageProps<TChildProps>
+  >(CreatePageDocument, operationOptions);
+}
 export const DeletePostDocument = gql`
   mutation DeletePost($id: ID!) {
     deletePost(id: $id)
@@ -477,6 +698,48 @@ export function DeletePostHOC<TProps, TChildProps = any>(
     DeletePostVariables,
     DeletePostProps<TChildProps>
   >(DeletePostDocument, operationOptions);
+}
+export const DeletePageDocument = gql`
+  mutation DeletePage($id: ID!) {
+    deletePage(id: $id)
+  }
+`;
+export class DeletePageComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<DeletePageMutation, DeletePageVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<DeletePageMutation, DeletePageVariables>
+        mutation={DeletePageDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type DeletePageProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<DeletePageMutation, DeletePageVariables>
+> &
+  TChildProps;
+export type DeletePageMutationFn = ReactApollo.MutationFn<
+  DeletePageMutation,
+  DeletePageVariables
+>;
+export function DeletePageHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        DeletePageMutation,
+        DeletePageVariables,
+        DeletePageProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    DeletePageMutation,
+    DeletePageVariables,
+    DeletePageProps<TChildProps>
+  >(DeletePageDocument, operationOptions);
 }
 export const EditPostDocument = gql`
   mutation EditPost($data: EditPostInput!) {
@@ -524,6 +787,53 @@ export function EditPostHOC<TProps, TChildProps = any>(
     EditPostVariables,
     EditPostProps<TChildProps>
   >(EditPostDocument, operationOptions);
+}
+export const EditPageDocument = gql`
+  mutation EditPage($data: EditPostInput!) {
+    editPage(data: $data) {
+      id
+      title
+      slug
+      content
+    }
+  }
+`;
+export class EditPageComponent extends React.Component<
+  Partial<ReactApollo.MutationProps<EditPageMutation, EditPageVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<EditPageMutation, EditPageVariables>
+        mutation={EditPageDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type EditPageProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<EditPageMutation, EditPageVariables>
+> &
+  TChildProps;
+export type EditPageMutationFn = ReactApollo.MutationFn<
+  EditPageMutation,
+  EditPageVariables
+>;
+export function EditPageHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        EditPageMutation,
+        EditPageVariables,
+        EditPageProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    EditPageMutation,
+    EditPageVariables,
+    EditPageProps<TChildProps>
+  >(EditPageDocument, operationOptions);
 }
 export const PostByIdDocument = gql`
   query PostById($id: ID!) {
@@ -577,6 +887,58 @@ export function PostByIdHOC<TProps, TChildProps = any>(
     PostByIdProps<TChildProps>
   >(PostByIdDocument, operationOptions);
 }
+export const PageByIdDocument = gql`
+  query PageById($id: ID!) {
+    page(id: $id) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+      user {
+        id
+        firstName
+        lastName
+        fullName
+        email
+      }
+    }
+  }
+`;
+export class PageByIdComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<PageByIdQuery, PageByIdVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<PageByIdQuery, PageByIdVariables>
+        query={PageByIdDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type PageByIdProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<PageByIdQuery, PageByIdVariables>
+> &
+  TChildProps;
+export function PageByIdHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        PageByIdQuery,
+        PageByIdVariables,
+        PageByIdProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    PageByIdQuery,
+    PageByIdVariables,
+    PageByIdProps<TChildProps>
+  >(PageByIdDocument, operationOptions);
+}
 export const PostBySlugDocument = gql`
   query PostBySlug($slug: String!) {
     post(slug: $slug) {
@@ -629,6 +991,58 @@ export function PostBySlugHOC<TProps, TChildProps = any>(
     PostBySlugProps<TChildProps>
   >(PostBySlugDocument, operationOptions);
 }
+export const PageBySlugDocument = gql`
+  query PageBySlug($slug: String!) {
+    page(slug: $slug) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+      user {
+        id
+        firstName
+        lastName
+        fullName
+        email
+      }
+    }
+  }
+`;
+export class PageBySlugComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<PageBySlugQuery, PageBySlugVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<PageBySlugQuery, PageBySlugVariables>
+        query={PageBySlugDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type PageBySlugProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<PageBySlugQuery, PageBySlugVariables>
+> &
+  TChildProps;
+export function PageBySlugHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        PageBySlugQuery,
+        PageBySlugVariables,
+        PageBySlugProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    PageBySlugQuery,
+    PageBySlugVariables,
+    PageBySlugProps<TChildProps>
+  >(PageBySlugDocument, operationOptions);
+}
 export const PostsDocument = gql`
   query Posts($take: Int, $skip: Int) {
     posts(take: $take, skip: $skip) {
@@ -678,6 +1092,56 @@ export function PostsHOC<TProps, TChildProps = any>(
     PostsVariables,
     PostsProps<TChildProps>
   >(PostsDocument, operationOptions);
+}
+export const PagesDocument = gql`
+  query Pages($take: Int, $skip: Int) {
+    pages(take: $take, skip: $skip) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+      user {
+        id
+        fullName
+      }
+    }
+    pagesCount
+  }
+`;
+export class PagesComponent extends React.Component<
+  Partial<ReactApollo.QueryProps<PagesQuery, PagesVariables>>
+> {
+  render() {
+    return (
+      <ReactApollo.Query<PagesQuery, PagesVariables>
+        query={PagesDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type PagesProps<TChildProps = any> = Partial<
+  ReactApollo.DataProps<PagesQuery, PagesVariables>
+> &
+  TChildProps;
+export function PagesHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        PagesQuery,
+        PagesVariables,
+        PagesProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    PagesQuery,
+    PagesVariables,
+    PagesProps<TChildProps>
+  >(PagesDocument, operationOptions);
 }
 export const ChangePasswordDocument = gql`
   mutation ChangePassword($data: ChangePasswordInput!) {

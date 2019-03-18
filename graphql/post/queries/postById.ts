@@ -19,3 +19,23 @@ export const postByIdQuery = gql`
     }
   }
 `;
+
+export const pageByIdQuery = gql`
+  query PageById($id: ID!) {
+    page(id: $id) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+      user {
+        id
+        firstName
+        lastName
+        fullName
+        email
+      }
+    }
+  }
+`;

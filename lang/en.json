@@ -32,6 +32,7 @@
   "content": "Content",
   "save": "Save",
   "new_post": "New post",
+  "new_page": "New page",
   "back": "Back",
   "reset": "Reset",
   "created": "Created",
@@ -51,5 +52,9 @@
   "menus": "Menus",
   "users": "Users",
   "edit_post": "Edit post",
-  "create_post": "New post"
+  "create_post": "New post",
+  "edit_page": "Edit page",
+  "create_page": "Create post",
+  "delete_page_title": "Delete page",
+  "delete_page_message": "Are you sure you want to remove the {title} page?"
 }

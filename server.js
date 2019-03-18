@@ -66,6 +66,12 @@ app.prepare().then(() => {
     });
   });
 
+  server.get('/admin/page/:id', (req, res) => {
+    return app.render(addLocaleSupport(req), res, '/admin/page', {
+      id: req.params.id
+    });
+  });
+
   server.get('/user/confirm/:token', (req, res) => {
     return app.render(addLocaleSupport(req), res, '/confirm', {
       token: req.params.token

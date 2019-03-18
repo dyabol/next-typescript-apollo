@@ -5,3 +5,9 @@ export const deletePostMutation = gql`
     deletePost(id: $id)
   }
 `;
+
+export const deletePageMutation = gql`
+  mutation DeletePage($id: ID!) {
+    deletePage(id: $id)
+  }
+`;

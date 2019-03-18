@@ -10,3 +10,14 @@ export const editPostMutation = gql`
     }
   }
 `;
+
+export const editPageMutation = gql`
+  mutation EditPage($data: EditPostInput!) {
+    editPage(data: $data) {
+      id
+      title
+      slug
+      content
+    }
+  }
+`;

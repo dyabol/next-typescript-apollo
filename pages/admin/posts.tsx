@@ -48,31 +48,6 @@ class Posts extends React.Component<Props, Stats> {
         <PostsComponent variables={this.state}>
           {({ data }) => {
             if (data && data.posts) {
-              const rows = data.posts.map((post, key) => {
-                return (
-                  <tr key={key}>
-                    <td>
-                      <Link
-                        href={{
-                          pathname: '/admin/post',
-                          query: { id: post.id }
-                        }}
-                        as={'/admin/post/' + post.id}
-                      >
-                        <a>{post.title}</a>
-                      </Link>
-                    </td>
-                    <td>{post.slug}</td>
-                    <td>{post.user.fullName}</td>
-                    <td>
-                      <FormattedRelative value={post.createdAt} />{' '}
-                    </td>
-                    <td>
-                      <FormattedRelative value={post.updatedAt} />{' '}
-                    </td>
-                  </tr>
-                );
-              });
               return (
                 <>
                   <div className="posts-table">
@@ -80,7 +55,33 @@ class Posts extends React.Component<Props, Stats> {
                       <thead>
                         <PostsTableHeader />
                       </thead>
-                      <tbody>{rows}</tbody>
+                      <tbody>
+                        {data.posts.map((post, key) => {
+                          return (
+                            <tr key={key}>
+                              <td>
+                                <Link
+                                  href={{
+                                    pathname: '/admin/post',
+                                    query: { id: post.id }
+                                  }}
+                                  as={'/admin/post/' + post.id}
+                                >
+                                  <a>{post.title}</a>
+                                </Link>
+                              </td>
+                              <td>{post.slug}</td>
+                              <td>{post.user.fullName}</td>
+                              <td>
+                                <FormattedRelative value={post.createdAt} />{' '}
+                              </td>
+                              <td>
+                                <FormattedRelative value={post.updatedAt} />{' '}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
                       <tfoot>
                         <PostsTableHeader />
                       </tfoot>

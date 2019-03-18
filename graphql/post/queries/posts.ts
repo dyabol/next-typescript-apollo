@@ -17,3 +17,21 @@ export const postsQuery = gql`
     postsCount
   }
 `;
+
+export const pagesQuery = gql`
+  query Pages($take: Int, $skip: Int) {
+    pages(take: $take, skip: $skip) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+      user {
+        id
+        fullName
+      }
+    }
+    pagesCount
+  }
+`;
