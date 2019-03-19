@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import * as React from 'react';
 import { Container } from 'reactstrap';
-import Footer from '../components/Footer';
-import Menu from '../components/Menu';
+import Menu from './Menu';
 
 export type Props = {
   readonly title?: string;
@@ -40,7 +39,6 @@ export default class Layout extends React.Component<Props, {}> {
           <Menu />
           <Container className="mt-3">{children}</Container>
         </div>
-        <Footer />
       </>
     );
   }

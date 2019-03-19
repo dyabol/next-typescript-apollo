@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Table } from 'reactstrap';
-import Layout from '../../containers/admin/Layout';
+import Layout from '../../components/admin/Layout';
 import { MeComponent } from '../../generated/apolloComponents';
 import withIntl from '../../lib/withIntl';
 

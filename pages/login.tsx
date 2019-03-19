@@ -1,6 +1,6 @@
 import * as React from 'react';
+import Layout from '../components/Layout';
 import LoginForm from '../components/LoginForm';
-import Layout from '../containers/Layout';
 
 export type Props = {};
 

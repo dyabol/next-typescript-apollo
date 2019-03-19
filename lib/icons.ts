@@ -1,11 +1,14 @@
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faAngleLeft,
+  faBars,
+  faBolt,
   faCheck,
   faCircleNotch,
   faCompass,
   faFileAlt,
   faHome,
+  faLaughWink,
   faPencilAlt,
   faPlus,
   faSave,
@@ -30,3 +33,6 @@ library.add(faFileAlt);
 library.add(faCompass);
 library.add(faUsers);
 library.add(faHome);
+library.add(faLaughWink);
+library.add(faBars);
+library.add(faBolt);

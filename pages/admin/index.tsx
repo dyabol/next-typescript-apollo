@@ -1,6 +1,6 @@
 import React from 'react';
 import { InjectedIntl } from 'react-intl';
-import Layout from '../../containers/admin/Layout';
+import Layout from '../../components/admin/Layout';
 import withIntl from '../../lib/withIntl';
 
 export type Props = {
@@ -11,8 +11,8 @@ class Index extends React.Component<Props, {}> {
   render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
-      id: 'main',
-      defaultMessage: 'Main'
+      id: 'dashboard',
+      defaultMessage: 'Dashboard'
     });
 
     return (

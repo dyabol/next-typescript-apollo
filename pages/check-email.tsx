@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Alert } from 'reactstrap';
-import Layout from '../containers/Layout';
+import Layout from '../components/Layout';
 
 export type Props = {};
 class CheckEmail extends React.Component<Props, {}> {

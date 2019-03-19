@@ -2,7 +2,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import Layout from '../containers/Layout';
+import Layout from '../components/Layout';
 import { PostBySlugProps } from '../generated/apolloComponents';
 import { postBySlugQuery } from '../graphql/post/queries/postBySlug';
 import Context from '../interfaces/Context';

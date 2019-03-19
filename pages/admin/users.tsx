@@ -1,6 +1,6 @@
 import React from 'react';
 import { InjectedIntl } from 'react-intl';
-import Layout from '../../containers/admin/Layout';
+import Layout from '../../components/admin/Layout';
 import withIntl from '../../lib/withIntl';
 
 export type Props = {

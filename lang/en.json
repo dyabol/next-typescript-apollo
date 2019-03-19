@@ -56,5 +56,9 @@
   "edit_page": "Edit page",
   "create_page": "Create post",
   "delete_page_title": "Delete page",
-  "delete_page_message": "Are you sure you want to remove the {title} page?"
+  "delete_page_message": "Are you sure you want to remove the {title} page?",
+  "admin": "Admin",
+  "personal": "Personal",
+  "settings": "Settings",
+  "dashboard": "Dashboard"
 }

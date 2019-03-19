@@ -4,9 +4,9 @@ import Router from 'next/router';
 import React from 'react';
 import { FormattedMessage, FormattedRelative, InjectedIntl } from 'react-intl';
 import { Button, Table } from 'reactstrap';
+import Layout from '../../components/admin/Layout';
 import PostsPagination from '../../components/admin/Pagination';
 import PostsTableHeader from '../../components/admin/PostsTableHeader';
-import Layout from '../../containers/admin/Layout';
 import { PostsComponent } from '../../generated/apolloComponents';
 import withIntl from '../../lib/withIntl';
 

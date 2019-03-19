@@ -1,9 +1,11 @@
+@import './SBAdmin2.scss';
 @import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 .admin {
   .editor-wrapper {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
+    background: #fff;
 
     .editor-toolbar {
       background: #fff;

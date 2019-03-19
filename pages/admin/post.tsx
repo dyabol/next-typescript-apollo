@@ -6,8 +6,8 @@ import { ApolloConsumer } from 'react-apollo';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
+import Layout from '../../components/admin/Layout';
 import PostForm, { EditorProps } from '../../components/admin/PostForm';
-import Layout from '../../containers/admin/Layout';
 import {
   CreatePostMutation,
   EditPostMutation,

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import * as React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import Layout from '../components/Layout';
 import Loading from '../components/Loading';
-import Layout from '../containers/Layout';
 import { PostsComponent } from '../generated/apolloComponents';
 import withIntl from '../lib/withIntl';
 

@@ -56,5 +56,9 @@
   "edit_page": "Upravit stránku",
   "create_page": "Vytvořit stránku",
   "delete_page_title": "Odstranit stránku",
-  "delete_page_message": "Jste si jist/a že chcete odstranit stránku {title}?"
+  "delete_page_message": "Jste si jist/a že chcete odstranit stránku {title}?",
+  "admin": "Admin",
+  "personal": "Osobní",
+  "settings": "Nastavení",
+  "dashboard": "Nástěnka"
 }

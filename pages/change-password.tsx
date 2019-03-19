@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { InjectedIntl } from 'react-intl';
 import ChangePasswordForm from '../components/ChangePasswordForm';
-import Layout from '../containers/Layout';
+import Layout from '../components/Layout';
 import Context from '../interfaces/Context';
 import withIntl from '../lib/withIntl';
 

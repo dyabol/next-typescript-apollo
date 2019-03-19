@@ -1,76 +1,53 @@
 import * as React from 'react';
-import { InjectedIntl } from 'react-intl';
-import { Nav, NavItem } from 'reactstrap';
-import styled from 'styled-components';
-import withIntl from '../../lib/withIntl';
-import MenuLink from '../MenuLink';
+import { FormattedMessage } from 'react-intl';
+import Brand from './sidebar/Brand';
+import Container from './sidebar/Container';
+import Divider from './sidebar/Divider';
+import Heading from './sidebar/Heading';
+import NavItem from './sidebar/NavItem';
 
-export interface SidebarProps {
-  intl: InjectedIntl;
-}
+export interface SidebarProps {}
 
-const Container = styled.div`
-  min-width: 200px;
-`;
-
-class Sidebar extends React.Component<SidebarProps, any> {
+export interface SidebarState {}
+class Sidebar extends React.Component<SidebarProps, SidebarState> {
   public render() {
-    const { intl } = this.props;
     return (
       <Container>
-        <Nav vertical>
-          <NavItem>
-            <MenuLink href="/admin" icon="home">
-              {intl.formatMessage({
-                id: 'main',
-                defaultMessage: 'Main'
-              })}
-            </MenuLink>
-          </NavItem>
-          <NavItem>
-            <MenuLink href="/admin/posts" icon="pencil-alt">
-              {intl.formatMessage({
-                id: 'posts',
-                defaultMessage: 'Posts'
-              })}
-            </MenuLink>
-          </NavItem>
-          <NavItem>
-            <MenuLink href="/admin/pages" icon="file-alt">
-              {intl.formatMessage({
-                id: 'pages',
-                defaultMessage: 'Pages'
-              })}
-            </MenuLink>
-          </NavItem>
-          <NavItem>
-            <MenuLink href="/admin/menus" icon="compass">
-              {intl.formatMessage({
-                id: 'menus',
-                defaultMessage: 'Menus'
-              })}
-            </MenuLink>
-          </NavItem>
-          <NavItem>
-            <MenuLink href="/admin/profile" icon="user-tie">
-              {intl.formatMessage({
-                id: 'profile',
-                defaultMessage: 'Profile'
-              })}
-            </MenuLink>
-          </NavItem>
-          <NavItem>
-            <MenuLink href="/admin/users" icon="users">
-              {intl.formatMessage({
-                id: 'users',
-                defaultMessage: 'Users'
-              })}
-            </MenuLink>
-          </NavItem>
-        </Nav>
+        <Brand />
+        <Divider className="my-0" />
+        <NavItem icon="home" href="/admin">
+          <FormattedMessage id="dashboard" defaultMessage="Dashboard" />
+        </NavItem>
+        <Divider />
+        <Heading>
+          <FormattedMessage id="content" defaultMessage="Content" />
+        </Heading>
+        <NavItem icon="pencil-alt" href="/admin/posts">
+          <FormattedMessage id="posts" defaultMessage="Posts" />
+        </NavItem>
+        <NavItem icon="file-alt" href="/admin/pages">
+          <FormattedMessage id="pages" defaultMessage="Pages" />
+        </NavItem>
+        <Divider />
+        <Heading>
+          <FormattedMessage id="personal" defaultMessage="Personal" />
+        </Heading>
+        <NavItem icon="user-tie" href="/admin/profile">
+          <FormattedMessage id="profile" defaultMessage="Profile" />
+        </NavItem>
+        <NavItem icon="users" href="/admin/users">
+          <FormattedMessage id="users" defaultMessage="Users" />
+        </NavItem>
+        <Divider />
+        <Heading>
+          <FormattedMessage id="settings" defaultMessage="Settings" />
+        </Heading>
+        <NavItem icon="compass" href="/admin/menus">
+          <FormattedMessage id="menus" defaultMessage="Menus" />
+        </NavItem>
       </Container>
     );
   }
 }
 
-export default withIntl(Sidebar);
+export default Sidebar;
