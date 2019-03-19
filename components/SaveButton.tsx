@@ -1,7 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Button } from 'reactstrap';
+import IconButton from './IconButton';
 
 export interface Props {
   loading?: boolean;
@@ -16,24 +15,32 @@ export default class SaveButton extends React.Component<Props, State> {
     const { complete, loading, className } = this.props;
     if (complete) {
       return (
-        <Button color="success" disabled className={className}>
-          <FontAwesomeIcon className="mr-2" icon="check" />
+        <IconButton icon="check" color="success" disabled className={className}>
           <FormattedMessage id="saved" defaultMessage="Saved" />
-        </Button>
+        </IconButton>
       );
     } else if (loading) {
       return (
-        <Button color="secondary" disabled className={className}>
-          <FontAwesomeIcon className="mr-2" icon="circle-notch" spin />
+        <IconButton
+          icon="circle-notch"
+          color="secondary"
+          disabled
+          className={className}
+          spin
+        >
           <FormattedMessage id="loading" defaultMessage="Loading" />
-        </Button>
+        </IconButton>
       );
     } else {
       return (
-        <Button type="submit" color="primary" className={className}>
-          <FontAwesomeIcon className="mr-2" icon="save" />
+        <IconButton
+          icon="save"
+          color="primary"
+          className={className}
+          type="submit"
+        >
           <FormattedMessage id="save" defaultMessage="Save" />
-        </Button>
+        </IconButton>
       );
     }
   }

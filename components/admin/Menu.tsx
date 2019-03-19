@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Button, Nav, Navbar, NavItem } from 'reactstrap';
 import { Subscribe } from 'unstated';
 import SidebarContainer from '../../containers/admin/SidebarContainer';
-import User from './Menu/User';
+import User from './menu/User';
 
 export interface MenuProps {}
 

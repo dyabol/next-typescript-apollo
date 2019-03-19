@@ -1,12 +1,12 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import Router from 'next/router';
 import React from 'react';
 import { FormattedMessage, FormattedRelative, InjectedIntl } from 'react-intl';
-import { Button, Table } from 'reactstrap';
+import { Card, CardBody, CardFooter, CardHeader, Table } from 'reactstrap';
 import Layout from '../../components/admin/Layout';
 import PostsPagination from '../../components/admin/Pagination';
 import PostsTableHeader from '../../components/admin/PostsTableHeader';
+import IconButton from '../../components/IconButton';
 import { PagesComponent } from '../../generated/apolloComponents';
 import withIntl from '../../lib/withIntl';
 
@@ -37,64 +37,78 @@ class Pages extends React.Component<Props, Stats> {
     return (
       <Layout title={title}>
         <h1>{title}</h1>
-        <Button
-          className="mr-3 mt-3 mb-3"
-          color="primary"
-          onClick={() => Router.push('/admin/page')}
-        >
-          <FontAwesomeIcon className="mr-2" icon="plus" />
-          <FormattedMessage id="new_page" defaultMessage="New page" />
-        </Button>
         <PagesComponent variables={this.state}>
           {({ data }) => {
             if (data && data.pages) {
               return (
-                <>
-                  <div className="posts-table">
-                    <Table hover>
-                      <thead>
-                        <PostsTableHeader />
-                      </thead>
-                      <tbody>
-                        {data.pages.map((post, key) => {
-                          return (
-                            <tr key={key}>
-                              <td>
-                                <Link
-                                  href={{
-                                    pathname: '/admin/page',
-                                    query: { id: post.id }
-                                  }}
-                                  as={'/admin/page/' + post.id}
-                                >
-                                  <a>{post.title}</a>
-                                </Link>
-                              </td>
-                              <td>{post.slug}</td>
-                              <td>{post.user.fullName}</td>
-                              <td>
-                                <FormattedRelative value={post.createdAt} />{' '}
-                              </td>
-                              <td>
-                                <FormattedRelative value={post.updatedAt} />{' '}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                      <tfoot>
-                        <PostsTableHeader />
-                      </tfoot>
-                    </Table>
-                  </div>
-                  <PostsPagination
-                    onChange={skip =>
-                      this.setState({ skip: skip * this.state.take })
-                    }
-                    {...this.state}
-                    count={data.pagesCount}
-                  />
-                </>
+                <div className="posts-table">
+                  <Card>
+                    <CardHeader>
+                      <IconButton
+                        color="primary"
+                        onClick={() => Router.push('/admin/page')}
+                        icon="plus"
+                      >
+                        <FormattedMessage
+                          id="new_post"
+                          defaultMessage="New post"
+                        />
+                      </IconButton>
+                    </CardHeader>
+                    <CardBody>
+                      <Table hover>
+                        <thead>
+                          <PostsTableHeader />
+                        </thead>
+                        {data && data.pages && data.pages.length > 0 ? (
+                          <tbody>
+                            {data.pages.map((post, key) => {
+                              return (
+                                <tr key={key}>
+                                  <td>
+                                    <Link
+                                      href={{
+                                        pathname: '/admin/page',
+                                        query: { id: post.id }
+                                      }}
+                                      as={'/admin/page/' + post.id}
+                                    >
+                                      <a>{post.title}</a>
+                                    </Link>
+                                  </td>
+                                  <td>{post.slug}</td>
+                                  <td>{post.user.fullName}</td>
+                                  <td>
+                                    <FormattedRelative value={post.createdAt} />{' '}
+                                  </td>
+                                  <td>
+                                    <FormattedRelative value={post.updatedAt} />{' '}
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        ) : (
+                          <caption className="text-center">
+                            <FormattedMessage
+                              id="no_data"
+                              defaultMessage="No data"
+                            />
+                          </caption>
+                        )}
+                      </Table>
+                    </CardBody>
+                    <CardFooter>
+                      <PostsPagination
+                        onChange={skip =>
+                          this.setState({ skip: skip * this.state.take })
+                        }
+                        {...this.state}
+                        count={data.pagesCount}
+                      />
+                    </CardFooter>
+                  </Card>
+                </div>
               );
             }
             return null;

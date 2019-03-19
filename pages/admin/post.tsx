@@ -8,6 +8,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
 import Layout from '../../components/admin/Layout';
 import PostForm, { EditorProps } from '../../components/admin/PostForm';
+import IconButton from '../../components/IconButton';
 import {
   CreatePostMutation,
   EditPostMutation,
@@ -192,17 +193,20 @@ class EditPost extends React.Component<Props, State> {
                   />
                 </ModalBody>
                 <ModalFooter>
-                  <Button
+                  <IconButton
                     color="danger"
                     onClick={() => this.onDeleteHandler(client)}
+                    icon="trash-alt"
                   >
-                    <FontAwesomeIcon className="mr-2" icon="trash-alt" />
                     <FormattedMessage id="delete" defaultMessage="Delete" />
-                  </Button>{' '}
-                  <Button color="secondary" onClick={this.toggle}>
-                    <FontAwesomeIcon className="mr-2" icon="times" />
+                  </IconButton>{' '}
+                  <IconButton
+                    color="secondary"
+                    onClick={this.toggle}
+                    icon="times"
+                  >
                     <FormattedMessage id="cancel" defaultMessage="Cancel" />
-                  </Button>
+                  </IconButton>
                 </ModalFooter>
               </Modal>
             </>

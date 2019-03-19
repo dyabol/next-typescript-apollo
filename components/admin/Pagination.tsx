@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { PaginationItem, PaginationLink } from 'reactstrap';
 
 type Props = {
   count: number;
@@ -35,34 +35,39 @@ export default class PostsPagination extends React.Component<Props, State> {
   render() {
     const { currentPage } = this.state;
 
-    return (
-      <div className="pagination-wrapper">
-        <Pagination aria-label="Page navigation example">
-          <PaginationItem disabled={currentPage <= 0}>
-            <PaginationLink
-              onClick={e => this.handleClick(e, currentPage - 1)}
-              previous
-              href=""
-            />
-          </PaginationItem>
+    if (this.props.count) {
+      return (
+        <div className="pagination-wrapper">
+          <nav aria-label="Page navigation">
+            <ul className="mb-0 pagination">
+              <PaginationItem disabled={currentPage <= 0}>
+                <PaginationLink
+                  onClick={e => this.handleClick(e, currentPage - 1)}
+                  previous
+                  href=""
+                />
+              </PaginationItem>
+              {[...Array(this.pagesCount)].map((_, i) => (
+                <PaginationItem active={i === currentPage} key={i}>
+                  <PaginationLink onClick={e => this.handleClick(e, i)} href="">
+                    {i + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
 
-          {[...Array(this.pagesCount)].map((_, i) => (
-            <PaginationItem active={i === currentPage} key={i}>
-              <PaginationLink onClick={e => this.handleClick(e, i)} href="">
-                {i + 1}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-
-          <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
-            <PaginationLink
-              onClick={e => this.handleClick(e, currentPage + 1)}
-              next
-              href=""
-            />
-          </PaginationItem>
-        </Pagination>
-      </div>
-    );
+              <PaginationItem disabled={currentPage >= this.pagesCount - 1}>
+                <PaginationLink
+                  onClick={e => this.handleClick(e, currentPage + 1)}
+                  next
+                  href=""
+                />
+              </PaginationItem>
+            </ul>
+          </nav>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 }

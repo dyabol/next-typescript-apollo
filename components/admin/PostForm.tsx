@@ -1,22 +1,14 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Field, Formik, FormikActions } from 'formik';
 import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
-import { Button, Form, FormGroup, Label } from 'reactstrap';
+import { Form, FormGroup, Label } from 'reactstrap';
 import MyEditor from '../../components/Editor';
 import ErrorAlert from '../../components/ErrorAlert';
 import InputField from '../../components/field/InputField';
 import SaveButton from '../../components/SaveButton';
-import {
-  CreatePostMutation,
-  EditPostMutation
-} from '../../generated/apolloComponents';
 import { parseGraphQlValidationError } from '../../lib/error';
 import withIntl from '../../lib/withIntl';
-
-export type Result = {
-  data: EditPostMutation | CreatePostMutation;
-};
+import IconButton from '../IconButton';
 
 export interface EditorProps {
   title: string;
@@ -29,7 +21,7 @@ export interface Props extends EditorProps {
   deleteButton?: boolean;
   onDelete?: () => void;
   onSave?: (values: any) => void;
-  save: (values: EditorProps) => Result;
+  save: (values: EditorProps) => any;
 }
 
 export type State = {
@@ -166,10 +158,13 @@ class PostForm extends React.Component<Props, State> {
                   complete={this.state.complete}
                 />
                 {deleteButton && (
-                  <Button type="button" color="danger" onClick={onDelete}>
-                    <FontAwesomeIcon className="mr-2" icon="trash-alt" />
+                  <IconButton
+                    onClick={onDelete}
+                    icon="trash-alt"
+                    color="danger"
+                  >
                     <FormattedMessage id="delete" defaultMessage="Delete" />
-                  </Button>
+                  </IconButton>
                 )}
               </FormGroup>
             </Form>

@@ -8,8 +8,7 @@ import '../lib/icons';
 import withApollo from '../lib/withApollo';
 import '../styles/global.scss';
 
-Router.events.on('routeChangeStart', (url: string) => {
-  console.log(`Loading: ${url}`);
+Router.events.on('routeChangeStart', () => {
   NProgress.start();
 });
 Router.events.on('routeChangeComplete', () => NProgress.done());
