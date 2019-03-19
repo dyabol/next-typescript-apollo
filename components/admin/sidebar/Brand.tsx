@@ -9,10 +9,10 @@ const Brand: React.FunctionComponent<BrandProps> = () => {
     <Link href="/admin">
       <a className="sidebar-brand d-flex align-items-center justify-content-center">
         <div className="sidebar-brand-icon">
-          <FontAwesomeIcon icon="bolt" size="2x" />
+          <FontAwesomeIcon color="#f6c23e" icon="bolt" size="2x" />
         </div>
         <div className="sidebar-brand-text mx-3">
-          Hrom<sup>CMS</sup>
+          Perun <sup className="text-warning">CMS</sup>
         </div>
       </a>
     </Link>

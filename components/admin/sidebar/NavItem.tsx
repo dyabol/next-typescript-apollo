@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { RouterProps, withRouter } from 'next/router';
 import * as React from 'react';
+import { NavItem } from 'reactstrap';
 
 interface NavItemProps {
   href: string;
@@ -10,26 +11,23 @@ interface NavItemProps {
   prefetch?: boolean;
   icon?: IconProp;
   router: RouterProps;
-  className?: string;
   children: React.ReactNode;
 }
 
-function NavItem(props: NavItemProps) {
-  const { className, children, router, icon, prefetch, href, as } = props;
-  const classes = className ? className : 'nav-item';
+function SidebarNavItem(props: NavItemProps) {
+  const { children, router, icon, prefetch, href, as } = props;
   const pathname = props.as ? props.as : props.href;
-  const itemClass =
-    router.pathname === pathname ? classes + ' active' : classes;
+  const active = router.pathname === pathname;
   return (
-    <li className={itemClass}>
+    <NavItem className={active ? 'active' : ''}>
       <Link href={href} as={as} prefetch={prefetch}>
         <a className="nav-link">
           {icon && <FontAwesomeIcon icon={icon} />}
           <span>{children}</span>
         </a>
       </Link>
-    </li>
+    </NavItem>
   );
 }
 
-export default withRouter(NavItem);
+export default withRouter(SidebarNavItem);

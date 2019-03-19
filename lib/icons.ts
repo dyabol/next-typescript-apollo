@@ -5,6 +5,7 @@ import {
   faBolt,
   faCheck,
   faCircleNotch,
+  faCog,
   faCompass,
   faFileAlt,
   faHome,
@@ -12,6 +13,7 @@ import {
   faPencilAlt,
   faPlus,
   faSave,
+  faSignOutAlt,
   faTimes,
   faTrashAlt,
   faUsers,
@@ -36,3 +38,5 @@ library.add(faHome);
 library.add(faLaughWink);
 library.add(faBars);
 library.add(faBolt);
+library.add(faCog);
+library.add(faSignOutAlt);
