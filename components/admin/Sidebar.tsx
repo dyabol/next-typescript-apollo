@@ -28,6 +28,12 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
         <NavItem icon="file-alt" href="/admin/pages">
           <FormattedMessage id="pages" defaultMessage="Pages" />
         </NavItem>
+        <NavItem icon="compass" href="/admin/menus">
+          <FormattedMessage id="menus" defaultMessage="Menus" />
+        </NavItem>
+        <NavItem icon="images" href="/admin/media">
+          <FormattedMessage id="media" defaultMessage="Media" />
+        </NavItem>
         <Divider />
         <Heading>
           <FormattedMessage id="personal" defaultMessage="Personal" />
@@ -42,8 +48,8 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
         <Heading>
           <FormattedMessage id="settings" defaultMessage="Settings" />
         </Heading>
-        <NavItem icon="compass" href="/admin/menus">
-          <FormattedMessage id="menus" defaultMessage="Menus" />
+        <NavItem icon="cog" href="/admin/settings">
+          <FormattedMessage id="main" defaultMessage="Main" />
         </NavItem>
       </Container>
     );

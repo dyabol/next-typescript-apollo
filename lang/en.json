@@ -60,5 +60,16 @@
   "admin": "Admin",
   "personal": "Personal",
   "settings": "Settings",
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "no_data": "No data",
+  "user": "User",
+  "update": "Update",
+  "id": "#",
+  "discard": "Discard",
+  "media": "Media",
+  "page_not_found": "Page Not Found",
+  "matrix_glitch": "It looks like you found a glitch in the matrix...",
+  "back_to_dashboard": "← Back to Dashboard",
+  "back_to_homepage": "← Back to Homepage",
+  "table_records": "Showing {start} to {end} of {total} entries"
 }

@@ -10,6 +10,7 @@ import {
   faCompass,
   faFileAlt,
   faHome,
+  faImages,
   faLaughWink,
   faPencilAlt,
   faPlus,
@@ -46,3 +47,4 @@ library.add(faSignOutAlt);
 library.add(faUndoAlt);
 library.add(faRedoAlt);
 library.add(faCamera);
+library.add(faImages);
