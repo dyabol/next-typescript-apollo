@@ -3,6 +3,7 @@ import {
   faAngleLeft,
   faBars,
   faBolt,
+  faCamera,
   faCheck,
   faCircleNotch,
   faCog,
@@ -44,3 +45,4 @@ library.add(faCog);
 library.add(faSignOutAlt);
 library.add(faUndoAlt);
 library.add(faRedoAlt);
+library.add(faCamera);
