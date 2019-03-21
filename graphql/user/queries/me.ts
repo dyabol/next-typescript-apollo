@@ -8,6 +8,7 @@ export const meQuery = gql`
       lastName
       email
       fullName
+      avatar
     }
   }
 `;

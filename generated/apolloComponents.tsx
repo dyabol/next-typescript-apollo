@@ -508,6 +508,16 @@ export type RegisterRegister = {
   email: string;
 };
 
+export type UploadAvatarVariables = {
+  avatar: Upload;
+};
+
+export type UploadAvatarMutation = {
+  __typename?: "Mutation";
+
+  addProfilePicture: boolean;
+};
+
 export type HelloVariables = {};
 
 export type HelloQuery = {
@@ -536,6 +546,8 @@ export type MeMe = {
   email: string;
 
   fullName: string;
+
+  avatar: string;
 };
 
 export type AddUserRoleVariables = {
@@ -1415,6 +1427,50 @@ export function RegisterHOC<TProps, TChildProps = any>(
     RegisterProps<TChildProps>
   >(RegisterDocument, operationOptions);
 }
+export const UploadAvatarDocument = gql`
+  mutation UploadAvatar($avatar: Upload!) {
+    addProfilePicture(picture: $avatar)
+  }
+`;
+export class UploadAvatarComponent extends React.Component<
+  Partial<
+    ReactApollo.MutationProps<UploadAvatarMutation, UploadAvatarVariables>
+  >
+> {
+  render() {
+    return (
+      <ReactApollo.Mutation<UploadAvatarMutation, UploadAvatarVariables>
+        mutation={UploadAvatarDocument}
+        {...(this as any)["props"] as any}
+      />
+    );
+  }
+}
+export type UploadAvatarProps<TChildProps = any> = Partial<
+  ReactApollo.MutateProps<UploadAvatarMutation, UploadAvatarVariables>
+> &
+  TChildProps;
+export type UploadAvatarMutationFn = ReactApollo.MutationFn<
+  UploadAvatarMutation,
+  UploadAvatarVariables
+>;
+export function UploadAvatarHOC<TProps, TChildProps = any>(
+  operationOptions:
+    | ReactApollo.OperationOption<
+        TProps,
+        UploadAvatarMutation,
+        UploadAvatarVariables,
+        UploadAvatarProps<TChildProps>
+      >
+    | undefined
+) {
+  return ReactApollo.graphql<
+    TProps,
+    UploadAvatarMutation,
+    UploadAvatarVariables,
+    UploadAvatarProps<TChildProps>
+  >(UploadAvatarDocument, operationOptions);
+}
 export const HelloDocument = gql`
   query Hello {
     hello
@@ -1461,6 +1517,7 @@ export const MeDocument = gql`
       lastName
       email
       fullName
+      avatar
     }
   }
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Table } from 'reactstrap';
 import Layout from '../../components/admin/Layout';
+import Avatar from '../../components/admin/profile/Avatar';
 import { MeComponent } from '../../generated/apolloComponents';
 import withIntl from '../../lib/withIntl';
 
@@ -23,10 +24,10 @@ class Profile extends React.Component<Props, {}> {
         <MeComponent>
           {({ data }) => {
             if (data && data.me) {
-              console.log(data.me);
               return (
                 <div>
                   <h2>{data.me.fullName}</h2>
+                  <Avatar avatar={data.me.avatar} className="mt-3 mb-3" />
                   <Table>
                     <tbody>
                       <tr>

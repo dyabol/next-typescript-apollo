@@ -41,19 +41,17 @@ export default class User extends React.Component<UserProps, UserState> {
                   <span className="mr-2 d-none d-lg-inline text-gray-600 small">
                     {data.me.fullName}
                   </span>
-                  {
-                    /*data.me.picture ? (*/
+                  {data.me.avatar ? (
                     <img
                       className="img-profile rounded-circle"
-                      src="https://source.unsplash.com/QAB-WJcbgJk/60x60"
+                      src={data.me.avatar}
                     />
-                    /*) : (
+                  ) : (
                     <FontAwesomeIcon
                       icon="user-tie"
                       className="rounded-circle"
                     />
-                  )*/
-                  }
+                  )}
                 </DropdownToggle>
                 <DropdownMenu right className="shadow animated--grow-in">
                   <Link href="/admin/profile">

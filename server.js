@@ -10,6 +10,7 @@ const { basename } = require('path');
 const accepts = require('accepts');
 const glob = require('glob');
 const next = require('next');
+const dotenv = require('dotenv').config();
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';

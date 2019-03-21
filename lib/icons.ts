@@ -12,10 +12,12 @@ import {
   faLaughWink,
   faPencilAlt,
   faPlus,
+  faRedoAlt,
   faSave,
   faSignOutAlt,
   faTimes,
   faTrashAlt,
+  faUndoAlt,
   faUsers,
   faUserTie
 } from '@fortawesome/free-solid-svg-icons';
@@ -40,3 +42,5 @@ library.add(faBars);
 library.add(faBolt);
 library.add(faCog);
 library.add(faSignOutAlt);
+library.add(faUndoAlt);
+library.add(faRedoAlt);

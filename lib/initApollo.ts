@@ -5,10 +5,10 @@ import {
 } from 'apollo-boost';
 import { setContext } from 'apollo-link-context';
 import { onError } from 'apollo-link-error';
-import { createHttpLink } from 'apollo-link-http';
+import { createUploadLink } from 'apollo-upload-client';
 import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
-import { isBrowser, server } from './utils';
+import { isBrowser } from './utils';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
@@ -22,8 +22,8 @@ type Options = {
 };
 
 function create(initialState: any, { getToken }: Options) {
-  const httpLink = createHttpLink({
-    uri: server,
+  const httpLink = createUploadLink({
+    uri: 'http://localhost:4000/graphql',
     credentials: 'include'
   });
 
