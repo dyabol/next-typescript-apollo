@@ -8,6 +8,7 @@ import InputField from '../../components/field/InputField';
 import SaveButton from '../../components/SaveButton';
 import { parseGraphQlValidationError } from '../../lib/error';
 import withIntl from '../../lib/withIntl';
+import { convertToSlug } from '../../utils/url';
 import IconButton from '../IconButton';
 
 export interface EditorProps {
@@ -127,6 +128,11 @@ class PostForm extends React.Component<Props, State> {
                 })}
                 autoFocus
                 autoComplete="off"
+                onChange={(e: React.ChangeEvent<any>) => {
+                  const value = e.target.value;
+                  setFieldValue('title', value);
+                  setFieldValue('slug', convertToSlug(value));
+                }}
               />
               <Field
                 name="slug"
