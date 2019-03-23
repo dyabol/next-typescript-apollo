@@ -1,5 +1,16 @@
-import Spinner from 'reactstrap/lib/Spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from 'styled-components';
+
+const Loading = styled.div`
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin-top: -24px;
+  margin-left: -24px;
+`;
 
 export default () => (
-  <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
+  <Loading>
+    <FontAwesomeIcon icon="cog" size="3x" color="DodgerBlue" spin />
+  </Loading>
 );

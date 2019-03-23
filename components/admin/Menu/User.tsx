@@ -80,7 +80,7 @@ export default class User extends React.Component<UserProps, UserState> {
                     </DropdownItem>
                   </Link>
                   <DropdownItem divider />
-                  <Link href="/logout">
+                  <Link href="/logout" shallow>
                     <DropdownItem>
                       <FontAwesomeIcon
                         fixedWidth

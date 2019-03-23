@@ -8,8 +8,9 @@ const Logout = () => {
 
 Logout.getInitialProps = async ({ apolloClient, ...ctx }: Context) => {
   await apolloClient.mutate({ mutation: logoutMutation });
-  await apolloClient.resetStore();
-  redirect(ctx, '/login');
+  apolloClient.resetStore().then(() => {
+    redirect(ctx, '/login');
+  });
   return {};
 };
 
