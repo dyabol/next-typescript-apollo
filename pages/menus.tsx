@@ -10,7 +10,7 @@ export type Props = {
   intl: InjectedIntl;
 };
 
-class Index extends React.Component<Props, {}> {
+class Menus extends React.Component<Props, {}> {
   static async getInitialProps(context: Context) {
     const { loggedInUser } = await checkLoggedIn(context.apolloClient);
 
@@ -25,8 +25,8 @@ class Index extends React.Component<Props, {}> {
   render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
-      id: 'dashboard',
-      defaultMessage: 'Dashboard'
+      id: 'menus',
+      defaultMessage: 'Menus'
     });
 
     return (
@@ -38,4 +38,4 @@ class Index extends React.Component<Props, {}> {
   }
 }
 
-export default withIntl(Index);
+export default withIntl(Menus);

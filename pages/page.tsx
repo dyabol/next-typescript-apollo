@@ -6,54 +6,64 @@ import { ApolloConsumer } from 'react-apollo';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
-import Layout from '../../components/admin/Layout';
-import PostForm, { EditorProps } from '../../components/admin/PostForm';
-import IconButton from '../../components/IconButton';
+import IconButton from '../components/IconButton';
+import Layout from '../components/Layout';
+import PostForm, { EditorProps } from '../components/PostForm';
 import {
-  CreatePostMutation,
-  EditPostMutation,
-  PostByIdPost
-} from '../../generated/apolloComponents';
-import { createPostMutation } from '../../graphql/post/mutations/createPost';
-import { deletePostMutation } from '../../graphql/post/mutations/deletePost';
-import { editPostMutation } from '../../graphql/post/mutations/editPost';
-import { postByIdQuery } from '../../graphql/post/queries/postById';
-import Context from '../../interfaces/Context';
-import redirect from '../../lib/redirect';
-import withIntl from '../../lib/withIntl';
+  CreatePageMutation,
+  EditPageMutation,
+  PageByIdPage
+} from '../generated/apolloComponents';
+import { createPageMutation } from '../graphql/post/mutations/createPost';
+import { deletePageMutation } from '../graphql/post/mutations/deletePost';
+import { editPageMutation } from '../graphql/post/mutations/editPost';
+import { pageByIdQuery } from '../graphql/post/queries/postById';
+import Context from '../interfaces/Context';
+import checkLoggedIn from '../lib/checkLoggedIn';
+import redirect from '../lib/redirect';
+import withIntl from '../lib/withIntl';
 
 export type Props = {
   router: any;
   intl: InjectedIntl;
-} & PostByIdPost;
+} & PageByIdPage;
 
 export interface State extends EditorProps {
   id: string | null;
   modal: boolean;
 }
 
-class EditPost extends React.Component<Props, State> {
-  static async getInitialProps({
-    apolloClient,
-    query: { id },
-    ...ctx
-  }: Context) {
+class EditPage extends React.Component<Props, State> {
+  static async getInitialProps(context: Context) {
+    const { loggedInUser } = await checkLoggedIn(context.apolloClient);
+
+    if (!loggedInUser.me) {
+      // If not signed in, send them somewhere more useful
+      redirect(context, '/login');
+    }
+
+    const {
+      apolloClient,
+      query: { id },
+      ...ctx
+    } = context;
+
     if (!id) {
       return {};
     }
-    const post = await apolloClient.query({
-      query: postByIdQuery,
+    const page = await apolloClient.query({
+      query: pageByIdQuery,
       variables: { id }
     });
-    if (!post || post.loading) {
+    if (!page || page.loading) {
       return {};
     }
-    if (!post || !post.data || !post.data.post) {
-      redirect(ctx, '/admin/post');
+    if (!page || !page.data || !page.data.page) {
+      redirect(ctx, '/page');
       return {};
     }
     return {
-      ...post.data.post
+      ...page.data.page
     };
   }
 
@@ -78,8 +88,8 @@ class EditPost extends React.Component<Props, State> {
     }));
   }
 
-  changeUrl(result: CreatePostMutation & EditPostMutation) {
-    const obj = result.createPost || result.editPost;
+  changeUrl(result: CreatePageMutation & EditPageMutation) {
+    const obj = result.createPage || result.editPage;
 
     this.setState({
       id: obj.id,
@@ -88,14 +98,14 @@ class EditPost extends React.Component<Props, State> {
       slug: obj.slug
     });
 
-    if (result && result.createPost) {
-      const id = result.createPost.id;
+    if (result && result.createPage) {
+      const id = result.createPage.id;
       Router.push(
         {
-          pathname: '/admin/post',
+          pathname: '/page',
           query: { id }
         },
-        '/admin/post/' + id,
+        '/page/' + id,
         { shallow: true }
       );
     }
@@ -106,7 +116,7 @@ class EditPost extends React.Component<Props, State> {
     var result;
     if (id) {
       result = client.mutate({
-        mutation: editPostMutation,
+        mutation: editPageMutation,
         variables: {
           data: {
             id,
@@ -116,7 +126,7 @@ class EditPost extends React.Component<Props, State> {
       });
     } else {
       result = client.mutate({
-        mutation: createPostMutation,
+        mutation: createPageMutation,
         variables: {
           data: {
             ...values
@@ -130,42 +140,42 @@ class EditPost extends React.Component<Props, State> {
 
   async onDeleteHandler(client: ApolloClient<any>) {
     const result = await client.mutate({
-      mutation: deletePostMutation,
+      mutation: deletePageMutation,
       variables: {
         id: this.state.id
       }
     });
-    if (result.data && result.data.deletePost) {
+    if (result.data && result.data.deletePage) {
       client.resetStore();
-      Router.push('/admin/posts');
+      Router.push('/pages');
     }
   }
 
   render() {
     const { title, content, slug, id } = this.state;
     const { intl } = this.props;
-    const postTitle = id
+    const pageTitle = id
       ? intl.formatMessage({
-          id: 'edit_post',
-          defaultMessage: 'Edit post'
+          id: 'edit_page',
+          defaultMessage: 'Edit page'
         })
       : intl.formatMessage({
-          id: 'create_post',
-          defaultMessage: 'Create post'
+          id: 'create_page',
+          defaultMessage: 'Create page'
         });
     return (
-      <Layout title={postTitle}>
+      <Layout title={pageTitle}>
         <Button
           outline
           size="sm"
           color="primary"
           className="mb-3"
-          onClick={() => Router.push('/admin/posts')}
+          onClick={() => Router.push('/pages')}
         >
           <FontAwesomeIcon className="mr-2" icon="angle-left" />
           <FormattedMessage id="back" defaultMessage="Back" />
         </Button>
-        <h1>{postTitle}</h1>
+        <h1>{pageTitle}</h1>
         <ApolloConsumer>
           {client => (
             <>
@@ -181,14 +191,14 @@ class EditPost extends React.Component<Props, State> {
               <Modal isOpen={this.state.modal} toggle={this.toggle}>
                 <ModalHeader toggle={this.toggle}>
                   <FormattedMessage
-                    id="delete_post_title"
-                    defaultMessage="Delete post"
+                    id="delete_page_title"
+                    defaultMessage="Delete page"
                   />
                 </ModalHeader>
                 <ModalBody>
                   <FormattedMessage
-                    id="delete_post_message"
-                    defaultMessage="Are you sure you want to remove the {title} post?"
+                    id="delete_page_message"
+                    defaultMessage="Are you sure you want to remove the {title} page?"
                     values={{ title: <strong>{title}</strong> }}
                   />
                 </ModalBody>
@@ -217,4 +227,4 @@ class EditPost extends React.Component<Props, State> {
   }
 }
 
-export default withIntl(EditPost);
+export default withIntl(EditPage);

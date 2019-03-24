@@ -1,124 +1,58 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
 import * as React from 'react';
-import { InjectedIntl } from 'react-intl';
-import {
-  Collapse,
-  Nav,
-  Navbar,
-  NavbarBrand,
-  NavbarToggler,
-  NavItem
-} from 'reactstrap';
-import { MeComponent } from '../generated/apolloComponents';
-import withIntl from '../lib/withIntl';
-import MenuLink from './MenuLink';
+import { FormattedMessage } from 'react-intl';
+import { Button, Nav, Navbar, NavItem } from 'reactstrap';
+import { Subscribe } from 'unstated';
+import SidebarContainer from '../containers/SidebarContainer';
+import User from './menu/User';
 
-export interface MenuProps {
-  intl: InjectedIntl;
-}
+export interface MenuProps {}
 
-export interface MenuState {
-  isOpen: boolean;
+export interface MenuState {}
+
+function TopbarDivider() {
+  return <div className="topbar-divider d-none d-sm-block" />;
 }
 
 class Menu extends React.Component<MenuProps, MenuState> {
-  constructor(props: MenuProps) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
   public render() {
-    const { intl } = this.props;
     return (
-      <Navbar color="light" light expand="md">
-        <NavbarBrand>reactstrap</NavbarBrand>
-        <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <MenuLink prefetch={true} href="/">
-                {intl.formatMessage({
-                  id: 'home',
-                  defaultMessage: 'Home'
-                })}
-              </MenuLink>
-            </NavItem>
-            <NavItem>
-              <MenuLink href={'/posts'}>
-                {intl.formatMessage({
-                  id: 'posts',
-                  defaultMessage: 'Posts'
-                })}
-              </MenuLink>
-            </NavItem>
-            <NavItem>
-              <MenuLink href="/hello">
-                {intl.formatMessage({
-                  id: 'hello',
-                  defaultMessage: 'Hello'
-                })}
-              </MenuLink>
-            </NavItem>
-            <MeComponent>
-              {({ data, loading }) => {
-                if (!data || loading || !data.me) {
-                  return (
-                    <>
-                      <NavItem>
-                        <MenuLink
-                          className="btn btn-primary ml-3"
-                          href="/login"
-                        >
-                          {intl.formatMessage({
-                            id: 'login',
-                            defaultMessage: 'Login'
-                          })}
-                        </MenuLink>
-                      </NavItem>
-                      <NavItem>
-                        <MenuLink
-                          className="btn btn-secondary ml-3"
-                          href="/register"
-                        >
-                          {intl.formatMessage({
-                            id: 'registration',
-                            defaultMessage: 'Registration'
-                          })}
-                        </MenuLink>
-                      </NavItem>
-                    </>
-                  );
-                }
-                return (
-                  <NavItem>
-                    <MenuLink className="btn btn-primary ml-3" href="/admin">
-                      {intl.formatMessage({
-                        id: 'administration',
-                        defaultMessage: 'Administration'
-                      })}
-                    </MenuLink>
-                    <MenuLink className="btn btn-secondary ml-3" href="/logout">
-                      {intl.formatMessage({
-                        id: 'logout',
-                        defaultMessage: 'Logout'
-                      })}
-                    </MenuLink>
-                  </NavItem>
-                );
-              }}
-            </MeComponent>
-          </Nav>
-        </Collapse>
-      </Navbar>
+      <Subscribe to={[SidebarContainer]}>
+        {({ toggle }: SidebarContainer) => (
+          <Navbar
+            expand
+            light
+            color="white"
+            className="topbar mb-4 static-top shadow"
+          >
+            <Button
+              onClick={toggle}
+              color="link"
+              id="sidebarToggleTop"
+              className="d-md-none rounded-circle mr-3"
+            >
+              <FontAwesomeIcon icon="bars" />
+            </Button>
+            <Nav navbar className="ml-auto">
+              <NavItem>
+                <Link href="/">
+                  <a className="btn btn-outline-primary m-3">
+                    <FormattedMessage
+                      id="go_to_website"
+                      defaultMessage="Go to website"
+                    />
+                  </a>
+                </Link>
+              </NavItem>
+              <TopbarDivider />
+              <User />
+            </Nav>
+          </Navbar>
+        )}
+      </Subscribe>
     );
   }
 }
 
-export default withIntl(Menu);
+export default Menu;

@@ -8,7 +8,7 @@ import {
   DropdownToggle,
   UncontrolledDropdown
 } from 'reactstrap';
-import { MeComponent } from '../../../generated/apolloComponents';
+import { MeComponent } from '../../generated/apolloComponents';
 
 export interface UserProps {}
 export interface UserState {
@@ -54,7 +54,7 @@ export default class User extends React.Component<UserProps, UserState> {
                   )}
                 </DropdownToggle>
                 <DropdownMenu right className="shadow animated--grow-in">
-                  <Link href="/admin/profile">
+                  <Link href="/profile">
                     <DropdownItem>
                       <FontAwesomeIcon
                         fixedWidth

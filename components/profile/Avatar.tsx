@@ -7,8 +7,8 @@ import Dropzone from 'react-dropzone';
 import { FormattedMessage } from 'react-intl';
 import { Button } from 'reactstrap';
 import styled from 'styled-components';
-import { uploadAvatar } from '../../../graphql/user/mutations/uploadAvatar';
-import IconButton from '../../IconButton';
+import { uploadAvatar } from '../../graphql/user/mutations/uploadAvatar';
+import IconButton from '../IconButton';
 
 export interface AvatarProps {
   className?: string;

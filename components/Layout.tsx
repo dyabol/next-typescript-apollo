@@ -1,7 +1,10 @@
 import Head from 'next/head';
 import * as React from 'react';
-import { Container } from 'reactstrap';
-import Menu from './Menu';
+import { Provider } from 'unstated';
+import { MeComponent } from '../generated/apolloComponents';
+import Content from './Content';
+import Loading from './Loading';
+import Sidebar from './Sidebar';
 
 export type Props = {
   readonly title?: string;
@@ -11,7 +14,7 @@ export default class Layout extends React.Component<Props, {}> {
   /**
    * Main page title
    */
-  private pageName: string = 'Page Name';
+  private pageName: string = 'Admin';
 
   /**
    * Return page title
@@ -26,20 +29,32 @@ export default class Layout extends React.Component<Props, {}> {
   public render() {
     const { children } = this.props;
     return (
-      <>
-        <div className="content">
-          <Head>
-            <title>{this.getTitle()}</title>
-            <meta
-              name="viewport"
-              content="initial-scale=1.0, width=device-width"
-              key="viewport"
-            />
-          </Head>
-          <Menu />
-          <Container className="mt-3">{children}</Container>
-        </div>
-      </>
+      <MeComponent>
+        {({ data }) =>
+          data && data.me ? (
+            <div id="wrapper" className="admin">
+              <Head>
+                <title>{this.getTitle()}</title>
+                <meta
+                  name="viewport"
+                  content="initial-scale=1.0, width=device-width"
+                  key="viewport"
+                />
+                <link
+                  href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+                  rel="stylesheet"
+                />
+              </Head>
+              <Provider>
+                <Sidebar />
+                <Content>{children}</Content>
+              </Provider>
+            </div>
+          ) : (
+            <Loading />
+          )
+        }
+      </MeComponent>
     );
   }
 }

@@ -3,12 +3,15 @@ import Router from 'next/router';
 import React from 'react';
 import { FormattedMessage, FormattedRelative, InjectedIntl } from 'react-intl';
 import { Card, CardBody, CardFooter, CardHeader, Table } from 'reactstrap';
-import Layout from '../../components/admin/Layout';
-import PostsPagination from '../../components/admin/Pagination';
-import PostsTableHeader from '../../components/admin/PostsTableHeader';
-import IconButton from '../../components/IconButton';
-import { PostsComponent } from '../../generated/apolloComponents';
-import withIntl from '../../lib/withIntl';
+import IconButton from '../components/IconButton';
+import Layout from '../components/Layout';
+import PostsPagination from '../components/Pagination';
+import PostsTableHeader from '../components/PostsTableHeader';
+import { PagesComponent } from '../generated/apolloComponents';
+import Context from '../interfaces/Context';
+import checkLoggedIn from '../lib/checkLoggedIn';
+import redirect from '../lib/redirect';
+import withIntl from '../lib/withIntl';
 
 export type Props = {
   intl: InjectedIntl;
@@ -18,7 +21,18 @@ export type Stats = {
   take: number;
 };
 
-class Posts extends React.Component<Props, Stats> {
+class Pages extends React.Component<Props, Stats> {
+  static async getInitialProps(context: Context) {
+    const { loggedInUser } = await checkLoggedIn(context.apolloClient);
+
+    if (!loggedInUser.me) {
+      // If not signed in, send them somewhere more useful
+      redirect(context, '/login');
+    }
+
+    return { loggedInUser };
+  }
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -30,23 +44,23 @@ class Posts extends React.Component<Props, Stats> {
   render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
-      id: 'posts',
-      defaultMessage: 'Posts'
+      id: 'pages',
+      defaultMessage: 'Pages'
     });
 
     return (
       <Layout title={title}>
         <h1>{title}</h1>
-        <PostsComponent variables={this.state}>
+        <PagesComponent variables={this.state}>
           {({ data }) => {
-            if (data && data.posts) {
+            if (data && data.pages) {
               return (
                 <div className="posts-table">
                   <Card>
                     <CardHeader>
                       <IconButton
                         color="primary"
-                        onClick={() => Router.push('/admin/post')}
+                        onClick={() => Router.push('/page')}
                         icon="plus"
                       >
                         <FormattedMessage
@@ -56,22 +70,22 @@ class Posts extends React.Component<Props, Stats> {
                       </IconButton>
                     </CardHeader>
                     <CardBody>
-                      <Table hover className="mb-0">
+                      <Table hover>
                         <thead>
                           <PostsTableHeader />
                         </thead>
-                        {data && data.posts && data.posts.length > 0 ? (
+                        {data && data.pages && data.pages.length > 0 ? (
                           <tbody>
-                            {data.posts.map((post, key) => {
+                            {data.pages.map((post, key) => {
                               return (
                                 <tr key={key}>
                                   <td>
                                     <Link
                                       href={{
-                                        pathname: '/admin/post',
+                                        pathname: '/page',
                                         query: { id: post.id }
                                       }}
-                                      as={'/admin/post/' + post.id}
+                                      as={'/page/' + post.id}
                                     >
                                       <a>{post.title}</a>
                                     </Link>
@@ -104,7 +118,7 @@ class Posts extends React.Component<Props, Stats> {
                           this.setState({ skip: skip * this.state.take })
                         }
                         {...this.state}
-                        count={data.postsCount}
+                        count={data.pagesCount}
                       />
                     </CardFooter>
                   </Card>
@@ -113,10 +127,10 @@ class Posts extends React.Component<Props, Stats> {
             }
             return null;
           }}
-        </PostsComponent>
+        </PagesComponent>
       </Layout>
     );
   }
 }
 
-export default withIntl(Posts);
+export default withIntl(Pages);

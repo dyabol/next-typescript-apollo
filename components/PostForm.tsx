@@ -2,14 +2,14 @@ import { Field, Formik, FormikActions } from 'formik';
 import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Form, FormGroup, Label } from 'reactstrap';
-import MyEditor from '../../components/Editor';
-import ErrorAlert from '../../components/ErrorAlert';
-import InputField from '../../components/field/InputField';
-import SaveButton from '../../components/SaveButton';
-import { parseGraphQlValidationError } from '../../lib/error';
-import withIntl from '../../lib/withIntl';
-import { convertToSlug } from '../../utils/url';
-import IconButton from '../IconButton';
+import { parseGraphQlValidationError } from '../lib/error';
+import withIntl from '../lib/withIntl';
+import { convertToSlug } from '../utils/url';
+import MyEditor from './Editor';
+import ErrorAlert from './ErrorAlert';
+import InputField from './field/InputField';
+import IconButton from './IconButton';
+import SaveButton from './SaveButton';
 
 export interface EditorProps {
   title: string;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Subscribe } from 'unstated';
-import SidebarContainer from '../../../containers/admin/SidebarContainer';
+import SidebarContainer from '../../containers/SidebarContainer';
 import Divider from './Divider';
 
 export interface ContainerProps {}

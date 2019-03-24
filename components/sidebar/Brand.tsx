@@ -6,7 +6,7 @@ interface BrandProps {}
 
 const Brand: React.FunctionComponent<BrandProps> = () => {
   return (
-    <Link href="/admin">
+    <Link href="/">
       <a className="sidebar-brand d-flex align-items-center justify-content-center">
         <div className="sidebar-brand-icon">
           <FontAwesomeIcon color="#f6c23e" icon="bolt" size="2x" />

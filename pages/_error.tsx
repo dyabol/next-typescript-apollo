@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import AdminLayout from '../components/admin/Layout';
-import PageLayout from '../components/Layout';
+import Layout from '../components/Layout';
 import Context from '../interfaces/Context';
 
 interface ErrorProps {
@@ -11,16 +10,14 @@ interface ErrorProps {
 }
 
 class Error extends React.Component<ErrorProps, {}> {
-  static getInitialProps({ res, err, asPath }: Context) {
+  static getInitialProps({ res, err }: Context) {
     const statusCode = res ? res.statusCode : err ? err : null;
-    return { statusCode, asPath };
+    return { statusCode };
   }
 
   render() {
-    const { statusCode, asPath } = this.props;
+    const { statusCode } = this.props;
     const title = `Hooops? ${statusCode}`;
-    const isAdmin = asPath.startsWith('/admin/');
-    const Layout = isAdmin ? AdminLayout : PageLayout;
     return (
       <Layout title={title}>
         <div className="container-fluid">
@@ -40,25 +37,14 @@ class Error extends React.Component<ErrorProps, {}> {
                 defaultMessage="It looks like you found a glitch in the matrix..."
               />
             </p>
-            {isAdmin ? (
-              <Link href="/admin">
-                <a>
-                  <FormattedMessage
-                    id="back_to_dashboard"
-                    defaultMessage="← Back to Dashboard"
-                  />
-                </a>
-              </Link>
-            ) : (
-              <Link href="/">
-                <a>
-                  <FormattedMessage
-                    id="back_to_homepage"
-                    defaultMessage="← Back to Homepage"
-                  />
-                </a>
-              </Link>
-            )}
+            <Link href="/">
+              <a>
+                <FormattedMessage
+                  id="back_to_dashboard"
+                  defaultMessage="← Back to Dashboard"
+                />
+              </a>
+            </Link>
           </div>
         </div>
       </Layout>

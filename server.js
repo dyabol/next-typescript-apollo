@@ -55,20 +55,14 @@ app.prepare().then(() => {
     return req;
   };
 
-  server.get('/post/:slug', (req, res) => {
+  server.get('/post/:id', (req, res) => {
     return app.render(addLocaleSupport(req), res, '/post', {
-      slug: req.params.slug
-    });
-  });
-
-  server.get('/admin/post/:id', (req, res) => {
-    return app.render(addLocaleSupport(req), res, '/admin/post', {
       id: req.params.id
     });
   });
 
-  server.get('/admin/page/:id', (req, res) => {
-    return app.render(addLocaleSupport(req), res, '/admin/page', {
+  server.get('/page/:id', (req, res) => {
+    return app.render(addLocaleSupport(req), res, '/page', {
       id: req.params.id
     });
   });
