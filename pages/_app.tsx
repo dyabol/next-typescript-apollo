@@ -1,3 +1,5 @@
+import { LocaleProvider } from 'antd';
+import csCZ from 'antd/lib/locale-provider/cs_CZ';
 import App, { Container } from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
@@ -43,7 +45,6 @@ class MyApp extends App<any> {
     const { req } = ctx;
     const { locale, messages } = req || window.__NEXT_DATA__.props;
     const initialNow = Date.now();
-
     return { pageProps, locale, messages, initialNow };
   }
 
@@ -58,15 +59,17 @@ class MyApp extends App<any> {
     } = this.props;
     return (
       <Container>
-        <IntlProvider
-          locale={locale}
-          messages={messages}
-          initialNow={initialNow}
-        >
-          <ApolloProvider client={apolloClient}>
-            <Component {...pageProps} />
-          </ApolloProvider>
-        </IntlProvider>
+        <LocaleProvider locale={csCZ}>
+          <IntlProvider
+            locale={locale}
+            messages={messages}
+            initialNow={initialNow}
+          >
+            <ApolloProvider client={apolloClient}>
+              <Component {...pageProps} />
+            </ApolloProvider>
+          </IntlProvider>
+        </LocaleProvider>
       </Container>
     );
   }

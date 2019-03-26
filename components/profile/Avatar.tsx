@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Slider } from 'antd';
+import { SliderValue } from 'antd/lib/slider';
 import { ApolloClient } from 'apollo-boost';
 import * as React from 'react';
 import { ApolloConsumer } from 'react-apollo';
 import AvatarEditor from 'react-avatar-editor';
 import Dropzone from 'react-dropzone';
 import { FormattedMessage } from 'react-intl';
-import { Button } from 'reactstrap';
 import styled from 'styled-components';
 import { uploadAvatar } from '../../graphql/user/mutations/uploadAvatar';
-import IconButton from '../IconButton';
 
 export interface AvatarProps {
   className?: string;
@@ -107,8 +107,10 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
     this.setState({ rotate: this.state.rotate + 90 });
   };
 
-  setScale = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseFloat(e.target.value);
+  setScale = (val: SliderValue) => {
+    if (Array.isArray(val)) {
+      val = val[0];
+    }
     this.setState({ scale: val });
   };
 
@@ -159,53 +161,49 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
               />
               <div style={{ textAlign: 'center' }}>
                 <div>
-                  <input
-                    style={{ maxWidth: '150px' }}
-                    className="mb-2 ml-1 mr-1 pt-2 custom-range"
-                    onChange={this.setScale}
-                    type="range"
+                  <Slider
                     step={0.01}
                     min={1}
-                    max={2}
-                    name="scale"
+                    max={3}
+                    onChange={this.setScale}
                     value={scale}
                   />
                   <Button
-                    size="sm"
-                    color="primary"
+                    size="small"
+                    type="primary"
+                    shape="circle"
                     onClick={this.rotateToLeft}
-                    className="m-1 mb-2 btn-circle"
-                  >
-                    <FontAwesomeIcon icon="undo-alt" />
-                  </Button>
+                    className="m-1 mb-2"
+                    icon="undo"
+                  />
                   <Button
-                    size="sm"
-                    color="primary"
+                    size="small"
+                    type="primary"
+                    shape="circle"
                     onClick={this.rotateToRight}
-                    className="m-1 mb-2 btn-circle"
-                  >
-                    <FontAwesomeIcon icon="redo-alt" />
-                  </Button>
+                    className="m-1 mb-2"
+                    icon="redo"
+                  />
                 </div>
                 <div>
-                  <IconButton
-                    size="sm"
+                  <Button
+                    size="small"
                     onClick={() => this.saveImage(client)}
                     className="m-2"
                     icon="save"
-                    color="success"
+                    type="primary"
                   >
                     <FormattedMessage id="save" defaultMessage="Save" />
-                  </IconButton>
-                  <IconButton
-                    color="danger"
-                    size="sm"
+                  </Button>
+                  <Button
+                    size="small"
                     onClick={this.resetImage}
                     className="m-2"
-                    icon="times"
+                    icon="close"
+                    type="dashed"
                   >
                     <FormattedMessage id="discard" defaultMessage="Discard" />
-                  </IconButton>
+                  </Button>
                 </div>
               </div>
             </div>

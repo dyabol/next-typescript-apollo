@@ -6,22 +6,22 @@ import { ApolloConsumer } from 'react-apollo';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
-import IconButton from '../components/IconButton';
-import Layout from '../components/Layout';
-import PostForm, { EditorProps } from '../components/PostForm';
+import IconButton from '../../components/IconButton';
+import Layout from '../../components/Layout';
+import PostForm, { EditorProps } from '../../components/PostForm';
 import {
   CreatePageMutation,
   EditPageMutation,
   PageByIdPage
-} from '../generated/apolloComponents';
-import { createPageMutation } from '../graphql/post/mutations/createPost';
-import { deletePageMutation } from '../graphql/post/mutations/deletePost';
-import { editPageMutation } from '../graphql/post/mutations/editPost';
-import { pageByIdQuery } from '../graphql/post/queries/postById';
-import Context from '../interfaces/Context';
-import checkLoggedIn from '../lib/checkLoggedIn';
-import redirect from '../lib/redirect';
-import withIntl from '../lib/withIntl';
+} from '../../generated/apolloComponents';
+import { createPageMutation } from '../../graphql/post/mutations/createPost';
+import { deletePageMutation } from '../../graphql/post/mutations/deletePost';
+import { editPageMutation } from '../../graphql/post/mutations/editPost';
+import { pageByIdQuery } from '../../graphql/post/queries/postById';
+import Context from '../../interfaces/Context';
+import checkLoggedIn from '../../lib/checkLoggedIn';
+import redirect from '../../lib/redirect';
+import withIntl from '../../lib/withIntl';
 
 export type Props = {
   router: any;

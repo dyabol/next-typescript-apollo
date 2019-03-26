@@ -1,3 +1,32 @@
-@import './admin.scss';
 @import '../node_modules/@fortawesome/fontawesome-svg-core/styles.css';
-@import '../static/css/nprogress.css';
+@import './nprogress.css';
+@import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+@import '../node_modules/antd/dist/antd.css';
+@import '../node_modules/bootstrap/scss/bootstrap-grid.scss';
+@import '../node_modules/bootstrap/scss/utilities/borders';
+
+.admin {
+  .editor-wrapper {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    background: #fff;
+
+    .editor-toolbar {
+      background: #fff;
+      border: 0;
+      border-bottom: 1px solid #ced4da;
+    }
+
+    .editor-content {
+      margin: 0 1rem;
+
+      .public-DraftEditor-content {
+        min-height: 20rem;
+      }
+    }
+  }
+
+  .posts-table {
+    min-height: 600px;
+  }
+}

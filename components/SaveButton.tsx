@@ -1,46 +1,31 @@
+import { Button, Icon } from 'antd';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import IconButton from './IconButton';
-
 export interface Props {
   loading?: boolean;
   complete?: boolean;
   className?: string;
+  style?: { [key: string]: string };
 }
 
 export interface State {}
 
 export default class SaveButton extends React.Component<Props, State> {
   public render() {
-    const { complete, loading, className } = this.props;
+    const { complete } = this.props;
     if (complete) {
       return (
-        <IconButton icon="check" color="success" disabled className={className}>
+        <Button disabled {...this.props}>
+          <Icon type="check" />
           <FormattedMessage id="saved" defaultMessage="Saved" />
-        </IconButton>
-      );
-    } else if (loading) {
-      return (
-        <IconButton
-          icon="circle-notch"
-          color="secondary"
-          disabled
-          className={className}
-          spin
-        >
-          <FormattedMessage id="loading" defaultMessage="Loading" />
-        </IconButton>
+        </Button>
       );
     } else {
       return (
-        <IconButton
-          icon="save"
-          color="primary"
-          className={className}
-          type="submit"
-        >
+        <Button type="primary" htmlType="submit" {...this.props}>
+          <Icon type="save" />
           <FormattedMessage id="save" defaultMessage="Save" />
-        </IconButton>
+        </Button>
       );
     }
   }

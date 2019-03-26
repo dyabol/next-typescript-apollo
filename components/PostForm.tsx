@@ -1,15 +1,16 @@
+import { Button, Form, Icon } from 'antd';
 import { Field, Formik, FormikActions } from 'formik';
 import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
-import { Form, FormGroup, Label } from 'reactstrap';
 import { parseGraphQlValidationError } from '../lib/error';
 import withIntl from '../lib/withIntl';
 import { convertToSlug } from '../utils/url';
 import MyEditor from './Editor';
 import ErrorAlert from './ErrorAlert';
 import InputField from './field/InputField';
-import IconButton from './IconButton';
 import SaveButton from './SaveButton';
+
+const FormItem = Form.Item;
 
 export interface EditorProps {
   title: string;
@@ -148,31 +149,25 @@ class PostForm extends React.Component<Props, State> {
                 })}
                 autoComplete="off"
               />
-              <FormGroup>
-                <Label>
-                  <FormattedMessage id="content" defaultMessage="Content" />
-                </Label>
+              <FormItem>
                 <MyEditor
                   content={content}
                   onChange={value => setFieldValue('content', value)}
                 />
-              </FormGroup>
-              <FormGroup>
+              </FormItem>
+              <FormItem>
                 <SaveButton
-                  className="mr-3"
+                  style={{ marginRight: '16px' }}
                   loading={this.state.loading}
                   complete={this.state.complete}
                 />
                 {deleteButton && (
-                  <IconButton
-                    onClick={onDelete}
-                    icon="trash-alt"
-                    color="danger"
-                  >
+                  <Button onClick={onDelete} type="danger">
+                    <Icon type="close" />
                     <FormattedMessage id="delete" defaultMessage="Delete" />
-                  </IconButton>
+                  </Button>
                 )}
-              </FormGroup>
+              </FormItem>
             </Form>
           )}
         </Formik>

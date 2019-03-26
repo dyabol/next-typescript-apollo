@@ -1,3 +1,4 @@
+import { Layout as AntLayout } from 'antd';
 import Head from 'next/head';
 import * as React from 'react';
 import { Provider } from 'unstated';
@@ -32,7 +33,7 @@ export default class Layout extends React.Component<Props, {}> {
       <MeComponent>
         {({ data }) =>
           data && data.me ? (
-            <div id="wrapper" className="admin">
+            <AntLayout className="admin" style={{ minHeight: '100vh' }}>
               <Head>
                 <title>{this.getTitle()}</title>
                 <meta
@@ -40,16 +41,12 @@ export default class Layout extends React.Component<Props, {}> {
                   content="initial-scale=1.0, width=device-width"
                   key="viewport"
                 />
-                <link
-                  href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-                  rel="stylesheet"
-                />
               </Head>
               <Provider>
                 <Sidebar />
                 <Content>{children}</Content>
               </Provider>
-            </div>
+            </AntLayout>
           ) : (
             <Loading />
           )

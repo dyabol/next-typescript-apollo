@@ -71,5 +71,9 @@
   "matrix_glitch": "Vypadá to že jste narazil/a na chybu v matrixu...",
   "back_to_dashboard": "← Zpět na nástěnku",
   "back_to_homepage": "← Zpět na hlavní stránku",
-  "table_records": "Zobrazeno {start} až {end} z {total} záznamů"
+  "table_records": "Zobrazeno {start} až {end} z {total} záznamů",
+  "filterTitle": "Filtr",
+  "filterConfirm": "Ok",
+  "filterReset": "Reset",
+  "emptyText": "Žádná data"
 }

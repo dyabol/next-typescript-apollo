@@ -71,5 +71,9 @@
   "matrix_glitch": "It looks like you found a glitch in the matrix...",
   "back_to_dashboard": "← Back to Dashboard",
   "back_to_homepage": "← Back to Homepage",
-  "table_records": "Showing {start} to {end} of {total} entries"
+  "table_records": "Showing {start} to {end} of {total} entries",
+  "filterTitle": "Filter",
+  "filterConfirm": "Ok",
+  "filterReset": "Reset",
+  "emptyText": "No data"
 }

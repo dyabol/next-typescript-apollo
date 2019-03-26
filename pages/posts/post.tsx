@@ -1,27 +1,24 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Icon, Modal } from 'antd';
 import { ApolloClient } from 'apollo-boost';
 import Router from 'next/router';
 import React from 'react';
 import { ApolloConsumer } from 'react-apollo';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import Button from 'reactstrap/lib/Button';
-import IconButton from '../components/IconButton';
-import Layout from '../components/Layout';
-import PostForm, { EditorProps } from '../components/PostForm';
+import Layout from '../../components/Layout';
+import PostForm, { EditorProps } from '../../components/PostForm';
 import {
   CreatePostMutation,
   EditPostMutation,
   PostByIdPost
-} from '../generated/apolloComponents';
-import { createPostMutation } from '../graphql/post/mutations/createPost';
-import { deletePostMutation } from '../graphql/post/mutations/deletePost';
-import { editPostMutation } from '../graphql/post/mutations/editPost';
-import { postByIdQuery } from '../graphql/post/queries/postById';
-import Context from '../interfaces/Context';
-import checkLoggedIn from '../lib/checkLoggedIn';
-import redirect from '../lib/redirect';
-import withIntl from '../lib/withIntl';
+} from '../../generated/apolloComponents';
+import { createPostMutation } from '../../graphql/post/mutations/createPost';
+import { deletePostMutation } from '../../graphql/post/mutations/deletePost';
+import { editPostMutation } from '../../graphql/post/mutations/editPost';
+import { postByIdQuery } from '../../graphql/post/queries/postById';
+import Context from '../../interfaces/Context';
+import checkLoggedIn from '../../lib/checkLoggedIn';
+import redirect from '../../lib/redirect';
+import withIntl from '../../lib/withIntl';
 
 export type Props = {
   router: any;
@@ -31,6 +28,7 @@ export type Props = {
 export interface State extends EditorProps {
   id: string | null;
   modal: boolean;
+  confirmLoading: boolean;
 }
 
 class EditPost extends React.Component<Props, State> {
@@ -74,7 +72,8 @@ class EditPost extends React.Component<Props, State> {
       title: props.title || '',
       content: props.content || '',
       slug: props.slug || '',
-      modal: false
+      modal: false,
+      confirmLoading: false
     };
     this.save = this.save.bind(this);
     this.changeUrl = this.changeUrl.bind(this);
@@ -139,6 +138,9 @@ class EditPost extends React.Component<Props, State> {
   }
 
   async onDeleteHandler(client: ApolloClient<any>) {
+    this.setState({
+      confirmLoading: true
+    });
     const result = await client.mutate({
       mutation: deletePostMutation,
       variables: {
@@ -152,7 +154,7 @@ class EditPost extends React.Component<Props, State> {
   }
 
   render() {
-    const { title, content, slug, id } = this.state;
+    const { title, content, slug, id, confirmLoading } = this.state;
     const { intl } = this.props;
     const postTitle = id
       ? intl.formatMessage({
@@ -166,13 +168,11 @@ class EditPost extends React.Component<Props, State> {
     return (
       <Layout title={postTitle}>
         <Button
-          outline
-          size="sm"
-          color="primary"
-          className="mb-3"
+          size="small"
+          style={{ marginBottom: '16px' }}
           onClick={() => Router.push('/posts')}
         >
-          <FontAwesomeIcon className="mr-2" icon="angle-left" />
+          <Icon type="left" />
           <FormattedMessage id="back" defaultMessage="Back" />
         </Button>
         <h1>{postTitle}</h1>
@@ -188,7 +188,43 @@ class EditPost extends React.Component<Props, State> {
                 onSave={this.changeUrl}
                 save={(values: EditorProps) => this.save(values, client)}
               />
-              <Modal isOpen={this.state.modal} toggle={this.toggle}>
+              <Modal
+                title={
+                  <FormattedMessage
+                    id="delete_post_title"
+                    defaultMessage="Delete post"
+                  />
+                }
+                okText={
+                  <FormattedMessage id="delete" defaultMessage="Delete" />
+                }
+                okType="danger"
+                cancelText={
+                  <FormattedMessage id="cancel" defaultMessage="Cancel" />
+                }
+                visible={this.state.modal}
+                onOk={() => this.onDeleteHandler(client)}
+                confirmLoading={confirmLoading}
+                onCancel={this.toggle}
+              >
+                <FormattedMessage
+                  id="delete_post_message"
+                  defaultMessage="Are you sure you want to remove the {title} post?"
+                  values={{ title: <strong>{title}</strong> }}
+                />
+              </Modal>
+            </>
+          )}
+        </ApolloConsumer>
+      </Layout>
+    );
+  }
+}
+
+export default withIntl(EditPost);
+
+/*
+<Modal isOpen={this.state.modal} toggle={this.toggle}>
                 <ModalHeader toggle={this.toggle}>
                   <FormattedMessage
                     id="delete_post_title"
@@ -219,12 +255,4 @@ class EditPost extends React.Component<Props, State> {
                   </IconButton>
                 </ModalFooter>
               </Modal>
-            </>
-          )}
-        </ApolloConsumer>
-      </Layout>
-    );
-  }
-}
-
-export default withIntl(EditPost);
+              */
