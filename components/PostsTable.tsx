@@ -3,48 +3,37 @@ import { PaginationConfig } from 'antd/lib/table';
 import Link from 'next/link';
 import * as React from 'react';
 import { InjectedIntl } from 'react-intl';
-import {
-  PagesComponent,
-  PostsComponent,
-  PostsPosts,
-  PostsUser
-} from '../generated/apolloComponents';
+import { PostsPosts, PostsUser } from '../generated/apolloComponents';
 import withIntl from '../lib/withIntl';
 
 interface PostTableProps {
   intl: InjectedIntl;
-  postType?: string;
+  loading?: boolean;
+  url: string;
+  data: any;
+  total: number;
+  onPagination: (page: number) => void;
 }
 
-interface PostTableState {
-  skip: number;
-  take: number;
-}
+interface PostTableState {}
 
 class PostsTable extends React.Component<PostTableProps, PostTableState> {
-  private posts: any = [];
   private pagination: PaginationConfig = {};
 
   constructor(props: PostTableProps) {
     super(props);
-    this.state = {
-      skip: 0,
-      take: 10
-    };
+    this.pagination.total = props.total;
   }
 
   private handleTableChange = (pagination: PaginationConfig) => {
-    console.log(pagination);
     if (pagination && pagination.current !== undefined) {
       this.pagination.current = pagination.current;
-      this.setState({
-        skip: this.state.take * (pagination.current - 1)
-      });
+      this.props.onPagination(pagination.current);
     }
   };
 
   private getColumns() {
-    const { intl } = this.props;
+    const { intl, url } = this.props;
     return [
       {
         title: intl.formatMessage({
@@ -56,10 +45,10 @@ class PostsTable extends React.Component<PostTableProps, PostTableState> {
         render: (title: string, post: PostsPosts) => (
           <Link
             href={{
-              pathname: '/posts/post',
+              pathname: url,
               query: { id: post.id }
             }}
-            as={'/posts/post/' + post.id}
+            as={url + '/' + post.id}
           >
             <a>{title}</a>
           </Link>
@@ -110,65 +99,16 @@ class PostsTable extends React.Component<PostTableProps, PostTableState> {
   }
 
   public render() {
-    if (this.props.postType === 'page') {
-      return (
-        <PagesComponent
-          variables={{
-            skip: this.state.skip,
-            take: this.state.take
-          }}
-        >
-          {({ loading, error, data }) => {
-            if (error) {
-              throw error;
-            }
-            if (data && data.pages) {
-              this.posts = data.pages;
-              this.pagination.total = data.pagesCount;
-            }
-            return (
-              <Table
-                rowKey="id"
-                columns={this.getColumns()}
-                dataSource={this.posts}
-                pagination={this.pagination}
-                loading={loading}
-                onChange={this.handleTableChange}
-              />
-            );
-          }}
-        </PagesComponent>
-      );
-    } else {
-      return (
-        <PostsComponent
-          variables={{
-            skip: this.state.skip,
-            take: this.state.take
-          }}
-        >
-          {({ loading, error, data }) => {
-            if (error) {
-              throw error;
-            }
-            if (data && data.posts) {
-              this.posts = data.posts;
-              this.pagination.total = data.postsCount;
-            }
-            return (
-              <Table
-                rowKey="id"
-                columns={this.getColumns()}
-                dataSource={this.posts}
-                pagination={this.pagination}
-                loading={loading}
-                onChange={this.handleTableChange}
-              />
-            );
-          }}
-        </PostsComponent>
-      );
-    }
+    return (
+      <Table
+        rowKey="id"
+        columns={this.getColumns()}
+        dataSource={this.props.data}
+        pagination={this.pagination}
+        loading={this.props.loading}
+        onChange={this.handleTableChange}
+      />
+    );
   }
 }
 

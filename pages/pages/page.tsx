@@ -1,12 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Icon, Modal } from 'antd';
 import { ApolloClient } from 'apollo-boost';
 import Router from 'next/router';
 import React from 'react';
 import { ApolloConsumer } from 'react-apollo';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import Button from 'reactstrap/lib/Button';
-import IconButton from '../../components/IconButton';
 import Layout from '../../components/Layout';
 import PostForm, { EditorProps } from '../../components/PostForm';
 import {
@@ -31,6 +28,7 @@ export type Props = {
 export interface State extends EditorProps {
   id: string | null;
   modal: boolean;
+  confirmLoading: boolean;
 }
 
 class EditPage extends React.Component<Props, State> {
@@ -74,7 +72,8 @@ class EditPage extends React.Component<Props, State> {
       title: props.title || '',
       content: props.content || '',
       slug: props.slug || '',
-      modal: false
+      modal: false,
+      confirmLoading: false
     };
     this.save = this.save.bind(this);
     this.changeUrl = this.changeUrl.bind(this);
@@ -152,7 +151,7 @@ class EditPage extends React.Component<Props, State> {
   }
 
   render() {
-    const { title, content, slug, id } = this.state;
+    const { title, content, slug, id, confirmLoading } = this.state;
     const { intl } = this.props;
     const pageTitle = id
       ? intl.formatMessage({
@@ -166,13 +165,11 @@ class EditPage extends React.Component<Props, State> {
     return (
       <Layout title={pageTitle}>
         <Button
-          outline
-          size="sm"
-          color="primary"
-          className="mb-3"
+          size="small"
+          style={{ marginBottom: '16px' }}
           onClick={() => Router.push('/pages')}
         >
-          <FontAwesomeIcon className="mr-2" icon="angle-left" />
+          <Icon type="left" />
           <FormattedMessage id="back" defaultMessage="Back" />
         </Button>
         <h1>{pageTitle}</h1>
@@ -188,36 +185,30 @@ class EditPage extends React.Component<Props, State> {
                 onSave={this.changeUrl}
                 save={(values: EditorProps) => this.save(values, client)}
               />
-              <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggle}>
+              <Modal
+                title={
                   <FormattedMessage
                     id="delete_page_title"
                     defaultMessage="Delete page"
                   />
-                </ModalHeader>
-                <ModalBody>
-                  <FormattedMessage
-                    id="delete_page_message"
-                    defaultMessage="Are you sure you want to remove the {title} page?"
-                    values={{ title: <strong>{title}</strong> }}
-                  />
-                </ModalBody>
-                <ModalFooter>
-                  <IconButton
-                    color="danger"
-                    onClick={() => this.onDeleteHandler(client)}
-                    icon="trash-alt"
-                  >
-                    <FormattedMessage id="delete" defaultMessage="Delete" />
-                  </IconButton>{' '}
-                  <IconButton
-                    color="secondary"
-                    onClick={this.toggle}
-                    icon="times"
-                  >
-                    <FormattedMessage id="cancel" defaultMessage="Cancel" />
-                  </IconButton>
-                </ModalFooter>
+                }
+                okText={
+                  <FormattedMessage id="delete" defaultMessage="Delete" />
+                }
+                okType="danger"
+                cancelText={
+                  <FormattedMessage id="cancel" defaultMessage="Cancel" />
+                }
+                visible={this.state.modal}
+                onOk={() => this.onDeleteHandler(client)}
+                confirmLoading={confirmLoading}
+                onCancel={this.toggle}
+              >
+                <FormattedMessage
+                  id="delete_page_message"
+                  defaultMessage="Are you sure you want to remove the {title} page?"
+                  values={{ title: <strong>{title}</strong> }}
+                />
               </Modal>
             </>
           )}

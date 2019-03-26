@@ -4,6 +4,7 @@ import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import Layout from '../components/Layout';
 import PostsTable from '../components/PostsTable';
+import { PostsComponent } from '../generated/apolloComponents';
 import Context from '../interfaces/Context';
 import checkLoggedIn from '../lib/checkLoggedIn';
 import redirect from '../lib/redirect';
@@ -12,7 +13,10 @@ import withIntl from '../lib/withIntl';
 export type Props = {
   intl: InjectedIntl;
 };
-export type Stats = {};
+export type Stats = {
+  skip: number;
+  take: number;
+};
 
 class Posts extends React.Component<Props, Stats> {
   static async getInitialProps(context: Context) {
@@ -24,6 +28,14 @@ class Posts extends React.Component<Props, Stats> {
     }
 
     return { loggedInUser };
+  }
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      skip: 0,
+      take: 10
+    };
   }
 
   render() {
@@ -45,7 +57,31 @@ class Posts extends React.Component<Props, Stats> {
             <FormattedMessage id="new_post" defaultMessage="New post" />
           </Button>
         </div>
-        <PostsTable />
+        <PostsComponent
+          variables={{
+            skip: this.state.skip,
+            take: this.state.take
+          }}
+        >
+          {({ loading, error, data }) => {
+            if (error) {
+              throw error;
+            }
+            return (
+              <PostsTable
+                onPagination={(page: number) =>
+                  this.setState({
+                    skip: this.state.take * (page - 1)
+                  })
+                }
+                url="/posts/post"
+                total={data && data.postsCount}
+                data={data && data.posts}
+                loading={loading}
+              />
+            );
+          }}
+        </PostsComponent>
       </Layout>
     );
   }

@@ -4,6 +4,7 @@ import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import Layout from '../components/Layout';
 import PostsTable from '../components/PostsTable';
+import { PagesComponent } from '../generated/apolloComponents';
 import Context from '../interfaces/Context';
 import checkLoggedIn from '../lib/checkLoggedIn';
 import redirect from '../lib/redirect';
@@ -29,6 +30,14 @@ class Pages extends React.Component<Props, Stats> {
     return { loggedInUser };
   }
 
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      skip: 0,
+      take: 10
+    };
+  }
+
   render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
@@ -48,7 +57,31 @@ class Pages extends React.Component<Props, Stats> {
             <FormattedMessage id="new_page" defaultMessage="New page" />
           </Button>
         </div>
-        <PostsTable postType="page" />
+        <PagesComponent
+          variables={{
+            skip: this.state.skip,
+            take: this.state.take
+          }}
+        >
+          {({ loading, error, data }) => {
+            if (error) {
+              throw error;
+            }
+            return (
+              <PostsTable
+                onPagination={(page: number) =>
+                  this.setState({
+                    skip: this.state.take * (page - 1)
+                  })
+                }
+                url="/pages/page"
+                total={data && data.pagesCount}
+                data={data && data.pages}
+                loading={loading}
+              />
+            );
+          }}
+        </PagesComponent>
       </Layout>
     );
   }
