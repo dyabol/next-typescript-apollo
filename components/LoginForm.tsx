@@ -3,7 +3,7 @@ import { Field, Formik } from 'formik';
 import Link from 'next/link';
 import Router from 'next/router';
 import * as React from 'react';
-import { InjectedIntl } from 'react-intl';
+import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { LoginComponent, MeQuery } from '../generated/apolloComponents';
 import { meQuery } from '../graphql/user/queries/me';
 import withIntl from '../lib/withIntl';
@@ -102,9 +102,14 @@ class LoginForm extends React.Component<LoginFormProps, {}> {
                   }
                 />
                 <Form.Item>
-                  <Checkbox>Remember me</Checkbox>
+                  <Checkbox>
+                    <FormattedMessage
+                      id="remember_me"
+                      defaultMessage="Remember me"
+                    />
+                  </Checkbox>
                   <Link href="/forgot-password">
-                    <a>
+                    <a style={{ float: 'right' }}>
                       {intl.formatMessage({
                         id: 'forgot_password',
                         defaultMessage: 'Forgot password'

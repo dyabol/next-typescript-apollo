@@ -1,8 +1,8 @@
+import { Button, Form } from 'antd';
 import { Field, Formik, FormikActions } from 'formik';
 import Router from 'next/router';
 import * as React from 'react';
 import { InjectedIntl } from 'react-intl';
-import { Button, Form } from 'reactstrap';
 import { registerMutation } from '../graphql/user/mutations/register';
 import { parseGraphQlValidationError } from '../lib/error';
 import withIntl from '../lib/withIntl';
@@ -75,6 +75,28 @@ class RegisterForm extends React.Component<Props, {}> {
 
   public render() {
     const { intl } = this.props;
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 }
+      }
+    };
+    const tailFormItemLayout = {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0
+        },
+        sm: {
+          span: 16,
+          offset: 8
+        }
+      }
+    };
     return (
       <Formik
         validateOnBlur={true}
@@ -84,7 +106,7 @@ class RegisterForm extends React.Component<Props, {}> {
         initialValues={this.initialValues}
       >
         {({ values, handleSubmit }) => (
-          <Form onSubmit={handleSubmit}>
+          <Form {...formItemLayout} onSubmit={handleSubmit}>
             <Field
               name="firstName"
               placeholder=""
@@ -149,12 +171,14 @@ class RegisterForm extends React.Component<Props, {}> {
                 defaultMessage: 'Repeat password'
               })}
             />
-            <Button color="primary" type="submit">
-              {intl.formatMessage({
-                id: 'register',
-                defaultMessage: 'Register'
-              })}
-            </Button>
+            <Form.Item {...tailFormItemLayout}>
+              <Button type="primary" htmlType="submit">
+                {intl.formatMessage({
+                  id: 'register',
+                  defaultMessage: 'Register'
+                })}
+              </Button>
+            </Form.Item>
           </Form>
         )}
       </Formik>

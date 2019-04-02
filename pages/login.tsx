@@ -6,7 +6,7 @@ import PublicLayout from '../components/PublicLayout';
 export type Props = {};
 
 const LoginContainer = styled.div`
-  width: 300px;
+  max-width: 300px;
   margin: 30px auto;
 `;
 

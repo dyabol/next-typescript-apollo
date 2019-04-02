@@ -5,6 +5,7 @@ const FormItem = Form.Item;
 
 type Props = {
   label?: string;
+  required?: boolean;
   ref?:
     | string
     | ((instance: Input | null) => void)
@@ -33,6 +34,7 @@ const InputField = ({
       label={props.label}
       validateStatus={errorMassage ? 'error' : ''}
       help={errorMassage}
+      required={props.required}
     >
       <Input {...field} {...inputProps} />
     </FormItem>
