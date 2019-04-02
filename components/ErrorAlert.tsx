@@ -1,10 +1,12 @@
+import { Alert } from 'antd';
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Alert, Button, Collapse } from 'reactstrap';
+import { InjectedIntl } from 'react-intl';
 import { parseGraphQlError } from '../lib/error';
+import withIntl from '../lib/withIntl';
 
 export interface Props {
   error: any | null;
+  intl: InjectedIntl;
   onDismiss?: () => void;
 }
 
@@ -12,7 +14,7 @@ export interface State {
   collapse: boolean;
 }
 
-export default class ErrorAlert extends React.Component<Props, State> {
+class ErrorAlert extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.toggle = this.toggle.bind(this);
@@ -42,31 +44,24 @@ export default class ErrorAlert extends React.Component<Props, State> {
   }
 
   public render() {
-    const { error } = this.props;
+    const { error, intl } = this.props;
     if (error) {
       const { message, stack } = this.getError();
+      console.error(stack);
       return (
         <Alert
-          color="danger"
-          isOpen={error ? true : false}
-          toggle={this.onDissmisHandler}
-        >
-          {message}
-          <Button
-            className="ml-3"
-            outline
-            color="danger"
-            size="sm"
-            onClick={this.toggle}
-          >
-            <FormattedMessage id="detail" defaultMessage="Detail" />
-          </Button>
-          <Collapse className="mt-3" isOpen={this.state.collapse}>
-            <pre>{stack}</pre>
-          </Collapse>
-        </Alert>
+          type="error"
+          message={intl.formatMessage({
+            id: 'error',
+            defaultMessage: 'Error'
+          })}
+          description={message}
+          showIcon
+        />
       );
     }
     return null;
   }
 }
+
+export default withIntl(ErrorAlert);

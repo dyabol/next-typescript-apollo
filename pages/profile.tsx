@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
-import { Table } from 'reactstrap';
 import Layout from '../components/Layout';
 import Avatar from '../components/profile/Avatar';
 import { MeComponent } from '../generated/apolloComponents';
@@ -29,7 +28,7 @@ class Profile extends React.Component<Props, {}> {
                 <div>
                   <h2>{data.me.fullName}</h2>
                   <Avatar avatar={data.me.avatar} className="mt-3 mb-3" />
-                  <Table>
+                  <table>
                     <tbody>
                       <tr>
                         <th>
@@ -65,7 +64,7 @@ class Profile extends React.Component<Props, {}> {
                         <td>{data.me.email}</td>
                       </tr>
                     </tbody>
-                  </Table>
+                  </table>
                 </div>
               );
             }

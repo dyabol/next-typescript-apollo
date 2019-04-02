@@ -1,28 +1,31 @@
+import { Alert } from 'antd';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Alert } from 'reactstrap';
+import { InjectedIntl } from 'react-intl';
 import PublicLayout from '../components/PublicLayout';
+import withIntl from '../lib/withIntl';
 
-export type Props = {};
+export type Props = {
+  intl: InjectedIntl;
+};
 class CheckEmail extends React.Component<Props, {}> {
   render() {
+    const { intl } = this.props;
     return (
       <PublicLayout>
-        <Alert color="success">
-          <FormattedMessage
-            tagName="h4"
-            id="registred"
-            defaultMessage="Registred"
-          />
-          <FormattedMessage
-            tagName="p"
-            id="check_email_massage"
-            defaultMessage="Check your email to confirm your account."
-          />
-        </Alert>
+        <Alert
+          message={intl.formatMessage({
+            id: 'registred',
+            defaultMessage: 'Registred'
+          })}
+          description={intl.formatMessage({
+            id: 'check_email_massage',
+            defaultMessage: 'Check your email to confirm your account.'
+          })}
+          type="success"
+        />
       </PublicLayout>
     );
   }
 }
 
-export default CheckEmail;
+export default withIntl(CheckEmail);

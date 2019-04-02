@@ -1,8 +1,8 @@
+import { Button, Form } from 'antd';
 import { Field, Formik } from 'formik';
 import Router from 'next/router';
 import * as React from 'react';
 import { InjectedIntl } from 'react-intl';
-import { Button, Form } from 'reactstrap';
 import { ChangePasswordComponent } from '../generated/apolloComponents';
 import withIntl from '../lib/withIntl';
 import InputField from './field/InputField';
@@ -76,7 +76,7 @@ class ChangePasswordForm extends React.Component<ChangePasswordFormProps, {}> {
                     defaultMessage: 'Repeat password'
                   })}
                 />
-                <Button color="primary" type="submit">
+                <Button type="primary" htmlType="submit">
                   {intl.formatMessage({
                     id: 'change_password',
                     defaultMessage: 'Change password'

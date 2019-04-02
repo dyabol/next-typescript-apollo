@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import * as React from 'react';
-import { Container } from 'reactstrap';
 
 export type Props = {
   readonly title?: string;
@@ -25,19 +24,17 @@ export default class PublicLayout extends React.Component<Props, {}> {
   public render() {
     const { children } = this.props;
     return (
-      <>
-        <div className="content">
-          <Head>
-            <title>{this.getTitle()}</title>
-            <meta
-              name="viewport"
-              content="initial-scale=1.0, width=device-width"
-              key="viewport"
-            />
-          </Head>
-          <Container className="mt-3">{children}</Container>
-        </div>
-      </>
+      <div className="content">
+        <Head>
+          <title>{this.getTitle()}</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+            key="viewport"
+          />
+        </Head>
+        <div className="mt-3 container">{children}</div>
+      </div>
     );
   }
 }
