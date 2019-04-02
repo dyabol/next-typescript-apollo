@@ -1,0 +1,42 @@
+[
+  {
+    "id": "dashboard",
+    "defaultMessage": "Dashboard"
+  },
+  {
+    "id": "content",
+    "defaultMessage": "Content"
+  },
+  {
+    "id": "posts",
+    "defaultMessage": "Posts"
+  },
+  {
+    "id": "pages",
+    "defaultMessage": "Pages"
+  },
+  {
+    "id": "menus",
+    "defaultMessage": "Menus"
+  },
+  {
+    "id": "media",
+    "defaultMessage": "Media"
+  },
+  {
+    "id": "personal",
+    "defaultMessage": "Personal"
+  },
+  {
+    "id": "profile",
+    "defaultMessage": "Profile"
+  },
+  {
+    "id": "users",
+    "defaultMessage": "Users"
+  },
+  {
+    "id": "settings",
+    "defaultMessage": "Settings"
+  }
+]

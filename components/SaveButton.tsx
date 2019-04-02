@@ -12,17 +12,22 @@ export interface State {}
 
 export default class SaveButton extends React.Component<Props, State> {
   public render() {
-    const { complete } = this.props;
+    const { complete, style, className } = this.props;
     if (complete) {
       return (
-        <Button disabled {...this.props}>
+        <Button disabled style={style} className={className}>
           <Icon type="check" />
           <FormattedMessage id="saved" defaultMessage="Saved" />
         </Button>
       );
     } else {
       return (
-        <Button type="primary" htmlType="submit" {...this.props}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={style}
+          className={className}
+        >
           <Icon type="save" />
           <FormattedMessage id="save" defaultMessage="Save" />
         </Button>

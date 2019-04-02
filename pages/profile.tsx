@@ -4,9 +4,7 @@ import { Table } from 'reactstrap';
 import Layout from '../components/Layout';
 import Avatar from '../components/profile/Avatar';
 import { MeComponent } from '../generated/apolloComponents';
-import Context from '../interfaces/Context';
-import checkLoggedIn from '../lib/checkLoggedIn';
-import redirect from '../lib/redirect';
+import withAuth from '../lib/withAuth';
 import withIntl from '../lib/withIntl';
 
 export type Props = {
@@ -14,17 +12,6 @@ export type Props = {
 };
 
 class Profile extends React.Component<Props, {}> {
-  static async getInitialProps(context: Context) {
-    const { loggedInUser } = await checkLoggedIn(context.apolloClient);
-
-    if (!loggedInUser.me) {
-      // If not signed in, send them somewhere more useful
-      redirect(context, '/login');
-    }
-
-    return { loggedInUser };
-  }
-
   render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
@@ -90,4 +77,4 @@ class Profile extends React.Component<Props, {}> {
   }
 }
 
-export default withIntl(Profile);
+export default withIntl(withAuth(Profile));

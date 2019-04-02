@@ -1,9 +1,10 @@
+import { Button, Form } from 'antd';
+import FormItem from 'antd/lib/form/FormItem';
 import { Field, Formik } from 'formik';
 import Link from 'next/link';
 import Router from 'next/router';
 import * as React from 'react';
 import { InjectedIntl } from 'react-intl';
-import { Button, Form, FormGroup } from 'reactstrap';
 import { LoginComponent, MeQuery } from '../generated/apolloComponents';
 import { meQuery } from '../graphql/user/queries/me';
 import withIntl from '../lib/withIntl';
@@ -54,7 +55,6 @@ class LoginForm extends React.Component<LoginFormProps, {}> {
                   });
                 }
               });
-              console.log(result);
               if (result && result.data && !result.data.login) {
                 setErrors({
                   email: intl.formatMessage({
@@ -98,7 +98,7 @@ class LoginForm extends React.Component<LoginFormProps, {}> {
                     defaultMessage: 'Password'
                   })}
                 />
-                <FormGroup>
+                <FormItem>
                   <Link href="/forgot-password">
                     <a>
                       {intl.formatMessage({
@@ -107,13 +107,15 @@ class LoginForm extends React.Component<LoginFormProps, {}> {
                       })}
                     </a>
                   </Link>
-                </FormGroup>
-                <Button color="primary" type="submit">
-                  {intl.formatMessage({
-                    id: 'login',
-                    defaultMessage: 'Login'
-                  })}
-                </Button>
+                </FormItem>
+                <FormItem>
+                  <Button type="primary" htmlType="submit">
+                    {intl.formatMessage({
+                      id: 'login',
+                      defaultMessage: 'Login'
+                    })}
+                  </Button>
+                </FormItem>
               </Form>
             )}
           </Formik>

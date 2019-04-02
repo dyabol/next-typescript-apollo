@@ -1,0 +1,10 @@
+[
+  {
+    "id": "registred",
+    "defaultMessage": "Registred"
+  },
+  {
+    "id": "check_email_massage",
+    "defaultMessage": "Check your email to confirm your account."
+  }
+]

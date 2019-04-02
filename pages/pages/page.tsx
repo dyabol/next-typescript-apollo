@@ -16,7 +16,6 @@ import { deletePageMutation } from '../../graphql/post/mutations/deletePost';
 import { editPageMutation } from '../../graphql/post/mutations/editPost';
 import { pageByIdQuery } from '../../graphql/post/queries/postById';
 import Context from '../../interfaces/Context';
-import checkLoggedIn from '../../lib/checkLoggedIn';
 import redirect from '../../lib/redirect';
 import withIntl from '../../lib/withIntl';
 
@@ -33,13 +32,6 @@ export interface State extends EditorProps {
 
 class EditPage extends React.Component<Props, State> {
   static async getInitialProps(context: Context) {
-    const { loggedInUser } = await checkLoggedIn(context.apolloClient);
-
-    if (!loggedInUser.me) {
-      // If not signed in, send them somewhere more useful
-      redirect(context, '/login');
-    }
-
     const {
       apolloClient,
       query: { id },
@@ -192,9 +184,7 @@ class EditPage extends React.Component<Props, State> {
                     defaultMessage="Delete page"
                   />
                 }
-                okText={
-                  <FormattedMessage id="delete" defaultMessage="Delete" />
-                }
+                okText={<FormattedMessage id="delete" />}
                 okType="danger"
                 cancelText={
                   <FormattedMessage id="cancel" defaultMessage="Cancel" />

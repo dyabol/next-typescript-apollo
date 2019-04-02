@@ -75,5 +75,6 @@
   "filterTitle": "Filtr",
   "filterConfirm": "Ok",
   "filterReset": "Reset",
-  "emptyText": "Žádná data"
+  "emptyText": "Žádná data",
+  "page": "Stránka"
 }

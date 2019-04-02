@@ -1,0 +1,18 @@
+[
+  {
+    "id": "id",
+    "defaultMessage": "#"
+  },
+  {
+    "id": "first_name",
+    "defaultMessage": "First name"
+  },
+  {
+    "id": "last_name",
+    "defaultMessage": "Last name"
+  },
+  {
+    "id": "email",
+    "defaultMessage": "E-mail"
+  }
+]

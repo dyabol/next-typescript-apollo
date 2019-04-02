@@ -1,0 +1,10 @@
+[
+  {
+    "id": "discard",
+    "defaultMessage": "Discard"
+  },
+  {
+    "id": "update",
+    "defaultMessage": "Update"
+  }
+]

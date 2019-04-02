@@ -5,9 +5,7 @@ import { FormattedMessage, InjectedIntl } from 'react-intl';
 import Layout from '../components/Layout';
 import PostsTable from '../components/PostsTable';
 import { PagesComponent } from '../generated/apolloComponents';
-import Context from '../interfaces/Context';
-import checkLoggedIn from '../lib/checkLoggedIn';
-import redirect from '../lib/redirect';
+import withAuth from '../lib/withAuth';
 import withIntl from '../lib/withIntl';
 
 export type Props = {
@@ -19,17 +17,6 @@ export type Stats = {
 };
 
 class Pages extends React.Component<Props, Stats> {
-  static async getInitialProps(context: Context) {
-    const { loggedInUser } = await checkLoggedIn(context.apolloClient);
-
-    if (!loggedInUser.me) {
-      // If not signed in, send them somewhere more useful
-      redirect(context, '/login');
-    }
-
-    return { loggedInUser };
-  }
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -87,4 +74,4 @@ class Pages extends React.Component<Props, Stats> {
   }
 }
 
-export default withIntl(Pages);
+export default withIntl(withAuth(Pages));

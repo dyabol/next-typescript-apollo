@@ -10,7 +10,7 @@ const breadcrumbNameMap: { [key: string]: string } = {
   '/posts': 'posts',
   '/pages': 'pages',
   '/menus': 'menus',
-  '/_error': 'Error',
+  '/_error': 'error',
   '/posts/post': 'post',
   '/pages/page': 'page'
 };

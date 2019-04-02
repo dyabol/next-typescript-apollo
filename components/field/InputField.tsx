@@ -4,8 +4,19 @@ import React from 'react';
 const FormItem = Form.Item;
 
 type Props = {
-  id: string;
   label?: string;
+  ref?:
+    | string
+    | ((instance: Input | null) => void)
+    | React.RefObject<Input>
+    | null
+    | undefined;
+  innerRef?:
+    | string
+    | ((instance: Input | null) => void)
+    | React.RefObject<Input>
+    | null
+    | undefined;
 };
 
 const InputField = ({
@@ -14,13 +25,16 @@ const InputField = ({
   ...props
 }: FieldProps & Props) => {
   const errorMassage = touched[field.name] && errors[field.name];
+  var inputProps = { ...props };
+  inputProps.ref = inputProps.innerRef;
+  delete inputProps.innerRef;
   return (
     <FormItem
       label={props.label}
       validateStatus={errorMassage ? 'error' : ''}
       help={errorMassage}
     >
-      <Input {...field} {...props} />
+      <Input {...field} {...inputProps} />
     </FormItem>
   );
 };

@@ -476,6 +476,8 @@ export type LoginLogin = {
   email: string;
 
   fullName: string;
+
+  avatar: string;
 };
 
 export type LogoutVariables = {};
@@ -1298,6 +1300,7 @@ export const LoginDocument = gql`
       lastName
       email
       fullName
+      avatar
     }
   }
 `;

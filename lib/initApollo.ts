@@ -23,7 +23,7 @@ type Options = {
 
 function create(initialState: any, { getToken }: Options) {
   const httpLink = createUploadLink({
-    uri: 'http://localhost:4000/graphql',
+    uri: process.env.API_URI,
     credentials: 'include'
   });
 

@@ -16,7 +16,6 @@ import { deletePostMutation } from '../../graphql/post/mutations/deletePost';
 import { editPostMutation } from '../../graphql/post/mutations/editPost';
 import { postByIdQuery } from '../../graphql/post/queries/postById';
 import Context from '../../interfaces/Context';
-import checkLoggedIn from '../../lib/checkLoggedIn';
 import redirect from '../../lib/redirect';
 import withIntl from '../../lib/withIntl';
 
@@ -33,13 +32,6 @@ export interface State extends EditorProps {
 
 class EditPost extends React.Component<Props, State> {
   static async getInitialProps(context: Context) {
-    const { loggedInUser } = await checkLoggedIn(context.apolloClient);
-
-    if (!loggedInUser.me) {
-      // If not signed in, send them somewhere more useful
-      redirect(context, '/login');
-    }
-
     const {
       apolloClient,
       query: { id },

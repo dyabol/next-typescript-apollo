@@ -1,0 +1,22 @@
+[
+  {
+    "id": "back",
+    "defaultMessage": "Back"
+  },
+  {
+    "id": "delete_post_title",
+    "defaultMessage": "Delete post"
+  },
+  {
+    "id": "delete",
+    "defaultMessage": "Delete"
+  },
+  {
+    "id": "cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "delete_post_message",
+    "defaultMessage": "Are you sure you want to remove the {title} post?"
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "back",
+    "defaultMessage": "Back"
+  },
+  {
+    "id": "delete_page_title",
+    "defaultMessage": "Delete page"
+  },
+  {
+    "id": "cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "delete_page_message",
+    "defaultMessage": "Are you sure you want to remove the {title} page?"
+  }
+]

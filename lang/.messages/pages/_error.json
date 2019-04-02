@@ -1,0 +1,14 @@
+[
+  {
+    "id": "page_not_found",
+    "defaultMessage": "Page Not Found"
+  },
+  {
+    "id": "matrix_glitch",
+    "defaultMessage": "It looks like you found a glitch in the matrix..."
+  },
+  {
+    "id": "back_to_dashboard",
+    "defaultMessage": "← Back to Dashboard"
+  }
+]
