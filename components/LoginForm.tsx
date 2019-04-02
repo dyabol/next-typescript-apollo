@@ -1,5 +1,4 @@
-import { Button, Form } from 'antd';
-import FormItem from 'antd/lib/form/FormItem';
+import { Button, Checkbox, Form, Icon } from 'antd';
 import { Field, Formik } from 'formik';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -74,31 +73,36 @@ class LoginForm extends React.Component<LoginFormProps, {}> {
                   innerRef={this.emailInput}
                   name="email"
                   type="email"
-                  placeholder=""
+                  placeholder={intl.formatMessage({
+                    id: 'email',
+                    defaultMessage: 'E-mail'
+                  })}
                   value={values.email}
                   component={InputField}
                   required
                   id="emailField"
-                  label={intl.formatMessage({
-                    id: 'email',
-                    defaultMessage: 'E-mail'
-                  })}
+                  prefix={
+                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
                   autoFocus
                 />
                 <Field
                   name="password"
                   type="password"
-                  placeholder=""
+                  placeholder={intl.formatMessage({
+                    id: 'password',
+                    defaultMessage: 'Password'
+                  })}
                   value={values.password}
                   component={InputField}
                   required
                   id="passwordField"
-                  label={intl.formatMessage({
-                    id: 'password',
-                    defaultMessage: 'Password'
-                  })}
+                  prefix={
+                    <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
+                  }
                 />
-                <FormItem>
+                <Form.Item>
+                  <Checkbox>Remember me</Checkbox>
                   <Link href="/forgot-password">
                     <a>
                       {intl.formatMessage({
@@ -107,15 +111,25 @@ class LoginForm extends React.Component<LoginFormProps, {}> {
                       })}
                     </a>
                   </Link>
-                </FormItem>
-                <FormItem>
-                  <Button type="primary" htmlType="submit">
+                  <Button
+                    style={{ width: '100%' }}
+                    type="primary"
+                    htmlType="submit"
+                  >
                     {intl.formatMessage({
                       id: 'login',
                       defaultMessage: 'Login'
                     })}
                   </Button>
-                </FormItem>
+                  <Link href="/register">
+                    <a>
+                      {intl.formatMessage({
+                        id: 'register',
+                        defaultMessage: 'Register'
+                      })}
+                    </a>
+                  </Link>
+                </Form.Item>
               </Form>
             )}
           </Formik>
