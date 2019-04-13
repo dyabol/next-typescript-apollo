@@ -8,6 +8,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "@types/prop-types": "^15.7.0",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
@@ -38,6 +39,7 @@
     "next-cookies": "^1.1.2",
     "node-sass": "^4.11.0",
     "nprogress": "^0.2.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-apollo": "^2.4.1",
     "react-avatar-editor": "^11.0.6",
@@ -87,6 +89,7 @@
     "graphql-codegen-typescript-common": "0.18.0",
     "graphql-codegen-typescript-react-apollo": "0.18.0",
     "tslint": "^5.13.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3333"
   }
 }

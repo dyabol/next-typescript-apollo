@@ -1,23 +1,23 @@
-import { Button } from 'antd';
-import Router from 'next/router';
-import React from 'react';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
-import Layout from '../components/Layout';
-import PostsTable from '../components/PostsTable';
-import { PostsComponent } from '../generated/apolloComponents';
-import withAuth from '../lib/withAuth';
-import withIntl from '../lib/withIntl';
+import { Button } from "antd";
+import Router from "next/router";
+import React from "react";
+import { FormattedMessage, InjectedIntl } from "react-intl";
+import Layout from "../components/Layout";
+import PostsTable from "../components/PostsTable";
+import { PostsComponent } from "../generated/apolloComponents";
+import withAuth from "../lib/withAuth";
+import withIntl from "../lib/withIntl";
 
-export type Props = {
+export interface IProps {
   intl: InjectedIntl;
-};
-export type Stats = {
+}
+export interface IStats {
   skip: number;
   take: number;
-};
+}
 
-class Posts extends React.Component<Props, Stats> {
-  constructor(props: Props) {
+class Posts extends React.Component<IProps, IStats> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       skip: 0,
@@ -25,18 +25,18 @@ class Posts extends React.Component<Props, Stats> {
     };
   }
 
-  render() {
+  public render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
-      id: 'posts',
-      defaultMessage: 'Posts'
+      id: "posts",
+      defaultMessage: "Posts"
     });
 
     return (
       <Layout title={title}>
-        <div style={{ marginBottom: '16px' }}>
+        <div style={{ marginBottom: "16px" }}>
           <Button
-            onClick={() => Router.push('/posts/post')}
+            onClick={() => Router.push("/posts/post")}
             type="primary"
             icon="plus"
             size="large"

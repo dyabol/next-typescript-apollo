@@ -57,17 +57,17 @@ export type Upload = any;
 // Documents
 // ====================================================
 
-export type CreatePostVariables = {
+export interface CreatePostVariables {
   data: CreatePostInput;
-};
+}
 
-export type CreatePostMutation = {
+export interface CreatePostMutation {
   __typename?: "Mutation";
 
   createPost: CreatePostCreatePost;
-};
+}
 
-export type CreatePostCreatePost = {
+export interface CreatePostCreatePost {
   __typename?: "Post";
 
   id: string;
@@ -77,19 +77,19 @@ export type CreatePostCreatePost = {
   slug: string;
 
   content: string;
-};
+}
 
-export type CreatePageVariables = {
+export interface CreatePageVariables {
   data: CreatePostInput;
-};
+}
 
-export type CreatePageMutation = {
+export interface CreatePageMutation {
   __typename?: "Mutation";
 
   createPage: CreatePageCreatePage;
-};
+}
 
-export type CreatePageCreatePage = {
+export interface CreatePageCreatePage {
   __typename?: "Post";
 
   id: string;
@@ -99,39 +99,39 @@ export type CreatePageCreatePage = {
   slug: string;
 
   content: string;
-};
+}
 
-export type DeletePostVariables = {
+export interface DeletePostVariables {
   id: string;
-};
+}
 
-export type DeletePostMutation = {
+export interface DeletePostMutation {
   __typename?: "Mutation";
 
   deletePost: boolean;
-};
+}
 
-export type DeletePageVariables = {
+export interface DeletePageVariables {
   id: string;
-};
+}
 
-export type DeletePageMutation = {
+export interface DeletePageMutation {
   __typename?: "Mutation";
 
   deletePage: boolean;
-};
+}
 
-export type EditPostVariables = {
+export interface EditPostVariables {
   data: EditPostInput;
-};
+}
 
-export type EditPostMutation = {
+export interface EditPostMutation {
   __typename?: "Mutation";
 
   editPost: EditPostEditPost;
-};
+}
 
-export type EditPostEditPost = {
+export interface EditPostEditPost {
   __typename?: "Post";
 
   id: string;
@@ -141,19 +141,19 @@ export type EditPostEditPost = {
   slug: string;
 
   content: string;
-};
+}
 
-export type EditPageVariables = {
+export interface EditPageVariables {
   data: EditPostInput;
-};
+}
 
-export type EditPageMutation = {
+export interface EditPageMutation {
   __typename?: "Mutation";
 
   editPage: EditPageEditPage;
-};
+}
 
-export type EditPageEditPage = {
+export interface EditPageEditPage {
   __typename?: "Post";
 
   id: string;
@@ -163,19 +163,19 @@ export type EditPageEditPage = {
   slug: string;
 
   content: string;
-};
+}
 
-export type PostByIdVariables = {
+export interface PostByIdVariables {
   id: string;
-};
+}
 
-export type PostByIdQuery = {
+export interface PostByIdQuery {
   __typename?: "Query";
 
   post: Maybe<PostByIdPost>;
-};
+}
 
-export type PostByIdPost = {
+export interface PostByIdPost {
   __typename?: "Post";
 
   id: string;
@@ -191,9 +191,9 @@ export type PostByIdPost = {
   updatedAt: DateTime;
 
   user: PostByIdUser;
-};
+}
 
-export type PostByIdUser = {
+export interface PostByIdUser {
   __typename?: "User";
 
   id: string;
@@ -205,19 +205,19 @@ export type PostByIdUser = {
   fullName: string;
 
   email: string;
-};
+}
 
-export type PageByIdVariables = {
+export interface PageByIdVariables {
   id: string;
-};
+}
 
-export type PageByIdQuery = {
+export interface PageByIdQuery {
   __typename?: "Query";
 
   page: Maybe<PageByIdPage>;
-};
+}
 
-export type PageByIdPage = {
+export interface PageByIdPage {
   __typename?: "Post";
 
   id: string;
@@ -233,9 +233,9 @@ export type PageByIdPage = {
   updatedAt: DateTime;
 
   user: PageByIdUser;
-};
+}
 
-export type PageByIdUser = {
+export interface PageByIdUser {
   __typename?: "User";
 
   id: string;
@@ -247,19 +247,19 @@ export type PageByIdUser = {
   fullName: string;
 
   email: string;
-};
+}
 
-export type PostBySlugVariables = {
+export interface PostBySlugVariables {
   slug: string;
-};
+}
 
-export type PostBySlugQuery = {
+export interface PostBySlugQuery {
   __typename?: "Query";
 
   post: Maybe<PostBySlugPost>;
-};
+}
 
-export type PostBySlugPost = {
+export interface PostBySlugPost {
   __typename?: "Post";
 
   id: string;
@@ -275,9 +275,9 @@ export type PostBySlugPost = {
   updatedAt: DateTime;
 
   user: PostBySlugUser;
-};
+}
 
-export type PostBySlugUser = {
+export interface PostBySlugUser {
   __typename?: "User";
 
   id: string;
@@ -289,19 +289,19 @@ export type PostBySlugUser = {
   fullName: string;
 
   email: string;
-};
+}
 
-export type PageBySlugVariables = {
+export interface PageBySlugVariables {
   slug: string;
-};
+}
 
-export type PageBySlugQuery = {
+export interface PageBySlugQuery {
   __typename?: "Query";
 
   page: Maybe<PageBySlugPage>;
-};
+}
 
-export type PageBySlugPage = {
+export interface PageBySlugPage {
   __typename?: "Post";
 
   id: string;
@@ -317,9 +317,9 @@ export type PageBySlugPage = {
   updatedAt: DateTime;
 
   user: PageBySlugUser;
-};
+}
 
-export type PageBySlugUser = {
+export interface PageBySlugUser {
   __typename?: "User";
 
   id: string;
@@ -331,22 +331,22 @@ export type PageBySlugUser = {
   fullName: string;
 
   email: string;
-};
+}
 
-export type PostsVariables = {
+export interface PostsVariables {
   take?: Maybe<number>;
   skip?: Maybe<number>;
-};
+}
 
-export type PostsQuery = {
+export interface PostsQuery {
   __typename?: "Query";
 
   posts: PostsPosts[];
 
   postsCount: number;
-};
+}
 
-export type PostsPosts = {
+export interface PostsPosts {
   __typename?: "Post";
 
   id: string;
@@ -362,30 +362,30 @@ export type PostsPosts = {
   updatedAt: DateTime;
 
   user: PostsUser;
-};
+}
 
-export type PostsUser = {
+export interface PostsUser {
   __typename?: "User";
 
   id: string;
 
   fullName: string;
-};
+}
 
-export type PagesVariables = {
+export interface PagesVariables {
   take?: Maybe<number>;
   skip?: Maybe<number>;
-};
+}
 
-export type PagesQuery = {
+export interface PagesQuery {
   __typename?: "Query";
 
   pages: PagesPages[];
 
   pagesCount: number;
-};
+}
 
-export type PagesPages = {
+export interface PagesPages {
   __typename?: "Post";
 
   id: string;
@@ -401,27 +401,27 @@ export type PagesPages = {
   updatedAt: DateTime;
 
   user: PagesUser;
-};
+}
 
-export type PagesUser = {
+export interface PagesUser {
   __typename?: "User";
 
   id: string;
 
   fullName: string;
-};
+}
 
-export type ChangePasswordVariables = {
+export interface ChangePasswordVariables {
   data: ChangePasswordInput;
-};
+}
 
-export type ChangePasswordMutation = {
+export interface ChangePasswordMutation {
   __typename?: "Mutation";
 
   changePassword: Maybe<ChangePasswordChangePassword>;
-};
+}
 
-export type ChangePasswordChangePassword = {
+export interface ChangePasswordChangePassword {
   __typename?: "User";
 
   id: string;
@@ -431,40 +431,40 @@ export type ChangePasswordChangePassword = {
   lastName: string;
 
   email: string;
-};
+}
 
-export type ConfirmUserVariables = {
+export interface ConfirmUserVariables {
   token: string;
-};
+}
 
-export type ConfirmUserMutation = {
+export interface ConfirmUserMutation {
   __typename?: "Mutation";
 
   confirmUser: boolean;
-};
+}
 
-export type ForgotPasswordVariables = {
+export interface ForgotPasswordVariables {
   email: string;
-};
+}
 
-export type ForgotPasswordMutation = {
+export interface ForgotPasswordMutation {
   __typename?: "Mutation";
 
   forgotPassword: boolean;
-};
+}
 
-export type LoginVariables = {
+export interface LoginVariables {
   email: string;
   password: string;
-};
+}
 
-export type LoginMutation = {
+export interface LoginMutation {
   __typename?: "Mutation";
 
   login: Maybe<LoginLogin>;
-};
+}
 
-export type LoginLogin = {
+export interface LoginLogin {
   __typename?: "User";
 
   id: string;
@@ -478,27 +478,27 @@ export type LoginLogin = {
   fullName: string;
 
   avatar: string;
-};
+}
 
-export type LogoutVariables = {};
+export interface LogoutVariables {}
 
-export type LogoutMutation = {
+export interface LogoutMutation {
   __typename?: "Mutation";
 
   logout: boolean;
-};
+}
 
-export type RegisterVariables = {
+export interface RegisterVariables {
   data: RegisterInput;
-};
+}
 
-export type RegisterMutation = {
+export interface RegisterMutation {
   __typename?: "Mutation";
 
   register: RegisterRegister;
-};
+}
 
-export type RegisterRegister = {
+export interface RegisterRegister {
   __typename?: "User";
 
   id: string;
@@ -508,35 +508,35 @@ export type RegisterRegister = {
   lastName: string;
 
   email: string;
-};
+}
 
-export type UploadAvatarVariables = {
+export interface UploadAvatarVariables {
   avatar: Upload;
-};
+}
 
-export type UploadAvatarMutation = {
+export interface UploadAvatarMutation {
   __typename?: "Mutation";
 
   addProfilePicture: boolean;
-};
+}
 
-export type HelloVariables = {};
+export interface HelloVariables {}
 
-export type HelloQuery = {
+export interface HelloQuery {
   __typename?: "Query";
 
   hello: string;
-};
+}
 
-export type MeVariables = {};
+export interface MeVariables {}
 
-export type MeQuery = {
+export interface MeQuery {
   __typename?: "Query";
 
   me: Maybe<MeMe>;
-};
+}
 
-export type MeMe = {
+export interface MeMe {
   __typename?: "User";
 
   id: string;
@@ -550,24 +550,24 @@ export type MeMe = {
   fullName: string;
 
   avatar: string;
-};
+}
 
-export type AddUserRoleVariables = {
+export interface AddUserRoleVariables {
   userId: string;
   role: string;
-};
+}
 
-export type AddUserRoleMutation = {
+export interface AddUserRoleMutation {
   __typename?: "Mutation";
 
   createUserMeta: AddUserRoleCreateUserMeta;
-};
+}
 
-export type AddUserRoleCreateUserMeta = {
+export interface AddUserRoleCreateUserMeta {
   __typename?: "UserMeta";
 
   id: string;
-};
+}
 
 import gql from "graphql-tag";
 import * as React from "react";
@@ -590,11 +590,11 @@ export const CreatePostDocument = gql`
 export class CreatePostComponent extends React.Component<
   Partial<ReactApollo.MutationProps<CreatePostMutation, CreatePostVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<CreatePostMutation, CreatePostVariables>
         mutation={CreatePostDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -637,11 +637,11 @@ export const CreatePageDocument = gql`
 export class CreatePageComponent extends React.Component<
   Partial<ReactApollo.MutationProps<CreatePageMutation, CreatePageVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<CreatePageMutation, CreatePageVariables>
         mutation={CreatePageDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -679,11 +679,11 @@ export const DeletePostDocument = gql`
 export class DeletePostComponent extends React.Component<
   Partial<ReactApollo.MutationProps<DeletePostMutation, DeletePostVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<DeletePostMutation, DeletePostVariables>
         mutation={DeletePostDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -721,11 +721,11 @@ export const DeletePageDocument = gql`
 export class DeletePageComponent extends React.Component<
   Partial<ReactApollo.MutationProps<DeletePageMutation, DeletePageVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<DeletePageMutation, DeletePageVariables>
         mutation={DeletePageDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -768,11 +768,11 @@ export const EditPostDocument = gql`
 export class EditPostComponent extends React.Component<
   Partial<ReactApollo.MutationProps<EditPostMutation, EditPostVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<EditPostMutation, EditPostVariables>
         mutation={EditPostDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -815,11 +815,11 @@ export const EditPageDocument = gql`
 export class EditPageComponent extends React.Component<
   Partial<ReactApollo.MutationProps<EditPageMutation, EditPageVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<EditPageMutation, EditPageVariables>
         mutation={EditPageDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -871,11 +871,11 @@ export const PostByIdDocument = gql`
 export class PostByIdComponent extends React.Component<
   Partial<ReactApollo.QueryProps<PostByIdQuery, PostByIdVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Query<PostByIdQuery, PostByIdVariables>
         query={PostByIdDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -923,11 +923,11 @@ export const PageByIdDocument = gql`
 export class PageByIdComponent extends React.Component<
   Partial<ReactApollo.QueryProps<PageByIdQuery, PageByIdVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Query<PageByIdQuery, PageByIdVariables>
         query={PageByIdDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -975,11 +975,11 @@ export const PostBySlugDocument = gql`
 export class PostBySlugComponent extends React.Component<
   Partial<ReactApollo.QueryProps<PostBySlugQuery, PostBySlugVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Query<PostBySlugQuery, PostBySlugVariables>
         query={PostBySlugDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1027,11 +1027,11 @@ export const PageBySlugDocument = gql`
 export class PageBySlugComponent extends React.Component<
   Partial<ReactApollo.QueryProps<PageBySlugQuery, PageBySlugVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Query<PageBySlugQuery, PageBySlugVariables>
         query={PageBySlugDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1077,11 +1077,11 @@ export const PostsDocument = gql`
 export class PostsComponent extends React.Component<
   Partial<ReactApollo.QueryProps<PostsQuery, PostsVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Query<PostsQuery, PostsVariables>
         query={PostsDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1127,11 +1127,11 @@ export const PagesDocument = gql`
 export class PagesComponent extends React.Component<
   Partial<ReactApollo.QueryProps<PagesQuery, PagesVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Query<PagesQuery, PagesVariables>
         query={PagesDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1172,11 +1172,11 @@ export class ChangePasswordComponent extends React.Component<
     ReactApollo.MutationProps<ChangePasswordMutation, ChangePasswordVariables>
   >
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<ChangePasswordMutation, ChangePasswordVariables>
         mutation={ChangePasswordDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1214,11 +1214,11 @@ export const ConfirmUserDocument = gql`
 export class ConfirmUserComponent extends React.Component<
   Partial<ReactApollo.MutationProps<ConfirmUserMutation, ConfirmUserVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<ConfirmUserMutation, ConfirmUserVariables>
         mutation={ConfirmUserDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1258,11 +1258,11 @@ export class ForgotPasswordComponent extends React.Component<
     ReactApollo.MutationProps<ForgotPasswordMutation, ForgotPasswordVariables>
   >
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<ForgotPasswordMutation, ForgotPasswordVariables>
         mutation={ForgotPasswordDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1307,11 +1307,11 @@ export const LoginDocument = gql`
 export class LoginComponent extends React.Component<
   Partial<ReactApollo.MutationProps<LoginMutation, LoginVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<LoginMutation, LoginVariables>
         mutation={LoginDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1349,11 +1349,11 @@ export const LogoutDocument = gql`
 export class LogoutComponent extends React.Component<
   Partial<ReactApollo.MutationProps<LogoutMutation, LogoutVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<LogoutMutation, LogoutVariables>
         mutation={LogoutDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1396,11 +1396,11 @@ export const RegisterDocument = gql`
 export class RegisterComponent extends React.Component<
   Partial<ReactApollo.MutationProps<RegisterMutation, RegisterVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<RegisterMutation, RegisterVariables>
         mutation={RegisterDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1440,11 +1440,11 @@ export class UploadAvatarComponent extends React.Component<
     ReactApollo.MutationProps<UploadAvatarMutation, UploadAvatarVariables>
   >
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<UploadAvatarMutation, UploadAvatarVariables>
         mutation={UploadAvatarDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1482,11 +1482,11 @@ export const HelloDocument = gql`
 export class HelloComponent extends React.Component<
   Partial<ReactApollo.QueryProps<HelloQuery, HelloVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Query<HelloQuery, HelloVariables>
         query={HelloDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1527,11 +1527,11 @@ export const MeDocument = gql`
 export class MeComponent extends React.Component<
   Partial<ReactApollo.QueryProps<MeQuery, MeVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Query<MeQuery, MeVariables>
         query={MeDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }
@@ -1567,11 +1567,11 @@ export const AddUserRoleDocument = gql`
 export class AddUserRoleComponent extends React.Component<
   Partial<ReactApollo.MutationProps<AddUserRoleMutation, AddUserRoleVariables>>
 > {
-  render() {
+  public render() {
     return (
       <ReactApollo.Mutation<AddUserRoleMutation, AddUserRoleVariables>
         mutation={AddUserRoleDocument}
-        {...(this as any)["props"] as any}
+        {...(this as any).props as any}
       />
     );
   }

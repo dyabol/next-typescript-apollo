@@ -1,37 +1,37 @@
-import { Button, Icon, Modal } from 'antd';
-import { ApolloClient } from 'apollo-boost';
-import Router from 'next/router';
-import React from 'react';
-import { ApolloConsumer } from 'react-apollo';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
-import Layout from '../../components/Layout';
-import PostForm, { EditorProps } from '../../components/PostForm';
+import { Button, Icon, Modal } from "antd";
+import { ApolloClient } from "apollo-boost";
+import Router from "next/router";
+import React from "react";
+import { ApolloConsumer } from "react-apollo";
+import { FormattedMessage, InjectedIntl } from "react-intl";
+import Layout from "../../components/Layout";
+import PostForm, { EditorProps } from "../../components/PostForm";
 import {
   CreatePageMutation,
   EditPageMutation,
   PageByIdPage
-} from '../../generated/apolloComponents';
-import { createPageMutation } from '../../graphql/post/mutations/createPost';
-import { deletePageMutation } from '../../graphql/post/mutations/deletePost';
-import { editPageMutation } from '../../graphql/post/mutations/editPost';
-import { pageByIdQuery } from '../../graphql/post/queries/postById';
-import Context from '../../interfaces/Context';
-import redirect from '../../lib/redirect';
-import withIntl from '../../lib/withIntl';
+} from "../../generated/apolloComponents";
+import { createPageMutation } from "../../graphql/post/mutations/createPost";
+import { deletePageMutation } from "../../graphql/post/mutations/deletePost";
+import { editPageMutation } from "../../graphql/post/mutations/editPost";
+import { pageByIdQuery } from "../../graphql/post/queries/postById";
+import Context from "../../interfaces/Context";
+import redirect from "../../lib/redirect";
+import withIntl from "../../lib/withIntl";
 
 export type Props = {
   router: any;
   intl: InjectedIntl;
 } & PageByIdPage;
 
-export interface State extends EditorProps {
+export interface IState extends EditorProps {
   id: string | null;
   modal: boolean;
   confirmLoading: boolean;
 }
 
-class EditPage extends React.Component<Props, State> {
-  static async getInitialProps(context: Context) {
+class EditPage extends React.Component<Props, IState> {
+  public static async getInitialProps(context: Context) {
     const {
       apolloClient,
       query: { id },
@@ -49,7 +49,7 @@ class EditPage extends React.Component<Props, State> {
       return {};
     }
     if (!page || !page.data || !page.data.page) {
-      redirect(ctx, '/page');
+      redirect(ctx, "/page");
       return {};
     }
     return {
@@ -61,9 +61,9 @@ class EditPage extends React.Component<Props, State> {
     super(props);
     this.state = {
       id: props.id,
-      title: props.title || '',
-      content: props.content || '',
-      slug: props.slug || '',
+      title: props.title || "",
+      content: props.content || "",
+      slug: props.slug || "",
       modal: false,
       confirmLoading: false
     };
@@ -73,13 +73,13 @@ class EditPage extends React.Component<Props, State> {
     this.toggle = this.toggle.bind(this);
   }
 
-  toggle() {
+  public toggle() {
     this.setState(prevState => ({
       modal: !prevState.modal
     }));
   }
 
-  changeUrl(result: CreatePageMutation & EditPageMutation) {
+  public changeUrl(result: CreatePageMutation & EditPageMutation) {
     const obj = result.createPage || result.editPage;
 
     this.setState({
@@ -93,18 +93,18 @@ class EditPage extends React.Component<Props, State> {
       const id = result.createPage.id;
       Router.push(
         {
-          pathname: '/page',
+          pathname: "/page",
           query: { id }
         },
-        '/page/' + id,
+        "/page/" + id,
         { shallow: true }
       );
     }
   }
 
-  save(values: EditorProps, client: ApolloClient<any>) {
+  public save(values: EditorProps, client: ApolloClient<any>) {
     const { id } = this.state;
-    var result;
+    let result;
     if (id) {
       result = client.mutate({
         mutation: editPageMutation,
@@ -129,7 +129,7 @@ class EditPage extends React.Component<Props, State> {
     return result;
   }
 
-  async onDeleteHandler(client: ApolloClient<any>) {
+  public async onDeleteHandler(client: ApolloClient<any>) {
     const result = await client.mutate({
       mutation: deletePageMutation,
       variables: {
@@ -138,28 +138,28 @@ class EditPage extends React.Component<Props, State> {
     });
     if (result.data && result.data.deletePage) {
       client.resetStore();
-      Router.push('/pages');
+      Router.push("/pages");
     }
   }
 
-  render() {
+  public render() {
     const { title, content, slug, id, confirmLoading } = this.state;
     const { intl } = this.props;
     const pageTitle = id
       ? intl.formatMessage({
-          id: 'edit_page',
-          defaultMessage: 'Edit page'
+          id: "edit_page",
+          defaultMessage: "Edit page"
         })
       : intl.formatMessage({
-          id: 'create_page',
-          defaultMessage: 'Create page'
+          id: "create_page",
+          defaultMessage: "Create page"
         });
     return (
       <Layout title={pageTitle}>
         <Button
           size="small"
-          style={{ marginBottom: '16px' }}
-          onClick={() => Router.push('/pages')}
+          style={{ marginBottom: "16px" }}
+          onClick={() => Router.push("/pages")}
         >
           <Icon type="left" />
           <FormattedMessage id="back" defaultMessage="Back" />

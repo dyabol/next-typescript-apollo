@@ -1,28 +1,28 @@
 // utils/withAuth.js - a HOC for protected pages
-import { ApolloClient, NormalizedCacheObject } from 'apollo-boost';
-import { SingletonRouter } from 'next/router';
-import { Component } from 'react';
-import { meQuery } from '../graphql/user/queries/me';
-import Context from '../interfaces/Context';
-import redirect from './redirect';
+import { ApolloClient, NormalizedCacheObject } from "apollo-boost";
+import { SingletonRouter } from "next/router";
+import { Component } from "react";
+import { meQuery } from "../graphql/user/queries/me";
+import Context from "../interfaces/Context";
+import redirect from "./redirect";
 
-interface Props {
+interface IProps {
   apolloClient: ApolloClient<NormalizedCacheObject>;
   router: SingletonRouter<Record<string, string | string[] | undefined>>;
 }
 
-interface State {
+interface IState {
   isLoading: boolean;
 }
 
 export default function withAuth(AuthComponent: any) {
-  return class Authenticated extends Component<Props, State> {
-    static async getInitialProps({ apolloClient, ...ctx }: Context) {
+  return class Authenticated extends Component<IProps, IState> {
+    public static async getInitialProps({ apolloClient, ...ctx }: Context) {
       const result = await apolloClient.query({
         query: meQuery
       });
       if (!(result && result.data && result.data.me)) {
-        redirect(ctx, '/login');
+        redirect(ctx, "/login");
       }
       return {};
     }

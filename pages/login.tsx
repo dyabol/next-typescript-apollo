@@ -1,16 +1,14 @@
-import * as React from 'react';
-import styled from 'styled-components';
-import LoginForm from '../components/LoginForm';
-import PublicLayout from '../components/PublicLayout';
-
-export type Props = {};
+import * as React from "react";
+import styled from "styled-components";
+import LoginForm from "../components/LoginForm";
+import PublicLayout from "../components/PublicLayout";
 
 const LoginContainer = styled.div`
   max-width: 300px;
   margin: 30px auto;
 `;
 
-export default class Login extends React.Component<Props, {}> {
+export default class Login extends React.Component<{}, {}> {
   public render() {
     return (
       <PublicLayout>

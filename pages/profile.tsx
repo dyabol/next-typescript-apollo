@@ -1,21 +1,21 @@
-import React from 'react';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
-import Layout from '../components/Layout';
-import Avatar from '../components/profile/Avatar';
-import { MeComponent } from '../generated/apolloComponents';
-import withAuth from '../lib/withAuth';
-import withIntl from '../lib/withIntl';
+import React from "react";
+import { FormattedMessage, InjectedIntl } from "react-intl";
+import Layout from "../components/Layout";
+import Avatar from "../components/profile/Avatar";
+import { MeComponent } from "../generated/apolloComponents";
+import withAuth from "../lib/withAuth";
+import withIntl from "../lib/withIntl";
 
-export type Props = {
+export interface IProps {
   intl: InjectedIntl;
-};
+}
 
-class Profile extends React.Component<Props, {}> {
-  render() {
+class Profile extends React.Component<IProps, {}> {
+  public render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
-      id: 'profile',
-      defaultMessage: 'Profile'
+      id: "profile",
+      defaultMessage: "Profile"
     });
 
     return (

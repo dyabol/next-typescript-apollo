@@ -18,13 +18,13 @@ export const parseGraphQlValidationError = (
 };
 
 export const parseGraphQlError = (errors: any): { [key: string]: string } => {
-  var message = '',
-    stack = '';
+  let message = "";
+  let stack = "";
   for (let i = 0; i < errors.length; i++) {
-    const error = errors[i],
-      exception = error.extensions.exception;
+    const error = errors[i];
+    const exception = error.extensions.exception;
     message += `(${i + 1}) ${error.message}\n`;
-    stack += `(${i + 1}) ${exception.stacktrace.join('\n')}\n`;
+    stack += `(${i + 1}) ${exception.stacktrace.join("\n")}\n`;
   }
   return { message, stack };
 };

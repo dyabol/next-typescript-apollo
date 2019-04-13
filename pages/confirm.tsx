@@ -1,19 +1,19 @@
-import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import * as React from "react";
+import { FormattedMessage } from "react-intl";
 import {
   ConfirmUserMutation,
   ConfirmUserVariables
-} from '../generated/apolloComponents';
-import { confirmUserMutation } from '../graphql/user/mutations/confirmUser';
-import Context from '../interfaces/Context';
-import redirect from '../lib/redirect';
+} from "../generated/apolloComponents";
+import { confirmUserMutation } from "../graphql/user/mutations/confirmUser";
+import Context from "../interfaces/Context";
+import redirect from "../lib/redirect";
 
-export type Props = {
+export interface IProps {
   token: string;
-};
+}
 
-export default class Confirm extends React.Component<Props, {}> {
-  static async getInitialProps(context: Context) {
+export default class Confirm extends React.Component<IProps, {}> {
+  public static async getInitialProps(context: Context) {
     const {
       query: { token },
       apolloClient,
@@ -30,7 +30,7 @@ export default class Confirm extends React.Component<Props, {}> {
       }
     });
 
-    redirect(ctx, '/login');
+    redirect(ctx, "/login");
   }
 
   public render() {

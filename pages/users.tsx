@@ -1,19 +1,19 @@
-import React from 'react';
-import { InjectedIntl } from 'react-intl';
-import Layout from '../components/Layout';
-import withAuth from '../lib/withAuth';
-import withIntl from '../lib/withIntl';
+import React from "react";
+import { InjectedIntl } from "react-intl";
+import Layout from "../components/Layout";
+import withAuth from "../lib/withAuth";
+import withIntl from "../lib/withIntl";
 
-export type Props = {
+export interface IProps {
   intl: InjectedIntl;
-};
+}
 
-class Users extends React.Component<Props, {}> {
-  render() {
+class Users extends React.Component<IProps, {}> {
+  public render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
-      id: 'user',
-      defaultMessage: 'Users'
+      id: "user",
+      defaultMessage: "Users"
     });
 
     return (

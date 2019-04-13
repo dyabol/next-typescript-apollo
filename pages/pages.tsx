@@ -1,23 +1,23 @@
-import { Button } from 'antd';
-import Router from 'next/router';
-import React from 'react';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
-import Layout from '../components/Layout';
-import PostsTable from '../components/PostsTable';
-import { PagesComponent } from '../generated/apolloComponents';
-import withAuth from '../lib/withAuth';
-import withIntl from '../lib/withIntl';
+import { Button } from "antd";
+import Router from "next/router";
+import React from "react";
+import { FormattedMessage, InjectedIntl } from "react-intl";
+import Layout from "../components/Layout";
+import PostsTable from "../components/PostsTable";
+import { PagesComponent } from "../generated/apolloComponents";
+import withAuth from "../lib/withAuth";
+import withIntl from "../lib/withIntl";
 
-export type Props = {
+export interface IProps {
   intl: InjectedIntl;
-};
-export type Stats = {
+}
+export interface IStats {
   skip: number;
   take: number;
-};
+}
 
-class Pages extends React.Component<Props, Stats> {
-  constructor(props: Props) {
+class Pages extends React.Component<IProps, IStats> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       skip: 0,
@@ -25,18 +25,18 @@ class Pages extends React.Component<Props, Stats> {
     };
   }
 
-  render() {
+  public render() {
     const { intl } = this.props;
     const title = intl.formatMessage({
-      id: 'pages',
-      defaultMessage: 'Pages'
+      id: "pages",
+      defaultMessage: "Pages"
     });
 
     return (
       <Layout title={title}>
-        <div style={{ marginBottom: '16px' }}>
+        <div style={{ marginBottom: "16px" }}>
           <Button
-            onClick={() => Router.push('/pages/page')}
+            onClick={() => Router.push("/pages/page")}
             type="primary"
             icon="plus"
             size="large"

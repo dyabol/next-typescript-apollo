@@ -1,4 +1,4 @@
-import { config, library } from '@fortawesome/fontawesome-svg-core';
+import { config, library } from "@fortawesome/fontawesome-svg-core";
 import {
   faAngleLeft,
   faBars,
@@ -22,7 +22,7 @@ import {
   faUndoAlt,
   faUsers,
   faUserTie
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
 config.autoAddCss = false;
 

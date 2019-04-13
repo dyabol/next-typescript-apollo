@@ -1,21 +1,21 @@
-import Link from 'next/link';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import Layout from '../components/Layout';
-import Context from '../interfaces/Context';
+import Link from "next/link";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import Layout from "../components/Layout";
+import Context from "../interfaces/Context";
 
-interface ErrorProps {
+interface IErrorProps {
   statusCode: number;
   asPath: string;
 }
 
-class Error extends React.Component<ErrorProps, {}> {
-  static getInitialProps({ res, err }: Context) {
+class Error extends React.Component<IErrorProps, {}> {
+  public static getInitialProps({ res, err }: Context) {
     const statusCode = res ? res.statusCode : err ? err : null;
     return { statusCode };
   }
 
-  render() {
+  public render() {
     const { statusCode } = this.props;
     const title = `Hooops? ${statusCode}`;
     return (

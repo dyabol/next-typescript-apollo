@@ -1,6 +1,6 @@
-import { logoutMutation } from '../graphql/user/mutations/logout';
-import Context from '../interfaces/Context';
-import redirect from '../lib/redirect';
+import { logoutMutation } from "../graphql/user/mutations/logout";
+import Context from "../interfaces/Context";
+import redirect from "../lib/redirect";
 
 const Logout = () => {
   return null;
@@ -9,7 +9,7 @@ const Logout = () => {
 Logout.getInitialProps = async ({ apolloClient, ...ctx }: Context) => {
   await apolloClient.mutate({ mutation: logoutMutation });
   apolloClient.resetStore().then(() => {
-    redirect(ctx, '/login');
+    redirect(ctx, "/login");
   });
   return {};
 };

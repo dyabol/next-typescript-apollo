@@ -2,13 +2,13 @@ import {
   ApolloClient,
   InMemoryCache,
   NormalizedCacheObject
-} from 'apollo-boost';
-import { setContext } from 'apollo-link-context';
-import { onError } from 'apollo-link-error';
-import { createUploadLink } from 'apollo-upload-client';
-import fetch from 'isomorphic-unfetch';
-import Router from 'next/router';
-import { isBrowser } from './utils';
+} from "apollo-boost";
+import { setContext } from "apollo-link-context";
+import { onError } from "apollo-link-error";
+import { createUploadLink } from "apollo-upload-client";
+import fetch from "isomorphic-unfetch";
+import Router from "next/router";
+import { isBrowser } from "./utils";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
@@ -17,27 +17,30 @@ if (!isBrowser) {
   (global as any).fetch = fetch;
 }
 
-type Options = {
+interface IOptions {
   getToken: () => string;
-};
+}
 
-function create(initialState: any, { getToken }: Options) {
+function create(initialState: any, { getToken }: IOptions) {
   const httpLink = createUploadLink({
     uri: process.env.API_URI,
-    credentials: 'include'
+    credentials: "include"
   });
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors)
+    if (graphQLErrors) {
       graphQLErrors.map(({ message, locations, path }) => {
         console.log(
           `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
         );
-        if (isBrowser && message.includes('Not authenticated.')) {
-          Router.replace('/login');
+        if (isBrowser && message.includes("Not authenticated.")) {
+          Router.replace("/login");
         }
       });
-    if (networkError) console.log(`[Network error]: ${networkError}`);
+    }
+    if (networkError) {
+      console.log(`[Network error]: ${networkError}`);
+    }
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -45,7 +48,7 @@ function create(initialState: any, { getToken }: Options) {
     return {
       headers: {
         ...headers,
-        cookie: token ? `qid=${token}` : ''
+        cookie: token ? `qid=${token}` : ""
       }
     };
   });
@@ -59,7 +62,7 @@ function create(initialState: any, { getToken }: Options) {
   });
 }
 
-export default function initApollo(initialState: any, options: Options) {
+export default function initApollo(initialState: any, options: IOptions) {
   // Make sure to create a new client for every server-side request so that data
   // isn't shared between connections (which would be bad)
   if (!isBrowser) {

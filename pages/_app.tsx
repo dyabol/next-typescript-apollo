@@ -1,22 +1,23 @@
-import { LocaleProvider } from 'antd';
-import csCZ from 'antd/lib/locale-provider/cs_CZ';
-import App, { Container } from 'next/app';
-import Router from 'next/router';
-import NProgress from 'nprogress';
-import React from 'react';
-import { ApolloProvider } from 'react-apollo';
-import { addLocaleData, IntlProvider } from 'react-intl';
-import '../lib/icons';
-import withApollo from '../lib/withApollo';
-import '../styles/global.scss';
+import { LocaleProvider } from "antd";
+import csCZ from "antd/lib/locale-provider/cs_CZ";
+import App, { Container } from "next/app";
+import Router from "next/router";
+import NProgress from "nprogress";
+import React from "react";
+import { ApolloProvider } from "react-apollo";
+import { addLocaleData, IntlProvider } from "react-intl";
+import "../lib/icons";
+import withApollo from "../lib/withApollo";
+import "../styles/global.scss";
 
-Router.events.on('routeChangeStart', () => {
+Router.events.on("routeChangeStart", () => {
   NProgress.start();
 });
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 
 declare global {
+  // tslint:disable-next-line:interface-name
   interface Window {
     ReactIntlLocaleData: any;
     __NEXT_DATA__: any;
@@ -26,14 +27,14 @@ declare global {
 // Register React Intl's locale data for the user's locale in the browser. This
 // locale data was added to the page by `pages/_document.js`. This only happens
 // once, on initial page load in the browser.
-if (typeof window !== 'undefined' && window.ReactIntlLocaleData) {
+if (typeof window !== "undefined" && window.ReactIntlLocaleData) {
   Object.keys(window.ReactIntlLocaleData).forEach(lang => {
     addLocaleData(window.ReactIntlLocaleData[lang]);
   });
 }
 
 class MyApp extends App<any> {
-  static async getInitialProps({ Component, ctx }: any) {
+  public static async getInitialProps({ Component, ctx }: any) {
     let pageProps = {};
 
     if (Component.getInitialProps) {
@@ -48,7 +49,7 @@ class MyApp extends App<any> {
     return { pageProps, locale, messages, initialNow };
   }
 
-  render() {
+  public render() {
     const {
       Component,
       pageProps,
