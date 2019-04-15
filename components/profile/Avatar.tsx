@@ -1,20 +1,20 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Slider } from 'antd';
-import { SliderValue } from 'antd/lib/slider';
-import { ApolloClient } from 'apollo-boost';
-import * as React from 'react';
-import { ApolloConsumer } from 'react-apollo';
-import AvatarEditor from 'react-avatar-editor';
-import Dropzone from 'react-dropzone';
-import { FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
-import { uploadAvatar } from '../../graphql/user/mutations/uploadAvatar';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Slider } from "antd";
+import { SliderValue } from "antd/lib/slider";
+import { ApolloClient } from "apollo-boost";
+import * as React from "react";
+import { ApolloConsumer } from "react-apollo";
+import AvatarEditor from "react-avatar-editor";
+import Dropzone from "react-dropzone";
+import { FormattedMessage } from "react-intl";
+import styled from "styled-components";
+import { uploadAvatar } from "../../graphql/user/mutations/uploadAvatar";
 
-export interface AvatarProps {
+export interface IAvatarProps {
   className?: string;
   avatar: string;
 }
-export interface AvatarState {
+export interface IAvatarState {
   image: File | string | null;
   scale: number;
   rotate: number;
@@ -64,10 +64,13 @@ const UploadButton = styled.div`
   }
 `;
 
-export default class Avatar extends React.Component<AvatarProps, AvatarState> {
-  editor = React.createRef<AvatarEditor>();
+export default class Avatar extends React.Component<
+  IAvatarProps,
+  IAvatarState
+> {
+  public editor = React.createRef<AvatarEditor>();
 
-  constructor(props: AvatarProps) {
+  constructor(props: IAvatarProps) {
     super(props);
     this.state = {
       image: null,
@@ -77,44 +80,44 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
     };
   }
 
-  handleDrop = (dropped: File[]) => {
+  public handleDrop = (dropped: File[]) => {
     const file = dropped[0];
     if (
       [
-        'image/jpeg',
-        'image/png',
-        'image/gif',
-        'image/bmp',
-        'image/wemp',
-        'image/tiff'
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/bmp",
+        "image/wemp",
+        "image/tiff"
       ].indexOf(file.type) > -1
     ) {
       this.setState({ image: file });
     } else {
-      throw new Error('Nepodporovaný formát obrázku.');
+      throw new Error("Nepodporovaný formát obrázku.");
     }
   };
 
-  resetImage = () => {
+  public resetImage = () => {
     this.setState({ image: null });
   };
 
-  rotateToLeft = () => {
+  public rotateToLeft = () => {
     this.setState({ rotate: this.state.rotate - 90 });
   };
 
-  rotateToRight = () => {
+  public rotateToRight = () => {
     this.setState({ rotate: this.state.rotate + 90 });
   };
 
-  setScale = (val: SliderValue) => {
+  public setScale = (val: SliderValue) => {
     if (Array.isArray(val)) {
       val = val[0];
     }
     this.setState({ scale: val });
   };
 
-  saveImage = (client: ApolloClient<any>) => {
+  public saveImage = (client: ApolloClient<any>) => {
     if (this.editor && this.editor.current) {
       const canvas = this.editor.current.getImageScaledToCanvas();
       const image = canvas.toDataURL();
@@ -129,7 +132,7 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
             });
           }
         },
-        'image/jpeg',
+        "image/jpeg",
         0.8
       );
       this.setState({
@@ -146,7 +149,7 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
       return (
         <ApolloConsumer>
           {client => (
-            <div style={{ maxWidth: '240px' }} className="mb-3">
+            <div style={{ maxWidth: "240px" }} className="mb-3">
               <AvatarEditor
                 ref={this.editor}
                 className={`rounded border ${className}`}
@@ -159,7 +162,7 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
                 rotate={rotate}
                 borderRadius={200}
               />
-              <div style={{ textAlign: 'center' }}>
+              <div style={{ textAlign: "center" }}>
                 <div>
                   <Slider
                     step={0.01}
@@ -216,7 +219,7 @@ export default class Avatar extends React.Component<AvatarProps, AvatarState> {
       <Dropzone onDrop={this.handleDrop}>
         {({ getRootProps, getInputProps, isDragActive }) => (
           <DropContainer
-            className={`${isDragActive ? 'active ' : ''} ${className}`}
+            className={`${isDragActive ? "active " : ""} ${className}`}
             {...getRootProps()}
           >
             <input {...getInputProps()} />

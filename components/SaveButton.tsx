@@ -1,16 +1,15 @@
-import { Button, Icon } from 'antd';
-import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
-export interface Props {
+import { Button, Icon } from "antd";
+import * as React from "react";
+import { FormattedMessage } from "react-intl";
+
+export interface IProps {
   loading?: boolean;
   complete?: boolean;
   className?: string;
   style?: { [key: string]: string };
 }
 
-export interface State {}
-
-export default class SaveButton extends React.Component<Props, State> {
+export default class SaveButton extends React.Component<IProps, {}> {
   public render() {
     const { complete, style, className } = this.props;
     if (complete) {

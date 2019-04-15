@@ -1,15 +1,15 @@
-import { Icon, Layout, Menu } from 'antd';
-import Link from 'next/link';
-import { SingletonRouter, withRouter } from 'next/router';
-import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Subscribe } from 'unstated';
-import SidebarContainer from '../containers/SidebarContainer';
+import { Icon, Layout, Menu } from "antd";
+import Link from "next/link";
+import { SingletonRouter, withRouter } from "next/router";
+import * as React from "react";
+import { FormattedMessage } from "react-intl";
+import { Subscribe } from "unstated";
+import SidebarContainer from "../containers/SidebarContainer";
 const { Sider } = Layout;
 
 const SubMenu = Menu.SubMenu;
 
-export interface SidebarProps {
+export interface ISidebarProps {
   router: SingletonRouter<Record<string, string | string[] | undefined>>;
 }
 
@@ -19,22 +19,21 @@ interface ISubMenu {
   [key: string]: string[];
 }
 
-class Sidebar extends React.Component<SidebarProps, {}> {
+class Sidebar extends React.Component<ISidebarProps, {}> {
+  public subMenu: ISubMenu = {
+    content: ["/posts", "/pages", "/menus"],
+    personal: ["/profile", "/users"]
+  };
   private sidebarStore: SidebarContainer;
 
-  subMenu: ISubMenu = {
-    content: ['/posts', '/pages', '/menus'],
-    personal: ['/profile', '/users']
-  };
-
-  constructor(props: SidebarProps) {
+  constructor(props: ISidebarProps) {
     super(props);
     this.sidebarStore = new SidebarContainer({
       opened: this.getDefaultOpenKeys()
     });
   }
 
-  getDefaultOpenKeys = () => {
+  public getDefaultOpenKeys = () => {
     for (const key in this.subMenu) {
       if (this.subMenu.hasOwnProperty(key)) {
         const items = this.subMenu[key];
@@ -55,11 +54,10 @@ class Sidebar extends React.Component<SidebarProps, {}> {
             <div className="logo" />
             <Menu
               theme="dark"
-              defaultSelectedKeys={['/']}
+              defaultSelectedKeys={["/"]}
               selectedKeys={[router.pathname]}
               mode="inline"
               onOpenChange={openKeys => {
-                console.log(openKeys);
                 const latestOpenKey = openKeys.find(
                   key => state.opened.indexOf(key) === -1
                 );

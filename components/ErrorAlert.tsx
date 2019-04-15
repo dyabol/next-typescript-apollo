@@ -1,32 +1,32 @@
-import { Alert } from 'antd';
-import * as React from 'react';
-import { InjectedIntl } from 'react-intl';
-import { parseGraphQlError } from '../lib/error';
-import withIntl from '../lib/withIntl';
+import { Alert } from "antd";
+import * as React from "react";
+import { InjectedIntl } from "react-intl";
+import { parseGraphQlError } from "../lib/error";
+import withIntl from "../lib/withIntl";
 
-export interface Props {
+export interface IProps {
   error: any | null;
   intl: InjectedIntl;
   onDismiss?: () => void;
 }
 
-export interface State {
+export interface IState {
   collapse: boolean;
 }
 
-class ErrorAlert extends React.Component<Props, State> {
-  constructor(props: Props) {
+class ErrorAlert extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = { collapse: false };
     this.onDissmisHandler = this.onDissmisHandler.bind(this);
   }
 
-  toggle() {
+  public toggle() {
     this.setState(state => ({ collapse: !state.collapse }));
   }
 
-  onDissmisHandler() {
+  public onDissmisHandler() {
     this.setState({
       collapse: false
     });
@@ -35,7 +35,7 @@ class ErrorAlert extends React.Component<Props, State> {
     }
   }
 
-  getError() {
+  public getError() {
     const { error } = this.props;
     if (error.graphQLErrors && error.graphQLErrors.length > 0) {
       return parseGraphQlError(error.graphQLErrors);
@@ -52,8 +52,8 @@ class ErrorAlert extends React.Component<Props, State> {
         <Alert
           type="error"
           message={intl.formatMessage({
-            id: 'error',
-            defaultMessage: 'Error'
+            id: "error",
+            defaultMessage: "Error"
           })}
           description={message}
           showIcon

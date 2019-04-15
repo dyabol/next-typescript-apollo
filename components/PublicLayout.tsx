@@ -1,25 +1,15 @@
-import Head from 'next/head';
-import * as React from 'react';
+import Head from "next/head";
+import * as React from "react";
 
-export type Props = {
+export interface IProps {
   readonly title?: string;
-};
+}
 
-export default class PublicLayout extends React.Component<Props, {}> {
+export default class PublicLayout extends React.Component<IProps, {}> {
   /**
    * Main page title
    */
-  private pageName: string = 'Page Name';
-
-  /**
-   * Return page title
-   */
-  private getTitle(): string {
-    if (this.props.title) {
-      return this.props.title + ' | ' + this.pageName;
-    }
-    return this.pageName;
-  }
+  private pageName: string = "Page Name";
 
   public render() {
     const { children } = this.props;
@@ -36,5 +26,15 @@ export default class PublicLayout extends React.Component<Props, {}> {
         <div className="mt-3 container">{children}</div>
       </div>
     );
+  }
+
+  /**
+   * Return page title
+   */
+  private getTitle(): string {
+    if (this.props.title) {
+      return this.props.title + " | " + this.pageName;
+    }
+    return this.pageName;
   }
 }

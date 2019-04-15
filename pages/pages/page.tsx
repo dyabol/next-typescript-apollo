@@ -5,7 +5,7 @@ import React from "react";
 import { ApolloConsumer } from "react-apollo";
 import { FormattedMessage, InjectedIntl } from "react-intl";
 import Layout from "../../components/Layout";
-import PostForm, { EditorProps } from "../../components/PostForm";
+import PostForm, { IEditorProps } from "../../components/PostForm";
 import {
   CreatePageMutation,
   EditPageMutation,
@@ -15,7 +15,7 @@ import { createPageMutation } from "../../graphql/post/mutations/createPost";
 import { deletePageMutation } from "../../graphql/post/mutations/deletePost";
 import { editPageMutation } from "../../graphql/post/mutations/editPost";
 import { pageByIdQuery } from "../../graphql/post/queries/postById";
-import Context from "../../interfaces/Context";
+import IContext from "../../interfaces/Context";
 import redirect from "../../lib/redirect";
 import withIntl from "../../lib/withIntl";
 
@@ -24,14 +24,14 @@ export type Props = {
   intl: InjectedIntl;
 } & PageByIdPage;
 
-export interface IState extends EditorProps {
+export interface IState extends IEditorProps {
   id: string | null;
   modal: boolean;
   confirmLoading: boolean;
 }
 
 class EditPage extends React.Component<Props, IState> {
-  public static async getInitialProps(context: Context) {
+  public static async getInitialProps(context: IContext) {
     const {
       apolloClient,
       query: { id },
@@ -93,16 +93,16 @@ class EditPage extends React.Component<Props, IState> {
       const id = result.createPage.id;
       Router.push(
         {
-          pathname: "/page",
+          pathname: "/pages/page",
           query: { id }
         },
-        "/page/" + id,
+        "/pages/page/" + id,
         { shallow: true }
       );
     }
   }
 
-  public save(values: EditorProps, client: ApolloClient<any>) {
+  public save(values: IEditorProps, client: ApolloClient<any>) {
     const { id } = this.state;
     let result;
     if (id) {
@@ -137,7 +137,7 @@ class EditPage extends React.Component<Props, IState> {
       }
     });
     if (result.data && result.data.deletePage) {
-      client.resetStore();
+      await client.resetStore();
       Router.push("/pages");
     }
   }
@@ -175,7 +175,7 @@ class EditPage extends React.Component<Props, IState> {
                 title={title}
                 content={content}
                 onSave={this.changeUrl}
-                save={(values: EditorProps) => this.save(values, client)}
+                save={(values: IEditorProps) => this.save(values, client)}
               />
               <Modal
                 title={

@@ -1,27 +1,25 @@
-import { Breadcrumb, Icon } from 'antd';
-import Link from 'next/link';
-import { withRouter } from 'next/router';
-import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
-
-export interface BreadcrumbProps {}
+import { Breadcrumb, Icon } from "antd";
+import Link from "next/link";
+import { withRouter } from "next/router";
+import * as React from "react";
+import { FormattedMessage } from "react-intl";
 
 const breadcrumbNameMap: { [key: string]: string } = {
-  '/posts': 'posts',
-  '/pages': 'pages',
-  '/menus': 'menus',
-  '/_error': 'error',
-  '/posts/post': 'post',
-  '/pages/page': 'page'
+  "/posts": "posts",
+  "/pages": "pages",
+  "/menus": "menus",
+  "/_error": "error",
+  "/posts/post": "post",
+  "/pages/page": "page"
 };
 
 export default withRouter(props => {
   const { router } = props;
   if (router) {
-    const pathSnippets = router.pathname.split('/').filter(i => i);
+    const pathSnippets = router.pathname.split("/").filter(i => i);
     const len = pathSnippets.length;
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-      const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+      const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
       if (len === index + 1) {
         return (
           <Breadcrumb.Item key={url}>
@@ -57,7 +55,7 @@ export default withRouter(props => {
       </Breadcrumb.Item>
     ].concat(extraBreadcrumbItems);
     return (
-      <Breadcrumb style={{ margin: '16px 0' }}>{breadcrumbItems}</Breadcrumb>
+      <Breadcrumb style={{ margin: "16px 0" }}>{breadcrumbItems}</Breadcrumb>
     );
   }
   return null;

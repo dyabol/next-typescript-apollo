@@ -3,7 +3,7 @@ import { ApolloClient, NormalizedCacheObject } from "apollo-boost";
 import { SingletonRouter } from "next/router";
 import { Component } from "react";
 import { meQuery } from "../graphql/user/queries/me";
-import Context from "../interfaces/Context";
+import IContext from "../interfaces/Context";
 import redirect from "./redirect";
 
 interface IProps {
@@ -17,7 +17,7 @@ interface IState {
 
 export default function withAuth(AuthComponent: any) {
   return class Authenticated extends Component<IProps, IState> {
-    public static async getInitialProps({ apolloClient, ...ctx }: Context) {
+    public static async getInitialProps({ apolloClient, ...ctx }: IContext) {
       const result = await apolloClient.query({
         query: meQuery
       });

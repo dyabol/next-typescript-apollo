@@ -1,39 +1,39 @@
-import { Button, Form, Icon } from 'antd';
-import { Field, Formik, FormikActions } from 'formik';
-import React from 'react';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
-import { parseGraphQlValidationError } from '../lib/error';
-import withIntl from '../lib/withIntl';
-import { convertToSlug } from '../utils/url';
-import MyEditor from './Editor';
-import ErrorAlert from './ErrorAlert';
-import InputField from './field/InputField';
-import SaveButton from './SaveButton';
+import { Button, Form, Icon } from "antd";
+import { Field, Formik, FormikActions } from "formik";
+import React from "react";
+import { FormattedMessage, InjectedIntl } from "react-intl";
+import { parseGraphQlValidationError } from "../lib/error";
+import withIntl from "../lib/withIntl";
+import { convertToSlug } from "../utils/url";
+import MyEditor from "./Editor";
+import ErrorAlert from "./ErrorAlert";
+import InputField from "./field/InputField";
+import SaveButton from "./SaveButton";
 
 const FormItem = Form.Item;
 
-export interface EditorProps {
+export interface IEditorProps {
   title: string;
   content: string;
   slug: string;
 }
 
-export interface Props extends EditorProps {
+export interface IProps extends IEditorProps {
   intl: InjectedIntl;
   deleteButton?: boolean;
   onDelete?: () => void;
   onSave?: (values: any) => void;
-  save: (values: EditorProps) => any;
+  save: (values: IEditorProps) => any;
 }
 
-export type State = {
+export interface IState {
   loading: boolean;
   complete: boolean;
   error: string | null;
-};
+}
 
-class PostForm extends React.Component<Props, State> {
-  constructor(props: Props) {
+class PostForm extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       loading: false,
@@ -45,33 +45,33 @@ class PostForm extends React.Component<Props, State> {
     this.setIdle = this.setIdle.bind(this);
   }
 
-  setLoading() {
+  public setLoading() {
     this.setState({ complete: false, loading: true, error: null });
   }
 
-  setComplete() {
+  public setComplete() {
     this.setState({ complete: true, loading: false });
   }
 
-  setIdle() {
+  public setIdle() {
     this.setState({ complete: false, loading: false });
   }
 
-  showError(err: string) {
+  public showError(err: string) {
     this.setState({
       error: err
     });
   }
 
-  hideError() {
+  public hideError() {
     this.setState({
       error: null
     });
   }
 
-  async onSubmitHandler(
-    values: EditorProps,
-    { setErrors }: FormikActions<EditorProps>
+  public async onSubmitHandler(
+    values: IEditorProps,
+    { setErrors }: FormikActions<IEditorProps>
   ) {
     const { intl, save, onSave } = this.props;
     this.setLoading();
@@ -85,8 +85,8 @@ class PostForm extends React.Component<Props, State> {
       } else {
         throw new Error(
           intl.formatMessage({
-            id: 'something_went_wrong',
-            defaultMessage: 'Something went wrong.'
+            id: "something_went_wrong",
+            defaultMessage: "Something went wrong."
           })
         );
       }
@@ -124,15 +124,15 @@ class PostForm extends React.Component<Props, State> {
                 required
                 id="titleField"
                 label={intl.formatMessage({
-                  id: 'title',
-                  defaultMessage: 'Title'
+                  id: "title",
+                  defaultMessage: "Title"
                 })}
                 autoFocus
                 autoComplete="off"
                 onChange={(e: React.ChangeEvent<any>) => {
                   const value = e.target.value;
-                  setFieldValue('title', value);
-                  setFieldValue('slug', convertToSlug(value));
+                  setFieldValue("title", value);
+                  setFieldValue("slug", convertToSlug(value));
                 }}
               />
               <Field
@@ -144,20 +144,20 @@ class PostForm extends React.Component<Props, State> {
                 required
                 id="emailField"
                 label={intl.formatMessage({
-                  id: 'slug',
-                  defaultMessage: 'Slug'
+                  id: "slug",
+                  defaultMessage: "Slug"
                 })}
                 autoComplete="off"
               />
               <FormItem>
                 <MyEditor
                   content={content}
-                  onChange={value => setFieldValue('content', value)}
+                  onChange={value => setFieldValue("content", value)}
                 />
               </FormItem>
               <FormItem>
                 <SaveButton
-                  style={{ marginRight: '16px' }}
+                  style={{ marginRight: "16px" }}
                   loading={this.state.loading}
                   complete={this.state.complete}
                 />

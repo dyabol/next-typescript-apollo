@@ -81,7 +81,7 @@ class RegisterForm extends React.Component<IProps, {}> {
               { setErrors }: FormikActions<IFieldType>
             ) => {
               try {
-                const response = await register({
+                await register({
                   variables: {
                     data: {
                       firstName: values.firstName,
@@ -91,7 +91,6 @@ class RegisterForm extends React.Component<IProps, {}> {
                     }
                   }
                 });
-                console.log(response);
                 Router.push("/check-email");
               } catch (err) {
                 const valErrors = parseGraphQlValidationError(err);

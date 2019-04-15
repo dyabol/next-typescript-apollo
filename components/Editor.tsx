@@ -1,27 +1,27 @@
-import { ContentState, EditorState } from 'draft-js';
+import { ContentState, EditorState } from "draft-js";
 // @ts-ignore
-import draftToHtml from 'draftjs-to-html';
+import draftToHtml from "draftjs-to-html";
 // @ts-ignore
-import htmlToDraft from 'html-to-draftjs';
-import * as React from 'react';
-import { Editor, RawDraftContentState } from 'react-draft-wysiwyg';
+import htmlToDraft from "html-to-draftjs";
+import * as React from "react";
+import { Editor, RawDraftContentState } from "react-draft-wysiwyg";
 
-export interface Props {
+export interface IProps {
   content?: string;
   onChange?: (value: string) => void;
   onBlur?: (event: React.SyntheticEvent<{}, Event>) => void;
 }
 
-export interface State {
+export interface IState {
   editorState: EditorState;
 }
 
-export default class MyEditor extends React.Component<Props, State> {
+export default class MyEditor extends React.Component<IProps, IState> {
   private lastHtml: string;
 
-  constructor(props: Props) {
+  constructor(props: IProps) {
     super(props);
-    this.lastHtml = props.content ? props.content : '';
+    this.lastHtml = props.content ? props.content : "";
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.state = {
@@ -29,7 +29,7 @@ export default class MyEditor extends React.Component<Props, State> {
     };
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     const contentBlock = htmlToDraft(this.props.content);
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(
@@ -40,14 +40,14 @@ export default class MyEditor extends React.Component<Props, State> {
     }
   }
 
-  onEditorStateChange(editorState: EditorState) {
+  public onEditorStateChange(editorState: EditorState) {
     this.setState({ editorState });
   }
 
-  onChangeHandler(value: RawDraftContentState) {
+  public onChangeHandler(value: RawDraftContentState) {
     if (this.props.onChange) {
       const html = draftToHtml(value);
-      if (html != this.lastHtml) {
+      if (html !== this.lastHtml) {
         this.props.onChange(html);
         this.lastHtml = html;
       }

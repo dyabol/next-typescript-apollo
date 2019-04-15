@@ -5,7 +5,7 @@ import {
   ConfirmUserVariables
 } from "../generated/apolloComponents";
 import { confirmUserMutation } from "../graphql/user/mutations/confirmUser";
-import Context from "../interfaces/Context";
+import IContext from "../interfaces/Context";
 import redirect from "../lib/redirect";
 
 export interface IProps {
@@ -13,7 +13,7 @@ export interface IProps {
 }
 
 export default class Confirm extends React.Component<IProps, {}> {
-  public static async getInitialProps(context: Context) {
+  public static async getInitialProps(context: IContext) {
     const {
       query: { token },
       apolloClient,

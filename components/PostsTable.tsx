@@ -1,12 +1,12 @@
-import { Table } from 'antd';
-import { PaginationConfig } from 'antd/lib/table';
-import Link from 'next/link';
-import * as React from 'react';
-import { InjectedIntl } from 'react-intl';
-import { PostsPosts, PostsUser } from '../generated/apolloComponents';
-import withIntl from '../lib/withIntl';
+import { Table } from "antd";
+import { PaginationConfig } from "antd/lib/table";
+import Link from "next/link";
+import * as React from "react";
+import { InjectedIntl } from "react-intl";
+import { PostsPosts, PostsUser } from "../generated/apolloComponents";
+import withIntl from "../lib/withIntl";
 
-interface PostTableProps {
+interface IPostTableProps {
   intl: InjectedIntl;
   loading?: boolean;
   url: string;
@@ -15,14 +15,25 @@ interface PostTableProps {
   onPagination: (page: number) => void;
 }
 
-interface PostTableState {}
-
-class PostsTable extends React.Component<PostTableProps, PostTableState> {
+class PostsTable extends React.Component<IPostTableProps, {}> {
   private pagination: PaginationConfig = {};
 
-  constructor(props: PostTableProps) {
+  constructor(props: IPostTableProps) {
     super(props);
     this.pagination.total = props.total;
+  }
+
+  public render() {
+    return (
+      <Table
+        rowKey="id"
+        columns={this.getColumns()}
+        dataSource={this.props.data}
+        pagination={this.pagination}
+        loading={this.props.loading}
+        onChange={this.handleTableChange}
+      />
+    );
   }
 
   private handleTableChange = (pagination: PaginationConfig) => {
@@ -37,18 +48,18 @@ class PostsTable extends React.Component<PostTableProps, PostTableState> {
     return [
       {
         title: intl.formatMessage({
-          id: 'title',
-          defaultMessage: 'Title'
+          id: "title",
+          defaultMessage: "Title"
         }),
-        dataIndex: 'title',
-        key: 'title',
+        dataIndex: "title",
+        key: "title",
         render: (title: string, post: PostsPosts) => (
           <Link
             href={{
               pathname: url,
               query: { id: post.id }
             }}
-            as={url + '/' + post.id}
+            as={url + "/" + post.id}
           >
             <a>{title}</a>
           </Link>
@@ -56,59 +67,46 @@ class PostsTable extends React.Component<PostTableProps, PostTableState> {
       },
       {
         title: intl.formatMessage({
-          id: 'slug',
-          defaultMessage: 'Slug'
+          id: "slug",
+          defaultMessage: "Slug"
         }),
-        dataIndex: 'slug',
-        key: 'slug'
+        dataIndex: "slug",
+        key: "slug"
       },
       {
         title: intl.formatMessage({
-          id: 'author',
-          defaultMessage: 'Author'
+          id: "author",
+          defaultMessage: "Author"
         }),
-        dataIndex: 'user',
-        key: 'author',
+        dataIndex: "user",
+        key: "author",
         render: (user: PostsUser) => {
           return user.fullName;
         }
       },
       {
         title: intl.formatMessage({
-          id: 'updated',
-          defaultMessage: 'Updated'
+          id: "updated",
+          defaultMessage: "Updated"
         }),
-        dataIndex: 'updatedAt',
-        key: 'updatedAt',
+        dataIndex: "updatedAt",
+        key: "updatedAt",
         render: (updated: string) => {
           return intl.formatRelative(updated);
         }
       },
       {
         title: intl.formatMessage({
-          id: 'created',
-          defaultMessage: 'Created'
+          id: "created",
+          defaultMessage: "Created"
         }),
-        dataIndex: 'createdAt',
-        key: 'createdAt',
+        dataIndex: "createdAt",
+        key: "createdAt",
         render: (created: string) => {
           return intl.formatRelative(created);
         }
       }
     ];
-  }
-
-  public render() {
-    return (
-      <Table
-        rowKey="id"
-        columns={this.getColumns()}
-        dataSource={this.props.data}
-        pagination={this.pagination}
-        loading={this.props.loading}
-        onChange={this.handleTableChange}
-      />
-    );
   }
 }
 

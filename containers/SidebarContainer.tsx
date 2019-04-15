@@ -1,11 +1,11 @@
-import { Container } from 'unstated';
+import { Container } from "unstated";
 
-type SidebarState = {
+interface ISidebarState {
   toggled: boolean;
   opened: string[];
-};
+}
 
-export default class SidebarContainer extends Container<SidebarState> {
+export default class SidebarContainer extends Container<ISidebarState> {
   constructor(props: any = {}) {
     super();
     this.state = {

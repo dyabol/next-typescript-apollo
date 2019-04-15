@@ -1,17 +1,17 @@
-import { Button, Form } from 'antd';
-import { Field, Formik } from 'formik';
-import Router from 'next/router';
-import * as React from 'react';
-import { InjectedIntl } from 'react-intl';
-import { ForgotPasswordComponent } from '../generated/apolloComponents';
-import withIntl from '../lib/withIntl';
-import InputField from './field/InputField';
+import { Button, Form } from "antd";
+import { Field, Formik } from "formik";
+import Router from "next/router";
+import * as React from "react";
+import { InjectedIntl } from "react-intl";
+import { ForgotPasswordComponent } from "../generated/apolloComponents";
+import withIntl from "../lib/withIntl";
+import InputField from "./field/InputField";
 
-export interface ForgotPasswordFormProps {
+export interface IForgotPasswordFormProps {
   intl: InjectedIntl;
 }
 
-class ForgotPasswordForm extends React.Component<ForgotPasswordFormProps, {}> {
+class ForgotPasswordForm extends React.Component<IForgotPasswordFormProps, {}> {
   public render() {
     const { intl } = this.props;
     return (
@@ -19,14 +19,13 @@ class ForgotPasswordForm extends React.Component<ForgotPasswordFormProps, {}> {
         {forgotPassword => (
           <Formik
             onSubmit={async values => {
-              const response = await forgotPassword({
+              await forgotPassword({
                 variables: values
               });
-              console.log(response);
-              Router.push('/check-email');
+              Router.push("/check-email");
             }}
             initialValues={{
-              email: ''
+              email: ""
             }}
           >
             {({ values, handleSubmit }) => (
@@ -40,14 +39,14 @@ class ForgotPasswordForm extends React.Component<ForgotPasswordFormProps, {}> {
                   required
                   id="emailField"
                   label={intl.formatMessage({
-                    id: 'email',
-                    defaultMessage: 'E-email'
+                    id: "email",
+                    defaultMessage: "E-email"
                   })}
                 />
                 <Button type="primary" htmlType="submit">
                   {intl.formatMessage({
-                    id: 'reset_password',
-                    defaultMessage: 'Reset password'
+                    id: "reset_password",
+                    defaultMessage: "Reset password"
                   })}
                 </Button>
               </Form>
